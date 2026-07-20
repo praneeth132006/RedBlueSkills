@@ -1,0 +1,198 @@
+{
+  "schema": "redblueskills/catalog/v1",
+  "count": 6,
+  "skills": [
+    {
+      "name": "web-sqli-detection",
+      "description": "Detect SQL injection attempts and successful exploitation against a web application from logs, WAF events, and database telemetry. Use when building or tuning detections for injection, triaging a suspected SQLi alert, or threat hunting for injection activity.",
+      "team": "blue",
+      "app_type": "web-app",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-66"
+        ],
+        "cwe": [
+          "CWE-89"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": [
+          "D3-NTA",
+          "D3-FA"
+        ]
+      },
+      "pairs_with": [
+        "web-sql-injection"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/blue/detect/web-sqli-detection/SKILL.md"
+    },
+    {
+      "name": "web-xss-detection",
+      "description": "Detect cross-site scripting attempts and successful injection against a web application using request telemetry, Content-Security-Policy violation reports, and output-context analysis. Use when tuning XSS detections, triaging a suspected XSS alert, or hunting for injection into reflected or stored sinks.",
+      "team": "blue",
+      "app_type": "web-app",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1189",
+          "T1059.007"
+        ],
+        "capec": [
+          "CAPEC-591"
+        ],
+        "cwe": [
+          "CWE-79"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": [
+          "D3-NTA"
+        ]
+      },
+      "pairs_with": [
+        "web-reflected-xss"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/blue/detect/web-xss-detection/SKILL.md"
+    },
+    {
+      "name": "web-security-headers",
+      "description": "Harden a web application by suppressing stack-leaking response headers and deploying the security header set (CSP, HSTS, frame/content-type options, referrer and permissions policy). Use when reducing fingerprint surface, remediating information disclosure, or establishing a secure response baseline.",
+      "team": "blue",
+      "app_type": "web-app",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1592.002"
+        ],
+        "capec": [
+          "CAPEC-170"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-693"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": [
+          "D3-RTSD"
+        ]
+      },
+      "pairs_with": [
+        "web-http-fingerprinting"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/blue/harden/web-security-headers/SKILL.md"
+    },
+    {
+      "name": "web-reflected-xss",
+      "description": "Find and prove reflected cross-site scripting in a web application during an authorized assessment. Use when user-controlled input is echoed into an HTML, attribute, JavaScript, or URL context and you need to confirm script execution and demonstrate impact safely.",
+      "team": "red",
+      "app_type": "web-app",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1189",
+          "T1059.007"
+        ],
+        "capec": [
+          "CAPEC-591"
+        ],
+        "cwe": [
+          "CWE-79"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "web-xss-detection"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/red/initial-access/web-reflected-xss/SKILL.md"
+    },
+    {
+      "name": "web-sql-injection",
+      "description": "Confirm, characterize, and demonstrate the impact of SQL injection in a web application during an authorized assessment. Use when a request parameter, header, or body field appears to reach a SQL query and you need to prove the flaw and its blast radius without damaging data.",
+      "team": "red",
+      "app_type": "web-app",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-66"
+        ],
+        "cwe": [
+          "CWE-89"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "web-sqli-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/red/initial-access/web-sql-injection/SKILL.md"
+    },
+    {
+      "name": "web-http-fingerprinting",
+      "description": "Fingerprint a web application's stack — server, framework, language, WAF, and exposed metadata — during authorized recon. Use at the start of a web assessment to map the technology surface and prioritize follow-on testing with low-noise, passive-first techniques.",
+      "team": "red",
+      "app_type": "web-app",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1592.002"
+        ],
+        "capec": [
+          "CAPEC-170"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "web-security-headers"
+      ],
+      "risk": "info",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "path": "skills/web-app/red/recon/web-http-fingerprinting/SKILL.md"
+    }
+  ]
+}

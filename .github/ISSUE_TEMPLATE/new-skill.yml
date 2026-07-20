@@ -1,0 +1,72 @@
+name: New skill proposal
+description: Propose a new red/blue skill or skill pair
+title: "[skill] <app-type>/<team>/<stage>: <name>"
+labels: ["skill", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a skill! Skills ship in **red↔blue pairs** and must be
+        validated. Read [ETHICS.md](../blob/main/ETHICS.md) before proposing offensive content.
+  - type: input
+    id: name
+    attributes:
+      label: Skill name (kebab-case)
+      placeholder: web-csrf
+    validations:
+      required: true
+  - type: dropdown
+    id: app_type
+    attributes:
+      label: App type
+      options: [web-app, api, cloud-native, mobile, network, ci-cd]
+    validations:
+      required: true
+  - type: dropdown
+    id: team
+    attributes:
+      label: Team
+      options: [red, blue, purple]
+    validations:
+      required: true
+  - type: input
+    id: stage
+    attributes:
+      label: Kill-chain stage
+      placeholder: initial-access / detect / harden / ...
+    validations:
+      required: true
+  - type: input
+    id: pair
+    attributes:
+      label: Paired skill (the other team's counterpart)
+      description: Existing skill name, or "new — proposing both"
+    validations:
+      required: true
+  - type: input
+    id: techniques
+    attributes:
+      label: References
+      placeholder: "ATT&CK T1190, CWE-352, OWASP A01:2021"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What the skill does
+    validations:
+      required: true
+  - type: input
+    id: target
+    attributes:
+      label: Validation target
+      placeholder: owasp-juice-shop, a named CTF, ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: ethics
+    attributes:
+      label: Responsible use
+      options:
+        - label: This content is for authorized testing / defense and complies with ETHICS.md
+          required: true

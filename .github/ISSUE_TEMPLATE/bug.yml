@@ -1,0 +1,31 @@
+name: Bug / incorrect skill
+description: A skill is wrong, a detection is ineffective, or the tooling misbehaves
+title: "[bug] <short description>"
+labels: ["bug", "triage"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Affected skill or tool
+      placeholder: skills/web-app/blue/detect/web-sqli-detection or tools/validate.py
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Commands, target, and observed output.
+    validations:
+      required: true
