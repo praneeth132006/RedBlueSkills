@@ -1,0 +1,48 @@
+name: Deploy website
+
+# Publishes the static site in site/ to GitHub Pages on every push to main.
+# The served catalog (site/catalog.json) is regenerated + freshness-checked by
+# the Validate workflow, so Pages always ships an in-sync catalog.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "catalog.json"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one live deploy at a time; don't cancel an in-flight publish
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh served catalog from source of truth
+        run: cp catalog.json site/catalog.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

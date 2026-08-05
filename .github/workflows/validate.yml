@@ -10,7 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  skills:
+    name: Validate skills
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +21,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: tools/requirements-dev.txt
 
       - name: Install dependencies
         run: python -m pip install -r tools/requirements-dev.txt
@@ -32,3 +34,46 @@ jobs:
 
       - name: Run tooling tests
         run: python -m pytest tools/tests -q
+
+  cli:
+    name: Smoke-test the CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax check
+        run: node -c bin/cli.js
+
+      - name: list / attack / path
+        run: |
+          node bin/cli.js list > /dev/null
+          node bin/cli.js list red > /dev/null
+          node bin/cli.js attack https://example.test > /dev/null
+          node bin/cli.js path > /dev/null
+
+      - name: init installs every skill
+        run: |
+          node bin/cli.js init --dest "$RUNNER_TEMP/rbsk" > /dev/null
+          count=$(find "$RUNNER_TEMP/rbsk/skills" -name SKILL.md | wc -l | tr -d ' ')
+          echo "installed $count skills"
+          test "$count" -ge 20
+
+      - name: add pulls in the paired skill
+        run: |
+          node bin/cli.js add web-ssrf --dest "$RUNNER_TEMP/rbsk2" > /dev/null
+          test -f "$RUNNER_TEMP/rbsk2/skills/web-app/red/initial-access/web-ssrf/SKILL.md"
+          test -f "$RUNNER_TEMP/rbsk2/skills/web-app/blue/harden/web-ssrf-hardening/SKILL.md"
+
+      - name: unknown skill exits non-zero
+        run: |
+          if node bin/cli.js add not-a-real-skill --dest "$RUNNER_TEMP/rbsk3" > /dev/null 2>&1; then
+            echo "expected a non-zero exit for an unknown skill"; exit 1
+          fi
+
+      - name: package.json is valid and exposes the CLI
+        run: jq -e '.bin.redblueskills and .bin.rbsk' package.json > /dev/null

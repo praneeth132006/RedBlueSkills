@@ -1,0 +1,48 @@
+{
+  "name": "redblueskills",
+  "version": "0.2.0",
+  "description": "Agent-native, validated red/blue security skills — paired offense and defense — installable into any coding LLM with one command.",
+  "keywords": [
+    "security",
+    "pentest",
+    "red-team",
+    "blue-team",
+    "claude",
+    "agent-skills",
+    "owasp",
+    "mitre-attack",
+    "appsec",
+    "ai-agents"
+  ],
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "bin": {
+    "redblueskills": "bin/cli.js",
+    "rbsk": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "orchestrators/",
+    "catalog.json",
+    "INDEX.md",
+    "SKILL-SPEC.md",
+    "ETHICS.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node bin/cli.js banner || true"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Security-Environment/RedBlueSkills.git"
+  },
+  "homepage": "https://github.com/Security-Environment/RedBlueSkills#readme",
+  "bugs": {
+    "url": "https://github.com/Security-Environment/RedBlueSkills/issues"
+  }
+}

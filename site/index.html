@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RedBlueSkills — paired offense & defense for AI agents</title>
+<meta name="description" content="Agent-native, validated red/blue security skills. Paired offense and defense, risk-labeled, installable into any coding LLM with one command." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<!-- classification strip -->
+<div class="strip" aria-hidden="true">
+  <div class="strip__track">
+    <span>AUTHORIZED&nbsp;USE&nbsp;ONLY</span><span class="strip__dot red"></span>
+    <span>RED&nbsp;∕&nbsp;BLUE</span><span class="strip__dot blue"></span>
+    <span>OFFENSE&nbsp;YOU&nbsp;CAN&#39;T&nbsp;DETECT&nbsp;DOESN&#39;T&nbsp;SHIP</span><span class="strip__dot red"></span>
+    <span>VALIDATED&nbsp;·&nbsp;PROVENANCED&nbsp;·&nbsp;PAIRED</span><span class="strip__dot blue"></span>
+    <span>AUTHORIZED&nbsp;USE&nbsp;ONLY</span><span class="strip__dot red"></span>
+    <span>RED&nbsp;∕&nbsp;BLUE</span><span class="strip__dot blue"></span>
+    <span>OFFENSE&nbsp;YOU&nbsp;CAN&#39;T&nbsp;DETECT&nbsp;DOESN&#39;T&nbsp;SHIP</span><span class="strip__dot red"></span>
+    <span>VALIDATED&nbsp;·&nbsp;PROVENANCED&nbsp;·&nbsp;PAIRED</span><span class="strip__dot blue"></span>
+  </div>
+</div>
+
+<!-- top nav -->
+<header class="nav">
+  <a class="nav__mark" href="#top">
+    <span class="mark red">■</span><span class="mark blue">■</span>
+    <span class="nav__name">RedBlueSkills</span>
+  </a>
+  <nav class="nav__links">
+    <a href="#install">install</a>
+    <a href="#catalog">catalog</a>
+    <a href="#attack">attack</a>
+    <a href="#doctrine">doctrine</a>
+    <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__meta">
+    <span>DOSSIER&nbsp;/&nbsp;RBSK-001</span>
+    <span data-count-hero>—&nbsp;SKILLS</span>
+    <span>REV&nbsp;0.2.0</span>
+  </div>
+
+  <h1 class="hero__title">
+    <span class="line">Security skills</span>
+    <span class="line">an <em class="red-ink">agent</em> can</span>
+    <span class="line">actually <em class="blue-ink">run.</em></span>
+  </h1>
+
+  <p class="hero__lede">
+    A library of executable <code>SKILL.md</code> packages for red teams and blue
+    teams. Every offensive technique ships with the detection that catches it —
+    risk-labeled, proven against a real target, and enforced before merge.
+  </p>
+
+  <div class="hero__cta">
+    <button class="copy" data-copy="npx redblueskills init" type="button">
+      <span class="copy__prompt">$</span>
+      <span class="copy__cmd">npx redblueskills init</span>
+      <span class="copy__hint">click to copy</span>
+    </button>
+    <a class="btn-ghost" href="#catalog">browse the catalog →</a>
+  </div>
+
+  <div class="hero__redactions" aria-hidden="true">
+    <span class="bar"></span><span class="bar short"></span><span class="bar med"></span>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="stat"><b data-stat="count">00</b><span>validated skills</span></div>
+  <div class="stat"><b data-stat="pairs">00</b><span>red↔blue pairs</span></div>
+  <div class="stat"><b data-stat="red">00</b><span class="red-ink">offensive</span></div>
+  <div class="stat"><b data-stat="blue">00</b><span class="blue-ink">defensive</span></div>
+  <div class="stat"><b>1</b><span>command to install</span></div>
+</section>
+
+<!-- INSTALL -->
+<section class="install" id="install">
+  <div class="section-head">
+    <span class="section-head__num">01</span>
+    <h2>Import into your coding LLM<br />like any dependency.</h2>
+    <p>No cloning, no submodules. One command drops the whole library — plus the
+       <code>attack-my-application</code> orchestrator — into your agent's skills path.</p>
+  </div>
+
+  <div class="install__grid">
+    <div class="term" role="group" aria-label="install commands">
+      <div class="term__bar"><span></span><span></span><span></span><em>zsh — your project</em></div>
+      <pre class="term__body"><code><span class="c-dim"># install every skill + the orchestrator</span>
+<span class="c-p">$</span> npx redblueskills <span class="c-k">init</span>
+
+<span class="c-dim"># or grab just what you need — its pair comes along</span>
+<span class="c-p">$</span> npx redblueskills <span class="c-k">add</span> web-sql-injection
+
+<span class="c-dim"># see everything on offer</span>
+<span class="c-p">$</span> npx redblueskills <span class="c-k">list</span> red</code></pre>
+    </div>
+
+    <ol class="install__steps">
+      <li><b>init</b> copies <code>skills/</code> + <code>orchestrators/</code> into <code>./.claude/skills/redblueskills</code>.</li>
+      <li>A generated <code>README</code> tells the agent when to load each skill.</li>
+      <li>Say <b>“attack my application”</b> — the orchestrator takes it from there.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section class="catalog" id="catalog">
+  <div class="section-head">
+    <span class="section-head__num">02</span>
+    <h2>The catalog.</h2>
+    <p>Every card is a self-contained runbook. Offense and defense are bound
+       together — hover a card to light up its counterpart.</p>
+  </div>
+
+  <div class="filters" role="toolbar" aria-label="filter skills">
+    <div class="filters__teams" data-filter-group="team">
+      <button class="chip is-active" data-team="all">all</button>
+      <button class="chip chip--red" data-team="red">● red</button>
+      <button class="chip chip--blue" data-team="blue">● blue</button>
+    </div>
+    <input class="filters__search" type="search" placeholder="search: sqli, ssrf, T1190, csrf…" data-search aria-label="search skills" />
+    <span class="filters__count" data-visible-count></span>
+  </div>
+
+  <div class="grid" data-grid>
+    <p class="grid__loading">loading dossier…</p>
+  </div>
+</section>
+
+<!-- ATTACK -->
+<section class="attack" id="attack">
+  <div class="section-head section-head--ondark">
+    <span class="section-head__num">03</span>
+    <h2>“Attack my application.”</h2>
+    <p>One instruction spins up a full, authorized assessment. The orchestrator
+       detects what your app is and drives the whole library, in order.</p>
+  </div>
+
+  <ol class="flow">
+    <li class="flow__step" data-k="0">
+      <span class="flow__num">00</span>
+      <h3>Authorization gate</h3>
+      <p>Hard stop. Confirms ownership, scope, window, and data-handling before a single active probe.</p>
+    </li>
+    <li class="flow__step flow__step--red" data-k="1">
+      <span class="flow__num">01</span>
+      <h3>Fingerprint</h3>
+      <p>Maps stack, entry points, and session model into a surface map.</p>
+    </li>
+    <li class="flow__step" data-k="2">
+      <span class="flow__num">02</span>
+      <h3>Select</h3>
+      <p>Routes each input to the skills whose preconditions it satisfies.</p>
+    </li>
+    <li class="flow__step flow__step--red" data-k="3">
+      <span class="flow__num">03</span>
+      <h3>Run in kill-chain order</h3>
+      <p>Recon → injection → access control → auth → client-side, minimal-proof first.</p>
+    </li>
+    <li class="flow__step flow__step--blue" data-k="4">
+      <span class="flow__num">04</span>
+      <h3>Verify detection</h3>
+      <p>For each finding, checks whether the paired blue skill would catch it.</p>
+    </li>
+    <li class="flow__step" data-k="5">
+      <span class="flow__num">05</span>
+      <h3>Report</h3>
+      <p>Prioritized findings, reproduction, remediation, and coverage — what ran and what didn’t.</p>
+    </li>
+  </ol>
+
+  <div class="attack__cmd">
+    <button class="copy copy--dark" data-copy="npx redblueskills attack https://staging.example.com" type="button">
+      <span class="copy__prompt">$</span>
+      <span class="copy__cmd">npx redblueskills attack https://staging.example.com</span>
+      <span class="copy__hint">click to copy</span>
+    </button>
+  </div>
+</section>
+
+<!-- DOCTRINE -->
+<section class="doctrine" id="doctrine">
+  <div class="section-head">
+    <span class="section-head__num">04</span>
+    <h2>The doctrine.</h2>
+    <p>Four rules most “awesome-security” lists don’t give you.</p>
+  </div>
+  <div class="doctrine__grid">
+    <article><span class="doctrine__k">A</span><h3>Agent-native</h3><p>Every skill is an executable <code>SKILL.md</code> with a machine-readable header — loadable by Claude Code and other agents, not just read by humans.</p></article>
+    <article><span class="doctrine__k">B</span><h3>Paired red ↔ blue</h3><p>Every offensive technique links to its detection. CI enforces the pairing is bidirectional. Offense you can’t detect doesn’t ship.</p></article>
+    <article><span class="doctrine__k">C</span><h3>Validated &amp; provenanced</h3><p>Proven against a real lab or CTF target, stamped with who validated it and when, and auto-flagged <code>stale</code> after six months.</p></article>
+    <article><span class="doctrine__k">D</span><h3>Tooled</h3><p>A schema validator, catalog generator, and test suite gate every PR. Quality scales with contributors instead of rotting.</p></article>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__warn">
+    <b>⚠ Authorized use only.</b> These skills are for testing systems you own or
+    are explicitly permitted to test, and for defending systems you operate. Read
+    <code>ETHICS.md</code> first. You are responsible for staying within your
+    authorization and the law.
+  </div>
+  <div class="foot__row">
+    <span class="mark red">■</span><span class="mark blue">■</span>
+    <span>RedBlueSkills</span>
+    <span class="foot__sp"></span>
+    <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
+    <a href="#catalog">Catalog</a>
+    <span class="foot__lic">Apache-2.0</span>
+  </div>
+</footer>
+
+<div class="toast" data-toast>copied</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
