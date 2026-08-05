@@ -1,0 +1,42 @@
+name: Publish to npm
+
+# Publishes the `redblueskills` package when a GitHub Release is published.
+# Requires an NPM_TOKEN repo secret (npm automation token) and that the release
+# tag matches the version in package.json.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Sanity-check the CLI before publishing
+        run: |
+          node -c bin/cli.js
+          node bin/cli.js list > /dev/null
+
+      - name: Verify the published file set installs cleanly
+        run: |
+          npm pack --dry-run
+          node bin/cli.js init --dest "$RUNNER_TEMP/verify" > /dev/null
+          test "$(find "$RUNNER_TEMP/verify/skills" -name SKILL.md | wc -l | tr -d ' ')" -ge 20
+
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
