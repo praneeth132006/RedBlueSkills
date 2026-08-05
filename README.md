@@ -73,9 +73,16 @@ skills/web-app/
                    web-authentication-hardening · web-csrf-hardening
 ```
 
-**v1 ships the `web-app` vertical, deeply** — 10 red↔blue pairs covering the OWASP
-Top 10 core. It is the reference implementation for every future surface (`api`,
-`cloud-native`, `mobile`, `network`, `ci-cd`) — each will follow the same schema,
+**`web-app` ships deeply** — 10 red↔blue pairs covering the OWASP Top 10 core — and
+is the reference implementation for every surface. The **`api`** vertical follows
+it with 6 red↔blue pairs across OWASP API Security Top 10 #1–5 (BOLA, broken
+authentication, BFLA, mass assignment, excessive data exposure, unrestricted
+resource consumption). Nine of those twelve are `validated` end-to-end against a
+live **OWASP crAPI** lab (all six offensive skills, plus the three detections,
+proven by running each detection over the real paired-attack traffic); the
+remaining three — one role-log-dependent detection and the two hardening skills —
+stay `reviewed`, with the blocker documented in-skill. The remaining surfaces
+(`cloud-native`, `mobile`, `network`, `ci-cd`) will follow the same schema,
 tooling, and pairing discipline.
 
 ---
@@ -98,7 +105,17 @@ at any `skills/**/SKILL.md`. A generated `README` in the install directory tells
 the agent when to load each skill.
 
 There's also a **website** — a browsable catalog with the same install flow — in
-[`site/`](site/) (deployable to any static host; run `make site` to preview).
+[`site/`](site/). It is fully self-contained: every `SKILL.md` and every doc is
+bundled into `site/content.json` at build time and rendered in-page, so browsing
+the library never sends you off to GitHub. To run it locally:
+
+```
+make site        # builds the catalog + content bundle, serves http://localhost:8799
+```
+
+`make site-build` regenerates `site/catalog.json` and `site/content.json` without
+starting a server — run it after editing any skill or doc. The result is a plain
+static directory, deployable to any static host if you ever want it published.
 
 ## The `attack-my-application` orchestrator
 

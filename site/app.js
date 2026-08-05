@@ -2,7 +2,6 @@
 (function () {
   'use strict';
 
-  var GH_SKILL = 'https://github.com/Security-Environment/RedBlueSkills/blob/main/';
 
   // ---- copy-to-clipboard buttons ----
   var toast = document.querySelector('[data-toast]');
@@ -73,6 +72,11 @@
 
   function boot(skills) {
     state.skills = skills;
+    window.RBS = window.RBS || {};
+    window.RBS.skillByName = function (name) {
+      for (var i = 0; i < skills.length; i++) { if (skills[i].name === name) return skills[i]; }
+      return null;
+    };
     // stats
     var red = skills.filter(function (s) { return s.team === 'red'; }).length;
     var blue = skills.filter(function (s) { return s.team === 'blue'; }).length;
@@ -185,8 +189,7 @@
   function cardFor(s) {
     var a = document.createElement('a');
     a.className = 'card card--' + s.team;
-    a.href = GH_SKILL + s.path;
-    a.target = '_blank'; a.rel = 'noopener';
+    a.href = '#/skill/' + encodeURIComponent(s.name);
     a.setAttribute('data-name', s.name);
     a.setAttribute('data-pairs', (s.pairs_with || []).join(','));
 

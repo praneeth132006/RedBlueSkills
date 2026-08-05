@@ -32,6 +32,9 @@ jobs:
       - name: Check catalog is up to date
         run: python tools/build_catalog.py --check
 
+      - name: Check the site's embedded content bundle is up to date
+        run: python tools/build_site_content.py --check
+
       - name: Run tooling tests
         run: python -m pytest tools/tests -q
 

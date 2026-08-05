@@ -21,4 +21,5 @@ venv/
 # Local scratch / lab loot — never commit engagement data
 _lab/loot/
 _lab/**/*.local
+_lab/crapi/.env
 *.log

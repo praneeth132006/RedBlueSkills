@@ -1,35 +1,39 @@
 /* =====================================================================
-   RedBlueSkills — "Obsidian Aurora" dark design system
-   Base: near-black cool obsidian · Text: warm off-white
-   Signals: warm coral (red team) + electric azure-cyan (blue team)
-   Faint aurora glows. Warm/cool complementary accents on low luminance —
-   high contrast where it matters, easy on the eyes everywhere else.
-   Type: Fraunces (editorial serif) + Space Mono (labels/code)
+   RedBlueSkills — "Graphite" dark design system
+   Base: neutral graphite, no colour cast, no glow washes
+   Text: cool near-white on layered greys, contrast from typography
+   Signals: a single restrained red (offense) + blue (defense), used as
+   accents only — never as background washes.
+   Type: Syne (extended geometric display) + Space Grotesk (body/UI)
+         + Space Mono (dossier labels/code)
    ===================================================================== */
 
 :root{
-  --bg:#0d0e13;
-  --bg-2:#090a0e;          /* strip / terminal — deepest */
-  --surface:#15161e;       /* cards, panels */
-  --surface-2:#1c1e28;     /* chips, inputs, elevated */
-  --elevated:#22242f;
+  /* surfaces — each step is a real, visible elevation */
+  --bg:#0e0f11;
+  --bg-2:#0a0b0c;          /* strip / terminal — deepest */
+  --surface:#16181b;       /* cards, panels */
+  --surface-2:#1d2024;     /* chips, inputs, elevated */
+  --elevated:#25282d;
 
-  --ink:#ece6da;           /* primary text, warm off-white */
-  --ink-soft:#9c968a;      /* secondary */
-  --ink-dim:#6b675e;       /* tertiary / mono meta */
+  --ink:#eceef1;           /* primary text */
+  --ink-soft:#a3a9b3;      /* secondary */
+  --ink-dim:#6e747d;       /* tertiary / mono meta */
 
-  --line:rgba(236,230,218,.10);
-  --line-strong:rgba(236,230,218,.20);
+  --line:rgba(236,238,241,.09);
+  --line-strong:rgba(236,238,241,.18);
 
-  --coral:#ff6a4d;         /* red team / offense */
-  --coral-deep:#e04d31;
-  --coral-glow:rgba(255,106,77,.16);
-  --azure:#38b6ff;         /* blue team / defense */
-  --azure-deep:#1f95dd;
-  --azure-glow:rgba(56,182,255,.14);
+  --coral:#f0555c;         /* red team / offense */
+  --coral-deep:#c9353d;
+  --coral-glow:rgba(240,85,92,.12);
+  --azure:#5b9bf8;         /* blue team / defense */
+  --azure-deep:#3b74d0;
+  --azure-glow:rgba(91,155,248,.12);
 
   --mono:"Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --serif:"Fraunces", Georgia, "Times New Roman", serif;
+  --display:"Syne", "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif:"Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sans:var(--serif);
 
   --maxw:1200px;
   --gut:clamp(20px,5vw,80px);
@@ -42,25 +46,22 @@ body{
   background:var(--bg);
   color:var(--ink);
   font-family:var(--serif);
-  font-optical-sizing:auto;
+  letter-spacing:-.005em;
   -webkit-font-smoothing:antialiased;
 }
-body::before{ /* aurora — luminous coral / azure at the top corners */
+body::before{ /* one quiet vertical lift — no colour wash */
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(52% 40% at 6% -8%, var(--coral-glow), transparent 66%),
-    radial-gradient(50% 38% at 96% -6%, var(--azure-glow), transparent 66%),
-    radial-gradient(80% 60% at 50% 118%, rgba(56,182,255,.05), transparent 70%);
+  background:linear-gradient(180deg, rgba(255,255,255,.028) 0%, transparent 38%);
 }
 img{max-width:100%}
 code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);
-  padding:.06em .34em;border:1px solid var(--line);border-radius:4px;color:#d8d2c6}
+  padding:.06em .34em;border:1px solid var(--line);border-radius:4px;color:#d3d7dd}
 pre code,.term code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 a{color:inherit}
-::selection{background:var(--coral);color:#0d0e13}
+::selection{background:var(--azure);color:#0a0b0c}
 
-.red-ink{color:var(--coral);font-style:italic}
-.blue-ink{color:var(--azure);font-style:italic}
+.red-ink{color:var(--coral);font-style:normal}
+.blue-ink{color:var(--azure);font-style:normal}
 .mark{font-size:.9em;letter-spacing:-.18em;margin-right:.15em}
 .mark.red{color:var(--coral)}
 .mark.blue{color:var(--azure)}
@@ -79,6 +80,7 @@ a{color:inherit}
 
 /* ---------- nav ---------- */
 .nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  gap:clamp(16px,4vw,48px);
   padding:14px var(--gut);background:color-mix(in srgb,var(--bg) 78%, transparent);
   backdrop-filter:saturate(1.3) blur(12px);border-bottom:1px solid var(--line)}
 .nav__mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--mono);
@@ -104,7 +106,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
 .section-head{max-width:720px;margin-bottom:clamp(34px,5vw,60px)}
 .section-head__num{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--coral);
   display:inline-block;padding-bottom:.6rem;border-bottom:2px solid var(--coral);margin-bottom:1.6rem}
-.section-head h2{font-size:clamp(30px,5vw,52px);line-height:1.02;font-weight:500;margin:0 0 .7rem;
+.section-head h2{font-family:var(--display);font-size:clamp(28px,4.7vw,48px);line-height:1.0;font-weight:700;margin:0 0 .7rem;
   letter-spacing:-.02em;color:var(--ink)}
 .section-head p{font-size:clamp(16px,1.6vw,19px);color:var(--ink-soft);line-height:1.5;margin:0;max-width:56ch}
 
@@ -114,10 +116,10 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
   letter-spacing:.16em;color:var(--ink-dim);border-bottom:1px solid var(--line);
   padding-bottom:12px;margin-bottom:clamp(28px,5vw,48px)}
 .hero__meta span:nth-child(2){margin-left:auto}
-.hero__title{font-size:clamp(46px,10.5vw,132px);line-height:.92;font-weight:300;letter-spacing:-.035em;
+.hero__title{font-family:var(--display);font-size:clamp(44px,9.6vw,120px);line-height:.9;font-weight:700;letter-spacing:-.03em;
   margin:0 0 clamp(26px,3vw,38px);color:var(--ink)}
 .hero__title .line{display:block}
-.hero__title em{font-weight:500}
+.hero__title em{font-weight:800}
 .hero__lede{font-size:clamp(17px,2vw,22px);line-height:1.5;max-width:60ch;color:var(--ink-soft);
   margin:0 0 clamp(30px,4vw,44px)}
 .hero__lede code{font-size:.82em}
@@ -150,7 +152,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
   border-bottom:1px solid var(--line-strong);padding:0;max-width:var(--maxw)}
 .stat{padding:clamp(20px,3vw,32px) clamp(12px,2vw,26px);border-right:1px solid var(--line)}
 .stat:last-child{border-right:none}
-.stat b{display:block;font-size:clamp(34px,5vw,60px);font-weight:400;letter-spacing:-.03em;line-height:1;
+.stat b{display:block;font-family:var(--display);font-size:clamp(32px,4.6vw,56px);font-weight:700;letter-spacing:-.02em;line-height:1;
   font-variant-numeric:tabular-nums;color:var(--ink)}
 .stat span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink-soft);display:block;margin-top:.6rem}
@@ -239,7 +241,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
 .card__risk[data-r="critical"]{background:var(--coral);color:#0d0e13;border-color:var(--coral)}
 .card__risk[data-r="high"]{color:var(--coral);border-color:color-mix(in srgb,var(--coral) 55%,transparent)}
 .card__risk[data-r="info"]{color:var(--azure);border-color:color-mix(in srgb,var(--azure) 50%,transparent)}
-.card__name{font-size:22px;font-weight:500;line-height:1.05;letter-spacing:-.01em;margin:0;color:var(--ink);transition:color .16s}
+.card__name{font-family:var(--display);font-size:20px;font-weight:600;line-height:1.06;letter-spacing:-.01em;margin:0;color:var(--ink);transition:color .16s}
 .card:hover .card__name{color:var(--coral)}
 .card--blue:hover .card__name{color:var(--azure)}
 .card__desc{font-size:14.5px;line-height:1.45;color:var(--ink-soft);margin:0;
@@ -274,7 +276,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
 .flow__step--red{border-top:3px solid var(--coral)}
 .flow__step--blue{border-top:3px solid var(--azure)}
 .flow__num{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--ink-dim)}
-.flow__step h3{font-size:22px;font-weight:500;margin:.5rem 0 .5rem;letter-spacing:-.01em;color:var(--ink)}
+.flow__step h3{font-family:var(--display);font-size:21px;font-weight:600;margin:.5rem 0 .5rem;letter-spacing:-.01em;color:var(--ink)}
 .flow__step p{margin:0;color:var(--ink-soft);font-size:14.5px;line-height:1.5}
 .attack__cmd{margin-top:clamp(30px,4vw,48px);display:flex;justify-content:center}
 
@@ -286,7 +288,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
 .doctrine__k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--coral);border:1px solid var(--coral);
   width:30px;height:30px;display:grid;place-items:center;border-radius:50%}
 .doctrine__grid article:nth-child(even) .doctrine__k{color:var(--azure);border-color:var(--azure)}
-.doctrine__grid h3{font-size:26px;font-weight:500;margin:1rem 0 .6rem;letter-spacing:-.01em;color:var(--ink)}
+.doctrine__grid h3{font-family:var(--display);font-size:24px;font-weight:600;margin:1rem 0 .6rem;letter-spacing:-.01em;color:var(--ink)}
 .doctrine__grid p{margin:0;color:var(--ink-soft);font-size:16px;line-height:1.55}
 
 /* ---------- footer ---------- */
@@ -380,7 +382,7 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
   box-shadow:0 24px 44px -26px rgba(0,0,0,.8)}
 .ex-card__lang{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-dim)}
-.ex-card h3{font-size:26px;font-weight:500;letter-spacing:-.01em;margin:0;color:var(--ink)}
+.ex-card h3{font-family:var(--display);font-size:24px;font-weight:600;letter-spacing:-.01em;margin:0;color:var(--ink)}
 .ex-card:hover h3{color:var(--coral)}
 .ex-card p{margin:0;color:var(--ink-soft);font-size:14.5px;line-height:1.5;flex:1}
 .ex-card__go{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--azure);margin-top:4px}
@@ -402,3 +404,107 @@ section{padding:clamp(56px,9vw,120px) var(--gut);max-width:var(--maxw);margin:0 
 /* ---------- contribute links ---------- */
 .contribute__links{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:clamp(26px,3.5vw,40px)}
 .contribute__links .pill-code{text-decoration:none}
+
+/* =====================================================================
+   READER — in-site SKILL.md / docs panel (#/skill/… , #/doc/… , #/docs)
+   Everything the site links to renders here. Nothing bounces to GitHub.
+   ===================================================================== */
+
+body.reader-open{overflow:hidden}
+
+.reader{position:fixed;inset:0;z-index:120;display:flex;justify-content:flex-end}
+.reader[hidden]{display:none}
+.reader__scrim{position:absolute;inset:0;background:rgba(6,7,8,.72);
+  backdrop-filter:blur(3px);animation:rd-fade .18s ease}
+.reader__panel{position:relative;width:min(860px,100%);height:100%;overflow-y:auto;
+  background:var(--bg);border-left:1px solid var(--line-strong);
+  box-shadow:-32px 0 80px rgba(0,0,0,.5);animation:rd-slide .22s cubic-bezier(.2,.7,.3,1);
+  outline:none}
+@keyframes rd-fade{from{opacity:0}}
+@keyframes rd-slide{from{transform:translateX(28px);opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .reader__scrim,.reader__panel{animation:none}
+}
+
+.reader__head{position:sticky;top:0;z-index:2;display:flex;align-items:flex-start;gap:16px;
+  padding:22px clamp(20px,4vw,44px) 16px;background:var(--bg);
+  border-bottom:1px solid var(--line)}
+.reader__headtext{min-width:0;flex:1}
+.reader__kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-dim)}
+.reader__title{font-family:var(--display);margin:.28em 0 .32em;font-size:clamp(21px,3vw,29px);font-weight:700;
+  letter-spacing:-.02em;line-height:1.15;word-break:break-word}
+.reader__path{font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);
+  background:none;border:none;padding:0}
+.reader__close{flex:none;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-soft);background:var(--surface-2);
+  border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;
+  transition:color .15s,border-color .15s,background .15s}
+.reader__close:hover{color:var(--ink);border-color:var(--line-strong);background:var(--elevated)}
+
+.reader__meta{display:flex;flex-wrap:wrap;gap:7px;
+  padding:16px clamp(20px,4vw,44px);border-bottom:1px solid var(--line);
+  background:var(--bg-2)}
+.rmeta{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;
+  color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);
+  border-radius:5px;padding:5px 9px}
+.rmeta b{color:var(--ink-dim);font-weight:400;letter-spacing:.14em;text-transform:uppercase;font-size:9.5px}
+.rmeta a{color:var(--azure);text-decoration:none}
+.rmeta a:hover{text-decoration:underline}
+.rmeta--red{border-color:rgba(240,85,92,.34);color:var(--coral)}
+.rmeta--blue{border-color:rgba(91,155,248,.34);color:var(--azure)}
+.rmeta--risk-high,.rmeta--risk-critical{border-color:rgba(240,85,92,.45);color:var(--coral)}
+
+.reader__body{padding:26px clamp(20px,4vw,44px) 96px}
+
+/* ---------- rendered markdown ---------- */
+.md{font-size:15.5px;line-height:1.72;color:var(--ink-soft)}
+.md h1,.md h2,.md h3,.md h4,.md h5,.md h6{font-family:var(--display);color:var(--ink);letter-spacing:-.015em;line-height:1.22;
+  margin:1.9em 0 .55em;font-weight:700;scroll-margin-top:90px}
+.md > :first-child{margin-top:0}
+.md h1{font-size:1.62em}
+.md h2{font-size:1.3em;padding-bottom:.34em;border-bottom:1px solid var(--line)}
+.md h3{font-size:1.09em}
+.md h4,.md h5,.md h6{font-size:.97em;color:var(--ink-soft)}
+.md p{margin:0 0 1.05em}
+.md strong{color:var(--ink);font-weight:600}
+.md a{color:var(--azure);text-decoration:none;border-bottom:1px solid rgba(91,155,248,.32)}
+.md a:hover{border-bottom-color:var(--azure)}
+.md ul,.md ol{margin:0 0 1.15em;padding-left:1.35em}
+.md li{margin:.32em 0}
+.md li::marker{color:var(--ink-dim)}
+.md hr{border:none;border-top:1px solid var(--line);margin:2.2em 0}
+.md blockquote{margin:1.2em 0;padding:.2em 0 .2em 1.15em;
+  border-left:2px solid var(--coral-deep);color:var(--ink-soft)}
+.md blockquote p:last-child{margin-bottom:0}
+
+.md-pre{position:relative;margin:0 0 1.35em;padding:16px 18px;overflow-x:auto;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:8px;
+  font-family:var(--mono);font-size:12.8px;line-height:1.6;color:#cfd4db}
+.md-pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.md-pre[data-lang]:not([data-lang=""])::after{content:attr(data-lang);position:absolute;
+  top:8px;right:12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-dim)}
+
+.md-tablewrap{overflow-x:auto;margin:0 0 1.35em;
+  border:1px solid var(--line);border-radius:8px}
+.md-table{border-collapse:collapse;width:100%;font-size:13.5px}
+.md-table th,.md-table td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);
+  vertical-align:top}
+.md-table th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-dim);background:var(--bg-2);white-space:nowrap}
+.md-table tr:last-child td{border-bottom:none}
+
+/* ---------- docs index ---------- */
+.doclist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.doclist a{display:grid;gap:3px;padding:15px 17px;text-decoration:none;border:1px solid var(--line);
+  border-radius:9px;background:var(--surface);transition:border-color .15s,background .15s,transform .15s}
+.doclist a:hover{border-color:var(--line-strong);background:var(--surface-2);transform:translateY(-1px)}
+.doclist b{color:var(--ink);font-size:15px;font-weight:600}
+.doclist span{color:var(--ink-soft);font-size:13.5px}
+.doclist code{font-size:11px;color:var(--ink-dim);background:none;border:none;padding:0}
+
+@media (max-width:640px){
+  .reader__panel{width:100%;border-left:none}
+  .reader__body{padding-bottom:70px}
+}

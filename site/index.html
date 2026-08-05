@@ -10,7 +10,7 @@
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -34,7 +34,7 @@
   <a class="nav__mark" href="#top">
     <span class="nav__glyph"><i class="g-red"></i><i class="g-blue"></i></span>
     <span class="nav__name">RedBlueSkills</span>
-    <span class="nav__ver">v0.3.0</span>
+    <span class="nav__ver">v0.4.0</span>
   </a>
   <nav class="nav__links">
     <a href="#quickstart">quickstart</a>
@@ -42,6 +42,7 @@
     <a href="#attack">attack</a>
     <a href="#examples">examples</a>
     <a href="#contribute">contribute</a>
+    <a href="#/docs">docs</a>
     <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">
       <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
       GitHub
@@ -56,7 +57,7 @@
   <div class="hero__meta">
     <span>DOSSIER&nbsp;/&nbsp;RBSK-001</span>
     <span data-count-hero>—&nbsp;SKILLS</span>
-    <span>REV&nbsp;0.3.0</span>
+    <span>REV&nbsp;0.4.0</span>
   </div>
 
   <h1 class="hero__title">
@@ -127,7 +128,7 @@
   </div>
 
   <div class="quickstart__foot">
-    <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md" target="_blank" rel="noopener">Full quickstart <span aria-hidden="true">↗</span></a>
+    <a class="pill-btn" href="#/doc/quickstart">Full quickstart <span aria-hidden="true">→</span></a>
     <span class="quickstart__note">No target handy? Spin up the practice lab in <code>_lab/</code> and attack that — no permission needed.</span>
   </div>
 </section>
@@ -139,11 +140,11 @@
       <span class="section-head__num">02</span>
       <h2>Browse the library.</h2>
       <p>Each skill is a self-contained runbook — offense and defense bound together.
-         Filter by team, search by technique, and open any skill on GitHub.</p>
+         Filter by team, search by technique, and read any skill in full right here.</p>
     </div>
     <div class="catalog__actions">
-      <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">
-        Full index <span aria-hidden="true">↗</span>
+      <a class="pill-btn" href="#/doc/index">
+        Full index <span aria-hidden="true">→</span>
       </a>
       <code class="pill-code" data-copy="npx redblueskills list">npx redblueskills list</code>
     </div>
@@ -251,23 +252,23 @@
   </div>
 
   <div class="ex-grid">
-    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/flask.md" target="_blank" rel="noopener">
+    <a class="ex-card" href="#/doc/example-flask">
       <span class="ex-card__lang">Python</span>
       <h3>Flask</h3>
       <p>A server-rendered app. Surfaces reflected XSS, IDOR, and SSRF — with the Jinja / parameterized-query fixes.</p>
-      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">→</span></span>
     </a>
-    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/node-express.md" target="_blank" rel="noopener">
+    <a class="ex-card" href="#/doc/example-node">
       <span class="ex-card__lang">Node.js</span>
       <h3>Express</h3>
       <p>An API + views. Surfaces SQL injection, CSRF, and missing security headers — fixed with helmet, csurf, and prepared statements.</p>
-      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">→</span></span>
     </a>
-    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/rails.md" target="_blank" rel="noopener">
+    <a class="ex-card" href="#/doc/example-rails">
       <span class="ex-card__lang">Ruby</span>
       <h3>Rails</h3>
       <p>Framework defaults credited; the real finds are authorization (IDOR) and path traversal on file downloads.</p>
-      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">→</span></span>
     </a>
   </div>
 
@@ -315,10 +316,10 @@
   </div>
 
   <div class="contribute__links">
-    <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/adding-a-skill.md" target="_blank" rel="noopener">Adding a skill <span aria-hidden="true">↗</span></a>
-    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SKILL-TEMPLATE.md" target="_blank" rel="noopener">SKILL-TEMPLATE.md</a>
-    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SKILL-SPEC.md" target="_blank" rel="noopener">SKILL-SPEC.md</a>
-    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>
+    <a class="pill-btn" href="#/doc/adding-a-skill">Adding a skill <span aria-hidden="true">→</span></a>
+    <a class="pill-code" href="#/doc/skill-template">SKILL-TEMPLATE.md</a>
+    <a class="pill-code" href="#/doc/skill-spec">SKILL-SPEC.md</a>
+    <a class="pill-code" href="#/doc/contributing">CONTRIBUTING.md</a>
   </div>
 </section>
 
@@ -361,25 +362,25 @@
     <nav class="foot__col" aria-label="Start">
       <h4>Start</h4>
       <a href="#quickstart">Quickstart</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md" target="_blank" rel="noopener">QUICKSTART.md</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/orchestrator.md" target="_blank" rel="noopener">Orchestrator walkthrough</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/tree/main/docs/examples" target="_blank" rel="noopener">Examples</a>
+      <a href="#/doc/quickstart">QUICKSTART.md</a>
+      <a href="#/doc/orchestrator">Orchestrator walkthrough</a>
+      <a href="#/doc/example-flask">Examples</a>
     </nav>
 
     <nav class="foot__col" aria-label="Library">
       <h4>Library</h4>
       <a href="#catalog">Catalog</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">Full index</a>
+      <a href="#/doc/index">Full index</a>
       <a href="https://www.npmjs.com/package/redblueskills" target="_blank" rel="noopener">npm package</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/catalog.json" target="_blank" rel="noopener">catalog.json</a>
+      <a href="./catalog.json">catalog.json</a>
     </nav>
 
     <nav class="foot__col" aria-label="Project">
       <h4>Project</h4>
       <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/adding-a-skill.md" target="_blank" rel="noopener">Contributing</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/ETHICS.md" target="_blank" rel="noopener">Ethics</a>
-      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+      <a href="#/doc/adding-a-skill">Contributing</a>
+      <a href="#/doc/ethics">Ethics</a>
+      <a href="#/doc/security">Security</a>
     </nav>
   </div>
 
@@ -393,6 +394,7 @@
 
 <div class="toast" data-toast>copied</div>
 
+<script src="./reader.js" defer></script>
 <script src="./app.js"></script>
 </body>
 </html>
