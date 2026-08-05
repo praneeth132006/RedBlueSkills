@@ -73,10 +73,14 @@ skills/web-app/
                    web-authentication-hardening · web-csrf-hardening
 ```
 
-**v1 ships the `web-app` vertical, deeply** — 10 red↔blue pairs covering the OWASP
-Top 10 core. It is the reference implementation for every future surface (`api`,
-`cloud-native`, `mobile`, `network`, `ci-cd`) — each will follow the same schema,
-tooling, and pairing discipline.
+**`web-app` ships deeply** — 10 red↔blue pairs covering the OWASP Top 10 core — and
+is the reference implementation for every surface. The **`api`** vertical follows
+it with 6 red↔blue pairs across OWASP API Security Top 10 #1–5 (BOLA, broken
+authentication, BFLA, mass assignment, excessive data exposure, unrestricted
+resource consumption); these are authored at `reviewed` maturity and promote to
+`validated` once reproduced against a live API lab (OWASP crAPI). The remaining
+surfaces (`cloud-native`, `mobile`, `network`, `ci-cd`) will follow the same
+schema, tooling, and pairing discipline.
 
 ---
 

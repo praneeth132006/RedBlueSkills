@@ -7,6 +7,26 @@ follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`api` vertical — 6 red↔blue pairs (12 skills)** across OWASP API Security
+  Top 10 #1–5: `api-bola` ↔ `api-bola-detection`, `api-broken-authentication` ↔
+  `api-authentication-monitoring`, `api-bfla` ↔ `api-function-authorization-monitoring`,
+  `api-mass-assignment` ↔ `api-mass-assignment-hardening`, `api-excessive-data-exposure`
+  ↔ `api-data-exposure-monitoring`, and `api-unrestricted-resource-consumption` ↔
+  `api-rate-limit-hardening`. Authored at `reviewed` maturity; they promote to
+  `validated` once reproduced against a live API lab (OWASP crAPI).
+- **Self-contained website** — every `SKILL.md` and repo doc is bundled into
+  `site/content.json` (`tools/build_site_content.py`) and rendered in-page by a
+  dependency-free reader (`site/reader.js`) at `#/skill/<name>`, `#/doc/<id>`, and
+  `#/docs`; browsing no longer links out to GitHub. New "Graphite" theme with a
+  Syne / Space Grotesk / Space Mono type system. `make site` builds and serves it;
+  CI fails if the bundle is stale.
+
+### Removed
+- **GitHub Pages deploy workflow** (`.github/workflows/pages.yml`) — Pages was never
+  enabled on the repo, so every push produced a failed deployment. The site is a
+  plain static directory served with `make site`.
+
+### Added (earlier in this cycle)
 - **`QUICKSTART.md`** — a 5-minute, no-jargon path from install to a security report.
 - **`docs/`** — an end-user documentation set:
   - `docs/orchestrator.md` — the `attack-my-application` orchestrator explained

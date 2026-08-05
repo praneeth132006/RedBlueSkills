@@ -1,7 +1,404 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 20,
+  "count": 32,
   "skills": [
+    {
+      "name": "api-authentication-monitoring",
+      "description": "Detect Broken Authentication abuse (API2:2023) against an API from auth-endpoint telemetry and token-validation events — invalid-signature spikes, alg:none / downgrade tokens, expired/replayed tokens, and credential stuffing or brute force. Use when building API authentication detections or triaging suspected token forgery or account takeover.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1110",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-115"
+        ],
+        "cwe": [
+          "CWE-287",
+          "CWE-347"
+        ],
+        "owasp": [
+          "A07:2021"
+        ],
+        "d3fend": [
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "api-broken-authentication"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/detect/api-authentication-monitoring/SKILL.md"
+    },
+    {
+      "name": "api-bola-detection",
+      "description": "Detect Broken Object Level Authorization (BOLA / API1:2023) abuse against a REST or GraphQL API from access logs, gateway telemetry, and authorization decisions. Use when building API access-control detections, triaging suspected cross-tenant data access, or hunting for object-id enumeration.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1548"
+        ],
+        "capec": [
+          "CAPEC-180"
+        ],
+        "cwe": [
+          "CWE-639",
+          "CWE-284"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "api-bola"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/detect/api-bola-detection/SKILL.md"
+    },
+    {
+      "name": "api-data-exposure-monitoring",
+      "description": "Detect excessive data exposure (API3:2023) in an API from response telemetry and schema-diff analysis — endpoints returning sensitive field names, oversized payloads, or fields absent from the sanctioned response schema. Use when building data-exposure detections or reviewing API responses for sensitive-field leakage.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1213"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-213"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": [
+          "D3-RAPA"
+        ]
+      },
+      "pairs_with": [
+        "api-excessive-data-exposure"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/detect/api-data-exposure-monitoring/SKILL.md"
+    },
+    {
+      "name": "api-function-authorization-monitoring",
+      "description": "Detect Broken Function Level Authorization abuse (BFLA / API5:2023) against an API from access logs and role/route telemetry — low-privilege principals reaching admin or internal operations, method tampering, and role-claim misuse. Use when building API function-authorization detections or triaging suspected privilege escalation.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-285",
+          "CWE-862"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "api-bfla"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/detect/api-function-authorization-monitoring/SKILL.md"
+    },
+    {
+      "name": "api-mass-assignment-hardening",
+      "description": "Harden an API against mass assignment / Broken Object Property Level Authorization (API3:2023) by binding only allowlisted, client-writable fields and authorizing sensitive property changes server-side. Use when designing or reviewing create/update endpoints that bind request bodies to objects.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-137"
+        ],
+        "cwe": [
+          "CWE-915"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-mass-assignment"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-mass-assignment-hardening/SKILL.md"
+    },
+    {
+      "name": "api-rate-limit-hardening",
+      "description": "Harden an API against Unrestricted Resource Consumption (API4:2023) with layered limits — gateway rate limiting, pagination and payload/complexity caps, and per-caller quotas on costly actions. Use when designing or reviewing an API that lacks throttling or bounds on a single caller's resource and cost footprint.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1499"
+        ],
+        "capec": [
+          "CAPEC-125"
+        ],
+        "cwe": [
+          "CWE-770",
+          "CWE-799"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-unrestricted-resource-consumption"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-rate-limit-hardening/SKILL.md"
+    },
+    {
+      "name": "api-excessive-data-exposure",
+      "description": "Find and prove excessive data exposure (part of API3:2023) in an API during an authorized test — endpoints that return more object properties than the caller needs, leaking sensitive or internal fields the client merely hides. Use when an API response may carry fields beyond what the consuming UI displays.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1213"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-213"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-data-exposure-monitoring"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/collection/api-excessive-data-exposure/SKILL.md"
+    },
+    {
+      "name": "api-broken-authentication",
+      "description": "Assess Broken Authentication (API2:2023) in an API during an authorized test — JWT verification flaws, weak or missing token expiry, credential stuffing and brute force against token/login endpoints, and reset/OTP abuse. Use when you need to confirm an API's authentication can be bypassed, forged, or overwhelmed.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1110",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-115"
+        ],
+        "cwe": [
+          "CWE-287",
+          "CWE-345",
+          "CWE-347"
+        ],
+        "owasp": [
+          "A07:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-authentication-monitoring"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/credential-access/api-broken-authentication/SKILL.md"
+    },
+    {
+      "name": "api-unrestricted-resource-consumption",
+      "description": "Assess Unrestricted Resource Consumption (API4:2023) in an API during an authorized test — missing rate limits, pagination caps, payload-size limits, and cost controls that let a caller exhaust CPU, memory, money, or third-party quota. Use when you need to confirm an API lacks the throttling and limits that bound a single caller's resource use.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "impact",
+      "techniques": {
+        "attack": [
+          "T1499"
+        ],
+        "capec": [
+          "CAPEC-125"
+        ],
+        "cwe": [
+          "CWE-770",
+          "CWE-799"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-rate-limit-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/impact/api-unrestricted-resource-consumption/SKILL.md"
+    },
+    {
+      "name": "api-bfla",
+      "description": "Find and prove Broken Function Level Authorization (BFLA / API5:2023) in an API during an authorized test — reaching administrative or cross-role operations with a lower-privilege principal. Use when an endpoint or HTTP method performs a privileged action and you need to confirm role/function checks are missing.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-285",
+          "CWE-862"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-function-authorization-monitoring"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/privilege-escalation/api-bfla/SKILL.md"
+    },
+    {
+      "name": "api-bola",
+      "description": "Find and prove Broken Object Level Authorization (BOLA / API1:2023) in a REST or GraphQL API during an authorized assessment. Use when an object identifier in a path, query, body, or GraphQL argument selects a record and you need to confirm one authenticated principal can read or modify another principal's or tenant's objects.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1548"
+        ],
+        "capec": [
+          "CAPEC-180"
+        ],
+        "cwe": [
+          "CWE-639",
+          "CWE-284"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-bola-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/privilege-escalation/api-bola/SKILL.md"
+    },
+    {
+      "name": "api-mass-assignment",
+      "description": "Find and prove mass assignment / Broken Object Property Level Authorization (API3:2023) in an API during an authorized test — setting privileged or internal object properties by adding them to a request body. Use when a create/update endpoint binds request fields to an object and you need to confirm it accepts properties the caller should not control.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-137"
+        ],
+        "cwe": [
+          "CWE-915"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-mass-assignment-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/red/privilege-escalation/api-mass-assignment/SKILL.md"
+    },
     {
       "name": "web-access-control-monitoring",
       "description": "Detect broken access control — IDOR/BOLA and missing function-level checks — against a web application from authorization decisions, access logs, and object-reference patterns. Use when building access-control detections, triaging suspected unauthorized data access, or hunting for enumeration.",
