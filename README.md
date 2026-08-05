@@ -98,7 +98,17 @@ at any `skills/**/SKILL.md`. A generated `README` in the install directory tells
 the agent when to load each skill.
 
 There's also a **website** — a browsable catalog with the same install flow — in
-[`site/`](site/) (deployable to any static host; run `make site` to preview).
+[`site/`](site/). It is fully self-contained: every `SKILL.md` and every doc is
+bundled into `site/content.json` at build time and rendered in-page, so browsing
+the library never sends you off to GitHub. To run it locally:
+
+```
+make site        # builds the catalog + content bundle, serves http://localhost:8799
+```
+
+`make site-build` regenerates `site/catalog.json` and `site/content.json` without
+starting a server — run it after editing any skill or doc. The result is a plain
+static directory, deployable to any static host if you ever want it published.
 
 ## The `attack-my-application` orchestrator
 
