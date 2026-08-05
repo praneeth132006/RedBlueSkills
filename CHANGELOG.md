@@ -6,6 +6,29 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **`QUICKSTART.md`** — a 5-minute, no-jargon path from install to a security report.
+- **`docs/`** — an end-user documentation set:
+  - `docs/orchestrator.md` — the `attack-my-application` orchestrator explained
+    stage by stage, with the surface × technique matrix and a sample transcript.
+  - `docs/examples/` — full walkthroughs on real stacks: Flask, Node/Express, Rails.
+  - `docs/adding-a-skill.md` — contributor guide: skill anatomy, the red/blue split
+    against a real pair, an add-a-pair walkthrough, and every CI gate documented.
+- **`SKILL-TEMPLATE.md`** — a discoverable, copy-paste starter for new skills.
+- **CLI**: `redblueskills quickstart` prints the getting-started guide; `init` now
+  points new users to it. `QUICKSTART.md`, `docs/`, and `SKILL-TEMPLATE.md` ship in
+  the npm package.
+
+### Changed
+- **Orchestrator** (`attack-my-application`, → v1.1.0): documents the surface ×
+  technique matrix, and the report now includes a per-screen risk roll-up and a
+  technique coverage roll-up.
+- **Website** upgraded to a full landing experience: quickstart, a browsable
+  catalog (team filters + technique search + show-all), the surface × technique
+  matrix, real-stack example cards, a sample-report preview, and a contribute
+  section — all on the existing "Obsidian Aurora" design system.
+- **README** now opens with a Getting-started map linking the new docs.
+
 ## [0.1.0] — 2026-07-20
 
 Initial public release. Establishes the framework and the first vertical.

@@ -57,7 +57,7 @@
 
   // ---- load catalog & render ----
   var grid = document.querySelector('[data-grid]');
-  var state = { skills: [], team: 'all', q: '' };
+  var state = { skills: [], team: 'all', q: '', showAll: false };
 
   fetch('./catalog.json')
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -129,6 +129,13 @@
     });
     var search = document.querySelector('[data-search]');
     if (search) search.addEventListener('input', function () { state.q = search.value.trim().toLowerCase(); render(); });
+
+    var toggle = document.querySelector('[data-toggle-all]');
+    if (toggle) toggle.addEventListener('click', function () {
+      state.showAll = !state.showAll;
+      toggle.textContent = state.showAll ? 'Show latest only' : 'Show all skills';
+      render();
+    });
   }
 
   function matches(s) {
@@ -146,13 +153,30 @@
     'credential-access', 'lateral-movement', 'collection', 'exfiltration', 'impact',
     'detect', 'harden', 'respond', 'recover', 'hunt'];
 
+  function byStage(a, b) {
+    var d = (a.team || '').localeCompare(b.team || '');
+    if (d) return d;
+    var sa = STAGE_ORDER.indexOf(a.stage), sb = STAGE_ORDER.indexOf(b.stage);
+    if (sa !== sb) return sa - sb;
+    return String(a.name).localeCompare(String(b.name));
+  }
+
   function render() {
     if (!grid) return;
-    // featured view: the 6 most-recently validated skills
-    var rows = state.skills.slice().sort(byLatest).slice(0, 6);
+    var filtered = state.skills.filter(matches);
+    // A filter/search or the "show all" toggle switches to the full browsable view;
+    // otherwise show the 6 most-recently validated as a featured teaser.
+    var isBrowsing = state.showAll || state.team !== 'all' || !!state.q;
+    var rows = isBrowsing ? filtered.slice().sort(byStage) : filtered.slice().sort(byLatest).slice(0, 6);
+
     var cnt = document.querySelector('[data-visible-count]');
-    if (cnt) cnt.textContent = '[ ' + rows.length + ' shown ]';
+    if (cnt) cnt.textContent = '[ ' + rows.length + ' of ' + state.skills.length + ' ]';
+
+    var toggle = document.querySelector('[data-toggle-all]');
+    if (toggle) toggle.style.display = (state.team !== 'all' || state.q) ? 'none' : '';
+
     grid.innerHTML = '';
+    if (!rows.length) { grid.innerHTML = '<p class="grid__loading">no skills match — clear the filter or search.</p>'; return; }
     rows.forEach(function (s) { grid.appendChild(cardFor(s)); });
   }
 

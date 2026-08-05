@@ -7,6 +7,12 @@ and pairing** — not volume.
 Before anything else, read [`ETHICS.md`](ETHICS.md). Content that fails the
 responsible-use standards there will be declined regardless of technical merit.
 
+> 📖 **New contributor?** [`docs/adding-a-skill.md`](docs/adding-a-skill.md) is the
+> hands-on version of this page: skill anatomy, the red/blue split explained
+> against a real pair, a full add-a-pair walkthrough, and a line-by-line breakdown
+> of every CI check. Start there, use [`SKILL-TEMPLATE.md`](SKILL-TEMPLATE.md) as
+> your starter, and keep [`SKILL-SPEC.md`](SKILL-SPEC.md) open for the field reference.
+
 ## What makes a good skill
 
 - Solves one clearly-scoped problem an agent or operator faces.

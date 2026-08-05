@@ -10,6 +10,7 @@
  *   npx redblueskills add <name...>   install specific skills (by name)
  *   npx redblueskills list [filter]   list skills (optional team/stage/text filter)
  *   npx redblueskills attack [target] print the attack-my-application playbook
+ *   npx redblueskills quickstart      print the 5-minute getting-started guide
  *   npx redblueskills path            print the default install directory
  */
 'use strict';
@@ -21,6 +22,7 @@ const PKG_ROOT = path.resolve(__dirname, '..');
 const SKILLS_DIR = path.join(PKG_ROOT, 'skills');
 const ORCH_DIR = path.join(PKG_ROOT, 'orchestrators');
 const CATALOG = path.join(PKG_ROOT, 'catalog.json');
+const QUICKSTART = path.join(PKG_ROOT, 'QUICKSTART.md');
 const DEST_SUBDIR = path.join('.claude', 'skills', 'redblueskills');
 
 // --- tiny ANSI helpers (no deps) --------------------------------------------
@@ -117,6 +119,23 @@ function cmdInit(args) {
   console.log('  Point your agent at ' + bold(path.join(dest, 'orchestrators/attack-my-application/SKILL.md')));
   console.log('  or just say: ' + bold('"attack my application"') + '.');
   console.log('');
+  console.log('  New here?  ' + bold('npx redblueskills quickstart') + dim('  — 5-minute guide'));
+  console.log('');
+}
+
+function cmdQuickstart() {
+  try {
+    process.stdout.write(fs.readFileSync(QUICKSTART, 'utf8'));
+  } catch (e) {
+    console.log('');
+    console.log('  ' + bold('RedBlueSkills quickstart'));
+    console.log('  1. ' + bold('npx redblueskills init') + '   — install skills + orchestrator');
+    console.log('  2. Tell your agent: ' + bold('"attack my application at <url>"'));
+    console.log('  3. Answer the authorization gate, then read the report.');
+    console.log('');
+    console.log(dim('  Full guide: https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md'));
+    console.log('');
+  }
 }
 
 function cmdAdd(args) {
@@ -253,6 +272,7 @@ function usage() {
     add <name...> [--dest DIR] install specific skills (paired skill comes along)
     list [filter]            list skills (filter by team/stage/text)
     attack [target] [--print] print the "attack my application" playbook
+    quickstart               print the 5-minute getting-started guide
     path                     print the default install directory
 
   ${bold('Examples')}
@@ -270,6 +290,7 @@ function main() {
     case 'add': return cmdAdd(args);
     case 'list': case 'ls': return cmdList(args);
     case 'attack': return cmdAttack(args);
+    case 'quickstart': case 'start': return cmdQuickstart();
     case 'path': return cmdPath();
     case 'banner': return cmdBanner();
     case 'help': case '--help': case '-h': case undefined: return usage();

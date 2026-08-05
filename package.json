@@ -1,6 +1,6 @@
 {
   "name": "redblueskills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Agent-native, validated red/blue security skills — paired offense and defense — installable into any coding LLM with one command.",
   "keywords": [
     "security",
@@ -24,9 +24,12 @@
     "bin/",
     "skills/",
     "orchestrators/",
+    "docs/",
     "catalog.json",
     "INDEX.md",
     "SKILL-SPEC.md",
+    "SKILL-TEMPLATE.md",
+    "QUICKSTART.md",
     "ETHICS.md",
     "README.md",
     "LICENSE"

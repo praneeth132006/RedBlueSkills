@@ -7,7 +7,7 @@ description: >-
   authorization and scope, then drives the RedBlueSkills library end to end —
   running each relevant offensive skill, verifying its paired detection, and
   producing a prioritized findings report. Authorized testing only.
-version: 1.0.0
+version: 1.1.0
 kind: orchestrator
 app_type: web-app
 license: Apache-2.0
@@ -55,6 +55,21 @@ Load **`web-http-fingerprinting`** and run it first. Identify:
 
 Record a **surface map**: each input → the sink it plausibly reaches. This map
 drives skill selection in Step 2.
+
+**Think of the assessment as a surface × technique matrix** — surfaces down the
+side, techniques across the top. A cell only lights up when that surface could
+actually reach that kind of sink; run one probe per lit cell, and record every
+un-lit cell as deliberate (skipped-with-reason) coverage.
+
+```
+                         SQLi  XSS   CmdInj  PathTrav  SSRF  XXE   IDOR  Auth  CSRF
+  /login (form)           ·     ·      —        —       —     —     —     ✓     ✓
+  /search?q= (reflected)  ✓     ✓      —        —       —     —     —     —     —
+  /import?url= (fetch)    —     —      —        —       ✓     —     —     —     ✓
+  /files?name= (path)     —     —      —        ✓       —     —     —     —     —
+  /api/orders/{id}        ✓     —      —        —       —     —     ✓     —     —
+  ✓ selected   · possible/low-signal   — not applicable
+```
 
 ## Step 2 — Select applicable skills
 
@@ -114,6 +129,19 @@ Produce a single report with:
   `risk.level` as a starting point, adjusted for exploitability and data
   sensitivity), reproduction (the minimal request/evidence), the paired
   detection/hardening from Step 4, and remediation.
+- **Per-screen risk roll-up** — a table of each surface/screen from the Step 1 map
+  against its worst confirmed finding, so the operator can see which page to fix
+  first. Example:
+
+  | Screen / endpoint | Worst finding | Severity | Fix (blue skill) |
+  |---|---|---|---|
+  | `/profile?id=` | IDOR | HIGH | `web-access-control-monitoring` |
+  | `/search?q=` | Reflected XSS | MEDIUM | `web-xss-detection` |
+  | `/import?url=` | SSRF | MEDIUM | `web-ssrf-hardening` |
+  | `/login` | No rate-limit | LOW | `web-authentication-hardening` |
+- **Technique coverage roll-up** — every technique in the library and its outcome
+  for this run: `confirmed` / `tested-clean` / `skipped (reason)`. Nothing is
+  silently omitted.
 - **Coverage** — which skills ran, which were skipped and why (from Step 2).
 - **Prioritized remediation plan** — highest-impact, lowest-effort fixes first,
   each linked to its blue skill.
