@@ -5,19 +5,19 @@
    ===================================================================== */
 
 :root{
-  --paper:#efe9dd;
-  --paper-2:#e7e0d1;
-  --ink:#181410;
-  --ink-soft:#4a443a;
-  --line:#c9bfa9;
-  --line-strong:#a8997c;
-  --red:#d4361f;
+  --paper:#f5f3ee;
+  --paper-2:#ebe7de;
+  --ink:#1a1712;
+  --ink-soft:#565049;
+  --line:#ddd8cd;
+  --line-strong:#c1baab;
+  --red:#d0381f;
   --red-deep:#a5240f;
-  --blue:#1f43c2;
-  --blue-deep:#132c86;
-  --dark:#17140f;
-  --dark-2:#221d16;
-  --paper-on-dark:#efe9dd;
+  --blue:#2444c9;
+  --blue-deep:#152c86;
+  --dark:#181510;
+  --dark-2:#231e17;
+  --paper-on-dark:#f2ede2;
 
   --mono:"Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --serif:"Fraunces", Georgia, "Times New Roman", serif;
@@ -35,18 +35,12 @@ body{
   font-family:var(--serif);
   font-optical-sizing:auto;
   -webkit-font-smoothing:antialiased;
-  /* faint dossier grid */
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size:38px 38px;
-  background-position:-1px -1px;
-  background-attachment:fixed;
-  background-blend-mode:multiply;
-  opacity:1;
 }
-body::before{ /* soften the grid */
-  content:"";position:fixed;inset:0;z-index:-1;background:var(--paper);opacity:.72;pointer-events:none;
+body::before{ /* soft ambient duality wash — replaces the old grid */
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(58% 40% at 10% -6%, rgba(208,56,31,.07), transparent 70%),
+    radial-gradient(54% 38% at 92% -4%, rgba(36,68,201,.07), transparent 70%);
 }
 img{max-width:100%}
 code{font-family:var(--mono);font-size:.86em;background:var(--paper-2);padding:.06em .34em;border:1px solid var(--line);border-radius:3px}
