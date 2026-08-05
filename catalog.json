@@ -34,6 +34,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/detect/web-access-control-monitoring/SKILL.md"
     },
     {
@@ -68,6 +69,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/detect/web-command-injection-detection/SKILL.md"
     },
     {
@@ -103,6 +105,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/detect/web-path-traversal-detection/SKILL.md"
     },
     {
@@ -136,6 +139,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/blue/detect/web-sqli-detection/SKILL.md"
     },
     {
@@ -169,6 +173,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/blue/detect/web-xss-detection/SKILL.md"
     },
     {
@@ -206,6 +211,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/harden/web-authentication-hardening/SKILL.md"
     },
     {
@@ -238,6 +244,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/harden/web-csrf-hardening/SKILL.md"
     },
     {
@@ -272,6 +279,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/blue/harden/web-security-headers/SKILL.md"
     },
     {
@@ -305,6 +313,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/harden/web-ssrf-hardening/SKILL.md"
     },
     {
@@ -337,6 +346,7 @@
       "authorization": "not-required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/blue/harden/web-xxe-hardening/SKILL.md"
     },
     {
@@ -372,6 +382,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/credential-access/web-broken-authentication/SKILL.md"
     },
     {
@@ -402,6 +413,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/execution/web-csrf/SKILL.md"
     },
     {
@@ -433,6 +445,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/initial-access/web-command-injection/SKILL.md"
     },
     {
@@ -465,6 +478,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/initial-access/web-path-traversal/SKILL.md"
     },
     {
@@ -496,6 +510,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/red/initial-access/web-reflected-xss/SKILL.md"
     },
     {
@@ -526,6 +541,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/red/initial-access/web-sql-injection/SKILL.md"
     },
     {
@@ -556,6 +572,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/initial-access/web-ssrf/SKILL.md"
     },
     {
@@ -586,6 +603,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/initial-access/web-xxe/SKILL.md"
     },
     {
@@ -618,6 +636,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-28",
       "path": "skills/web-app/red/privilege-escalation/web-idor/SKILL.md"
     },
     {
@@ -649,6 +668,7 @@
       "authorization": "required",
       "maturity": "validated",
       "version": "1.0.0",
+      "last_validated": "2026-07-20",
       "path": "skills/web-app/red/recon/web-http-fingerprinting/SKILL.md"
     }
   ]

@@ -4,7 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RedBlueSkills — paired offense & defense for AI agents</title>
-<meta name="description" content="Agent-native, validated red/blue security skills. Paired offense and defense, risk-labeled, installable into any coding LLM with one command." />
+<meta name="description" content="Agent-native, validated red/blue security skills. Paired offense and defense, risk-labeled, installable into any coding LLM with one command. Say &quot;attack my application&quot; and get a report." />
+<meta property="og:title" content="RedBlueSkills — security skills an agent can actually run" />
+<meta property="og:description" content="Paired red/blue security skills for AI coding agents. Install in one command, say &quot;attack my application,&quot; get a prioritized report with the detection that catches each finding." />
+<meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -29,15 +32,20 @@
 <!-- top nav -->
 <header class="nav">
   <a class="nav__mark" href="#top">
-    <span class="mark red">■</span><span class="mark blue">■</span>
+    <span class="nav__glyph"><i class="g-red"></i><i class="g-blue"></i></span>
     <span class="nav__name">RedBlueSkills</span>
+    <span class="nav__ver">v0.3.0</span>
   </a>
   <nav class="nav__links">
-    <a href="#install">install</a>
+    <a href="#quickstart">quickstart</a>
     <a href="#catalog">catalog</a>
     <a href="#attack">attack</a>
-    <a href="#doctrine">doctrine</a>
-    <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="#examples">examples</a>
+    <a href="#contribute">contribute</a>
+    <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      GitHub
+    </a>
   </nav>
 </header>
 
@@ -48,7 +56,7 @@
   <div class="hero__meta">
     <span>DOSSIER&nbsp;/&nbsp;RBSK-001</span>
     <span data-count-hero>—&nbsp;SKILLS</span>
-    <span>REV&nbsp;0.2.0</span>
+    <span>REV&nbsp;0.3.0</span>
   </div>
 
   <h1 class="hero__title">
@@ -59,8 +67,10 @@
 
   <p class="hero__lede">
     A library of executable <code>SKILL.md</code> packages for red teams and blue
-    teams. Every offensive technique ships with the detection that catches it —
-    risk-labeled, proven against a real target, and enforced before merge.
+    teams. Point your coding agent at an app you own, say <b>“attack my
+    application,”</b> and get a prioritized report — every finding paired with the
+    detection that catches it. Risk-labeled, proven against a real target, and
+    enforced before merge.
   </p>
 
   <div class="hero__cta">
@@ -69,7 +79,7 @@
       <span class="copy__cmd">npx redblueskills init</span>
       <span class="copy__hint">click to copy</span>
     </button>
-    <a class="btn-ghost" href="#catalog">browse the catalog →</a>
+    <a class="btn-ghost" href="#quickstart">read the 5-min quickstart →</a>
   </div>
 
   <div class="hero__redactions" aria-hidden="true">
@@ -86,57 +96,76 @@
   <div class="stat"><b>1</b><span>command to install</span></div>
 </section>
 
-<!-- INSTALL -->
-<section class="install" id="install">
+<!-- QUICKSTART -->
+<section class="quickstart" id="quickstart">
   <div class="section-head">
     <span class="section-head__num">01</span>
-    <h2>Import into your coding LLM<br />like any dependency.</h2>
-    <p>No cloning, no submodules. One command drops the whole library — plus the
-       <code>attack-my-application</code> orchestrator — into your agent's skills path.</p>
+    <h2>Zero to a report<br />in five minutes.</h2>
+    <p>No security background needed. Install the library into your agent, point it
+       at an app you own, and let it work. One command, one instruction, one report.</p>
   </div>
 
   <div class="install__grid">
-    <div class="term" role="group" aria-label="install commands">
+    <div class="term" role="group" aria-label="quickstart commands">
       <div class="term__bar"><span></span><span></span><span></span><em>zsh — your project</em></div>
-      <pre class="term__body"><code><span class="c-dim"># install every skill + the orchestrator</span>
+      <pre class="term__body"><code><span class="c-dim"># 1 · install every skill + the orchestrator</span>
 <span class="c-p">$</span> npx redblueskills <span class="c-k">init</span>
 
-<span class="c-dim"># or grab just what you need — its pair comes along</span>
-<span class="c-p">$</span> npx redblueskills <span class="c-k">add</span> web-sql-injection
+<span class="c-dim"># 2 · read the 5-minute guide anytime</span>
+<span class="c-p">$</span> npx redblueskills <span class="c-k">quickstart</span>
 
-<span class="c-dim"># see everything on offer</span>
-<span class="c-p">$</span> npx redblueskills <span class="c-k">list</span> red</code></pre>
+<span class="c-dim"># or grab just what you need — its pair comes along</span>
+<span class="c-p">$</span> npx redblueskills <span class="c-k">add</span> web-sql-injection</code></pre>
     </div>
 
     <ol class="install__steps">
-      <li><b>init</b> copies <code>skills/</code> + <code>orchestrators/</code> into <code>./.claude/skills/redblueskills</code>.</li>
-      <li>A generated <code>README</code> tells the agent when to load each skill.</li>
-      <li>Say <b>“attack my application”</b> — the orchestrator takes it from there.</li>
+      <li><b>Install.</b> <code>init</code> copies <code>skills/</code> + <code>orchestrators/</code> into <code>./.claude/skills/redblueskills</code>.</li>
+      <li><b>Instruct.</b> Tell your agent: <i>“attack my application at <code>&lt;url&gt;</code> — it’s mine and I authorize testing.”</i></li>
+      <li><b>Confirm the gate.</b> Ownership, scope, window, data-handling — a hard stop before anything active runs.</li>
+      <li><b>Read the report.</b> Findings, per-screen risk, coverage, and a prioritized fix list linked to each defense skill.</li>
     </ol>
+  </div>
+
+  <div class="quickstart__foot">
+    <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md" target="_blank" rel="noopener">Full quickstart <span aria-hidden="true">↗</span></a>
+    <span class="quickstart__note">No target handy? Spin up the practice lab in <code>_lab/</code> and attack that — no permission needed.</span>
   </div>
 </section>
 
 <!-- CATALOG -->
 <section class="catalog" id="catalog">
-  <div class="section-head">
-    <span class="section-head__num">02</span>
-    <h2>The catalog.</h2>
-    <p>Every card is a self-contained runbook. Offense and defense are bound
-       together — hover a card to light up its counterpart.</p>
+  <div class="catalog__head">
+    <div class="section-head">
+      <span class="section-head__num">02</span>
+      <h2>Browse the library.</h2>
+      <p>Each skill is a self-contained runbook — offense and defense bound together.
+         Filter by team, search by technique, and open any skill on GitHub.</p>
+    </div>
+    <div class="catalog__actions">
+      <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">
+        Full index <span aria-hidden="true">↗</span>
+      </a>
+      <code class="pill-code" data-copy="npx redblueskills list">npx redblueskills list</code>
+    </div>
   </div>
 
-  <div class="filters" role="toolbar" aria-label="filter skills">
+  <div class="filters">
     <div class="filters__teams" data-filter-group="team">
       <button class="chip is-active" data-team="all">all</button>
-      <button class="chip chip--red" data-team="red">● red</button>
-      <button class="chip chip--blue" data-team="blue">● blue</button>
+      <button class="chip chip--red" data-team="red">red</button>
+      <button class="chip chip--blue" data-team="blue">blue</button>
+      <button class="chip chip--purple" data-team="purple">purple</button>
     </div>
-    <input class="filters__search" type="search" placeholder="search: sqli, ssrf, T1190, csrf…" data-search aria-label="search skills" />
-    <span class="filters__count" data-visible-count></span>
+    <input class="filters__search" data-search type="search" placeholder="search name, technique (T1190), CWE, OWASP…" aria-label="search skills" />
+    <span class="filters__count" data-visible-count>[ — shown ]</span>
   </div>
 
-  <div class="grid" data-grid>
+  <div class="grid grid--feature" data-grid>
     <p class="grid__loading">loading dossier…</p>
+  </div>
+
+  <div class="catalog__more">
+    <button class="pill-btn pill-btn--ghost" data-toggle-all type="button">Show all skills</button>
   </div>
 </section>
 
@@ -146,7 +175,8 @@
     <span class="section-head__num">03</span>
     <h2>“Attack my application.”</h2>
     <p>One instruction spins up a full, authorized assessment. The orchestrator
-       detects what your app is and drives the whole library, in order.</p>
+       detects what your app is, builds a surface&nbsp;×&nbsp;technique matrix, and
+       drives the whole library in kill-chain order.</p>
   </div>
 
   <ol class="flow">
@@ -163,7 +193,7 @@
     <li class="flow__step" data-k="2">
       <span class="flow__num">02</span>
       <h3>Select</h3>
-      <p>Routes each input to the skills whose preconditions it satisfies.</p>
+      <p>Lights up the matrix — routes each input to the skills whose preconditions it satisfies.</p>
     </li>
     <li class="flow__step flow__step--red" data-k="3">
       <span class="flow__num">03</span>
@@ -178,9 +208,29 @@
     <li class="flow__step" data-k="5">
       <span class="flow__num">05</span>
       <h3>Report</h3>
-      <p>Prioritized findings, reproduction, remediation, and coverage — what ran and what didn’t.</p>
+      <p>Prioritized findings, per-screen risk, reproduction, remediation, and coverage.</p>
     </li>
   </ol>
+
+  <!-- surface × technique matrix -->
+  <div class="matrix" aria-label="surface by technique matrix (illustrative)">
+    <div class="matrix__cap"><span>SURFACE&nbsp;×&nbsp;TECHNIQUE&nbsp;MATRIX</span><em>illustrative — a cell lights up only when the surface can reach that sink</em></div>
+    <div class="matrix__scroll">
+      <table class="matrix__grid">
+        <thead>
+          <tr><th class="matrix__rh">surface</th><th>SQLi</th><th>XSS</th><th>CmdInj</th><th>PathTrav</th><th>SSRF</th><th>XXE</th><th>IDOR</th><th>Auth</th><th>CSRF</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>/login</th><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="hit r">✓</td><td class="hit r">✓</td></tr>
+          <tr><th>/search?q=</th><td class="hit r">✓</td><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+          <tr><th>/import?url=</th><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="maybe">·</td></tr>
+          <tr><th>/files?name=</th><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td></tr>
+          <tr><th>/api/orders/{id}</th><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td></tr>
+          <tr><th>/upload (XML)</th><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="na">—</td><td class="hit r">✓</td><td class="na">—</td><td class="na">—</td><td class="maybe">·</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <div class="attack__cmd">
     <button class="copy copy--dark" data-copy="npx redblueskills attack https://staging.example.com" type="button">
@@ -191,10 +241,91 @@
   </div>
 </section>
 
+<!-- EXAMPLES -->
+<section class="examples" id="examples">
+  <div class="section-head">
+    <span class="section-head__num">04</span>
+    <h2>See it on your stack.</h2>
+    <p>The same one instruction, walked end-to-end on three real stacks — surface
+       map, technique selection, findings, and the fix for each.</p>
+  </div>
+
+  <div class="ex-grid">
+    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/flask.md" target="_blank" rel="noopener">
+      <span class="ex-card__lang">Python</span>
+      <h3>Flask</h3>
+      <p>A server-rendered app. Surfaces reflected XSS, IDOR, and SSRF — with the Jinja / parameterized-query fixes.</p>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+    </a>
+    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/node-express.md" target="_blank" rel="noopener">
+      <span class="ex-card__lang">Node.js</span>
+      <h3>Express</h3>
+      <p>An API + views. Surfaces SQL injection, CSRF, and missing security headers — fixed with helmet, csurf, and prepared statements.</p>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+    </a>
+    <a class="ex-card" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/examples/rails.md" target="_blank" rel="noopener">
+      <span class="ex-card__lang">Ruby</span>
+      <h3>Rails</h3>
+      <p>Framework defaults credited; the real finds are authorization (IDOR) and path traversal on file downloads.</p>
+      <span class="ex-card__go">read the walkthrough <span aria-hidden="true">↗</span></span>
+    </a>
+  </div>
+
+  <!-- sample report preview -->
+  <div class="report">
+    <div class="report__bar"><span></span><span></span><span></span><em>attack-my-application — sample report</em></div>
+    <pre class="report__body"><code><span class="c-dim">FINDINGS (worst first)</span>
+  <span class="sev-h">HIGH</span>    IDOR on /profile?id=      sequential ids expose other users     <span class="c-dim">→ web-access-control-monitoring</span>
+  <span class="sev-m">MEDIUM</span>  Reflected XSS on /search    q reflected unencoded                 <span class="c-dim">→ web-xss-detection</span>
+  <span class="sev-m">MEDIUM</span>  SSRF on /import?url=        server fetches arbitrary hosts        <span class="c-dim">→ web-ssrf-hardening</span>
+  <span class="sev-l">LOW</span>     No auth rate-limiting       brute-force feasible                  <span class="c-dim">→ web-authentication-hardening</span>
+
+<span class="c-dim">PER-SCREEN RISK</span>
+  /profile <span class="sev-h">HIGH</span>   /search <span class="sev-m">MEDIUM</span>   /import <span class="sev-m">MEDIUM</span>   /login <span class="sev-l">LOW</span>
+
+<span class="c-dim">COVERAGE</span>
+  ran: recon, xss, idor, ssrf, auth        skipped: cmd-injection, path-traversal, xxe (no matching sink)</code></pre>
+  </div>
+</section>
+
+<!-- CONTRIBUTE -->
+<section class="contribute" id="contribute">
+  <div class="section-head">
+    <span class="section-head__num">05</span>
+    <h2>Add your own pair.</h2>
+    <p>The library scales with contributors, not with one author. A red skill ships
+       with the blue skill that detects it — and CI enforces the pairing is real.</p>
+  </div>
+
+  <div class="install__grid">
+    <ol class="install__steps">
+      <li><b>Copy the template.</b> <code>cp -r _template skills/&lt;app&gt;/&lt;team&gt;/&lt;stage&gt;/&lt;name&gt;</code></li>
+      <li><b>Author both sides.</b> The offensive skill and the detection/hardening it pairs with — each lists the other.</li>
+      <li><b>Validate</b> against <code>_lab/</code> or a CTF target, then stamp who validated it and when.</li>
+      <li><b>Run the gate.</b> <code>make check</code> — schema, bidirectional pairing, catalog freshness, tests.</li>
+    </ol>
+    <div class="term" role="group" aria-label="contribute commands">
+      <div class="term__bar"><span></span><span></span><span></span><em>zsh — RedBlueSkills</em></div>
+      <pre class="term__body"><code><span class="c-p">$</span> make install
+<span class="c-p">$</span> cp -r _template skills/web-app/red/…/my-skill
+<span class="c-dim"># …author SKILL.md + its paired blue skill…</span>
+<span class="c-p">$</span> make check     <span class="c-dim"># the same gate CI runs</span>
+<span class="c-p">$</span> make catalog   <span class="c-dim"># refresh catalog.json + INDEX.md</span></code></pre>
+    </div>
+  </div>
+
+  <div class="contribute__links">
+    <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/adding-a-skill.md" target="_blank" rel="noopener">Adding a skill <span aria-hidden="true">↗</span></a>
+    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SKILL-TEMPLATE.md" target="_blank" rel="noopener">SKILL-TEMPLATE.md</a>
+    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SKILL-SPEC.md" target="_blank" rel="noopener">SKILL-SPEC.md</a>
+    <a class="pill-code" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>
+  </div>
+</section>
+
 <!-- DOCTRINE -->
 <section class="doctrine" id="doctrine">
   <div class="section-head">
-    <span class="section-head__num">04</span>
+    <span class="section-head__num">06</span>
     <h2>The doctrine.</h2>
     <p>Four rules most “awesome-security” lists don’t give you.</p>
   </div>
@@ -215,13 +346,48 @@
     <code>ETHICS.md</code> first. You are responsible for staying within your
     authorization and the law.
   </div>
-  <div class="foot__row">
-    <span class="mark red">■</span><span class="mark blue">■</span>
-    <span>RedBlueSkills</span>
+
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="nav__mark" href="#top">
+        <span class="nav__glyph"><i class="g-red"></i><i class="g-blue"></i></span>
+        <span class="nav__name">RedBlueSkills</span>
+      </a>
+      <p>Agent-native, validated security skills — paired offense and defense,
+         risk-labeled, and proven before merge.</p>
+      <code class="pill-code" data-copy="npx redblueskills init">npx redblueskills init</code>
+    </div>
+
+    <nav class="foot__col" aria-label="Start">
+      <h4>Start</h4>
+      <a href="#quickstart">Quickstart</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md" target="_blank" rel="noopener">QUICKSTART.md</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/orchestrator.md" target="_blank" rel="noopener">Orchestrator walkthrough</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/tree/main/docs/examples" target="_blank" rel="noopener">Examples</a>
+    </nav>
+
+    <nav class="foot__col" aria-label="Library">
+      <h4>Library</h4>
+      <a href="#catalog">Catalog</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">Full index</a>
+      <a href="https://www.npmjs.com/package/redblueskills" target="_blank" rel="noopener">npm package</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/catalog.json" target="_blank" rel="noopener">catalog.json</a>
+    </nav>
+
+    <nav class="foot__col" aria-label="Project">
+      <h4>Project</h4>
+      <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/docs/adding-a-skill.md" target="_blank" rel="noopener">Contributing</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/ETHICS.md" target="_blank" rel="noopener">Ethics</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+    </nav>
+  </div>
+
+  <div class="foot__bar">
+    <span class="foot__dots"><i class="d-red"></i><i class="d-blue"></i></span>
+    <span>© 2026 RedBlueSkills</span>
     <span class="foot__sp"></span>
-    <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
-    <a href="#catalog">Catalog</a>
-    <span class="foot__lic">Apache-2.0</span>
+    <span class="foot__lic">Apache-2.0 · authorized use only</span>
   </div>
 </footer>
 

@@ -57,7 +57,7 @@
 
   // ---- load catalog & render ----
   var grid = document.querySelector('[data-grid]');
-  var state = { skills: [], team: 'all', q: '' };
+  var state = { skills: [], team: 'all', q: '', showAll: false };
 
   fetch('./catalog.json')
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -86,9 +86,24 @@
     setStat('count', skills.length); setStat('red', red); setStat('blue', blue); setStat('pairs', pairs);
     var heroCount = document.querySelector('[data-count-hero]');
     if (heroCount) heroCount.textContent = skills.length + ' SKILLS';
+    var total = document.querySelector('[data-total]');
+    if (total) total.textContent = String(skills.length);
 
     wireFilters();
     render();
+  }
+
+  // most-recently validated first, then name
+  function byLatest(a, b) {
+    var d = String(b.last_validated || '').localeCompare(String(a.last_validated || ''));
+    return d || String(a.name).localeCompare(String(b.name));
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    if (!m) return iso;
+    var mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1];
+    return mon + ' ' + (+m[3]) + ', ' + m[1];
   }
 
   function setStat(key, val) {
@@ -114,6 +129,13 @@
     });
     var search = document.querySelector('[data-search]');
     if (search) search.addEventListener('input', function () { state.q = search.value.trim().toLowerCase(); render(); });
+
+    var toggle = document.querySelector('[data-toggle-all]');
+    if (toggle) toggle.addEventListener('click', function () {
+      state.showAll = !state.showAll;
+      toggle.textContent = state.showAll ? 'Show latest only' : 'Show all skills';
+      render();
+    });
   }
 
   function matches(s) {
@@ -131,16 +153,30 @@
     'credential-access', 'lateral-movement', 'collection', 'exfiltration', 'impact',
     'detect', 'harden', 'respond', 'recover', 'hunt'];
 
+  function byStage(a, b) {
+    var d = (a.team || '').localeCompare(b.team || '');
+    if (d) return d;
+    var sa = STAGE_ORDER.indexOf(a.stage), sb = STAGE_ORDER.indexOf(b.stage);
+    if (sa !== sb) return sa - sb;
+    return String(a.name).localeCompare(String(b.name));
+  }
+
   function render() {
     if (!grid) return;
-    var rows = state.skills.filter(matches).slice().sort(function (a, b) {
-      var t = (a.team || '').localeCompare(b.team || '');
-      if (t) return t;
-      return STAGE_ORDER.indexOf(a.stage) - STAGE_ORDER.indexOf(b.stage);
-    });
+    var filtered = state.skills.filter(matches);
+    // A filter/search or the "show all" toggle switches to the full browsable view;
+    // otherwise show the 6 most-recently validated as a featured teaser.
+    var isBrowsing = state.showAll || state.team !== 'all' || !!state.q;
+    var rows = isBrowsing ? filtered.slice().sort(byStage) : filtered.slice().sort(byLatest).slice(0, 6);
+
     var cnt = document.querySelector('[data-visible-count]');
-    if (cnt) cnt.textContent = '[ ' + rows.length + ' shown ]';
+    if (cnt) cnt.textContent = '[ ' + rows.length + ' of ' + state.skills.length + ' ]';
+
+    var toggle = document.querySelector('[data-toggle-all]');
+    if (toggle) toggle.style.display = (state.team !== 'all' || state.q) ? 'none' : '';
+
     grid.innerHTML = '';
+    if (!rows.length) { grid.innerHTML = '<p class="grid__loading">no skills match — clear the filter or search.</p>'; return; }
     rows.forEach(function (s) { grid.appendChild(cardFor(s)); });
   }
 
@@ -177,6 +213,12 @@
     pair.innerHTML = '↔&nbsp;<b>' + escapeHtml((s.pairs_with || [])[0] || '—') + '</b>';
     foot.appendChild(pair);
     a.appendChild(foot);
+
+    if (s.last_validated) {
+      var stamp = el('div', 'card__val');
+      stamp.innerHTML = '<span class="card__valdot"></span>validated · ' + escapeHtml(fmtDate(s.last_validated));
+      a.appendChild(stamp);
+    }
 
     // pairing highlight
     a.addEventListener('mouseenter', function () { highlightPairs(s, true); });

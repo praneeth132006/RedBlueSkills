@@ -29,6 +29,22 @@ That means four things most "awesome-security" lists don't give you:
 
 ---
 
+## New here? Start with the Quickstart
+
+**[`QUICKSTART.md`](QUICKSTART.md) — zero to a security report in 5 minutes.** No
+security background needed: install, point your agent at an app you own, say
+"attack my application," read the report.
+
+| Guide | What it covers |
+|---|---|
+| **[QUICKSTART.md](QUICKSTART.md)** | The 5-minute, no-jargon path from install to report. |
+| **[docs/orchestrator.md](docs/orchestrator.md)** | How `attack-my-application` works, stage by stage, with a sample transcript. |
+| **[docs/examples/](docs/examples/)** | Full runs against real stacks — [Flask](docs/examples/flask.md) · [Node/Express](docs/examples/node-express.md) · [Rails](docs/examples/rails.md). |
+| **[docs/adding-a-skill.md](docs/adding-a-skill.md)** | Write your own red↔blue pair; every CI gate explained. |
+| **[ETHICS.md](ETHICS.md)** | The rules of the road. Read once. |
+
+---
+
 ## Browse the library
 
 See **[INDEX.md](INDEX.md)** for the full catalog (auto-generated), or
