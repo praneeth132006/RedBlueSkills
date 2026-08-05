@@ -86,9 +86,24 @@
     setStat('count', skills.length); setStat('red', red); setStat('blue', blue); setStat('pairs', pairs);
     var heroCount = document.querySelector('[data-count-hero]');
     if (heroCount) heroCount.textContent = skills.length + ' SKILLS';
+    var total = document.querySelector('[data-total]');
+    if (total) total.textContent = String(skills.length);
 
     wireFilters();
     render();
+  }
+
+  // most-recently validated first, then name
+  function byLatest(a, b) {
+    var d = String(b.last_validated || '').localeCompare(String(a.last_validated || ''));
+    return d || String(a.name).localeCompare(String(b.name));
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    if (!m) return iso;
+    var mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1];
+    return mon + ' ' + (+m[3]) + ', ' + m[1];
   }
 
   function setStat(key, val) {
@@ -133,11 +148,8 @@
 
   function render() {
     if (!grid) return;
-    var rows = state.skills.filter(matches).slice().sort(function (a, b) {
-      var t = (a.team || '').localeCompare(b.team || '');
-      if (t) return t;
-      return STAGE_ORDER.indexOf(a.stage) - STAGE_ORDER.indexOf(b.stage);
-    });
+    // featured view: the 6 most-recently validated skills
+    var rows = state.skills.slice().sort(byLatest).slice(0, 6);
     var cnt = document.querySelector('[data-visible-count]');
     if (cnt) cnt.textContent = '[ ' + rows.length + ' shown ]';
     grid.innerHTML = '';
@@ -177,6 +189,12 @@
     pair.innerHTML = '↔&nbsp;<b>' + escapeHtml((s.pairs_with || [])[0] || '—') + '</b>';
     foot.appendChild(pair);
     a.appendChild(foot);
+
+    if (s.last_validated) {
+      var stamp = el('div', 'card__val');
+      stamp.innerHTML = '<span class="card__valdot"></span>validated · ' + escapeHtml(fmtDate(s.last_validated));
+      a.appendChild(stamp);
+    }
 
     // pairing highlight
     a.addEventListener('mouseenter', function () { highlightPairs(s, true); });

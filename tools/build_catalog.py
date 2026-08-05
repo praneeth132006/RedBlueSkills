@@ -36,6 +36,7 @@ def collect() -> list[dict]:
         fm, _body, errors = load_frontmatter(path)
         if fm is None:
             continue
+        lv = (fm.get("validation") or {}).get("last_validated")
         rows.append({
             "name": fm.get("name"),
             "description": " ".join(str(fm.get("description", "")).split()),
@@ -48,6 +49,7 @@ def collect() -> list[dict]:
             "authorization": fm.get("authorization"),
             "maturity": fm.get("maturity"),
             "version": fm.get("version"),
+            "last_validated": lv.isoformat() if hasattr(lv, "isoformat") else lv,
             "path": str(path.relative_to(REPO)),
         })
     return rows

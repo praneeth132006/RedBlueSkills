@@ -29,15 +29,19 @@
 <!-- top nav -->
 <header class="nav">
   <a class="nav__mark" href="#top">
-    <span class="mark red">■</span><span class="mark blue">■</span>
+    <span class="nav__glyph"><i class="g-red"></i><i class="g-blue"></i></span>
     <span class="nav__name">RedBlueSkills</span>
+    <span class="nav__ver">v0.2.0</span>
   </a>
   <nav class="nav__links">
     <a href="#install">install</a>
     <a href="#catalog">catalog</a>
     <a href="#attack">attack</a>
     <a href="#doctrine">doctrine</a>
-    <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub ↗</a>
+    <a class="nav__gh" href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      GitHub
+    </a>
   </nav>
 </header>
 
@@ -118,24 +122,22 @@
 
 <!-- CATALOG -->
 <section class="catalog" id="catalog">
-  <div class="section-head">
-    <span class="section-head__num">02</span>
-    <h2>The catalog.</h2>
-    <p>Every card is a self-contained runbook. Offense and defense are bound
-       together — hover a card to light up its counterpart.</p>
-  </div>
-
-  <div class="filters" role="toolbar" aria-label="filter skills">
-    <div class="filters__teams" data-filter-group="team">
-      <button class="chip is-active" data-team="all">all</button>
-      <button class="chip chip--red" data-team="red">● red</button>
-      <button class="chip chip--blue" data-team="blue">● blue</button>
+  <div class="catalog__head">
+    <div class="section-head">
+      <span class="section-head__num">02</span>
+      <h2>Latest skills.</h2>
+      <p>Each is a self-contained runbook — offense and defense bound together.
+         Six most-recently validated shown; the full library has <b data-total>20</b>.</p>
     </div>
-    <input class="filters__search" type="search" placeholder="search: sqli, ssrf, T1190, csrf…" data-search aria-label="search skills" />
-    <span class="filters__count" data-visible-count></span>
+    <div class="catalog__actions">
+      <a class="pill-btn" href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">
+        Browse all skills <span aria-hidden="true">↗</span>
+      </a>
+      <code class="pill-code" data-copy="npx redblueskills list">npx redblueskills list</code>
+    </div>
   </div>
 
-  <div class="grid" data-grid>
+  <div class="grid grid--feature" data-grid>
     <p class="grid__loading">loading dossier…</p>
   </div>
 </section>
@@ -215,13 +217,48 @@
     <code>ETHICS.md</code> first. You are responsible for staying within your
     authorization and the law.
   </div>
-  <div class="foot__row">
-    <span class="mark red">■</span><span class="mark blue">■</span>
-    <span>RedBlueSkills</span>
+
+  <div class="foot__grid">
+    <div class="foot__brand">
+      <a class="nav__mark" href="#top">
+        <span class="nav__glyph"><i class="g-red"></i><i class="g-blue"></i></span>
+        <span class="nav__name">RedBlueSkills</span>
+      </a>
+      <p>Agent-native, validated security skills — paired offense and defense,
+         risk-labeled, and proven before merge.</p>
+      <code class="pill-code" data-copy="npx redblueskills init">npx redblueskills init</code>
+    </div>
+
+    <nav class="foot__col" aria-label="Library">
+      <h4>Library</h4>
+      <a href="#catalog">Catalog</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/INDEX.md" target="_blank" rel="noopener">Full index</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SKILL-SPEC.md" target="_blank" rel="noopener">Skill spec</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/catalog.json" target="_blank" rel="noopener">catalog.json</a>
+    </nav>
+
+    <nav class="foot__col" aria-label="Use">
+      <h4>Use</h4>
+      <a href="#install">Install</a>
+      <a href="https://www.npmjs.com/package/redblueskills" target="_blank" rel="noopener">npm package</a>
+      <a href="#attack">attack-my-application</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/tree/main/orchestrators" target="_blank" rel="noopener">Orchestrators</a>
+    </nav>
+
+    <nav class="foot__col" aria-label="Project">
+      <h4>Project</h4>
+      <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/ETHICS.md" target="_blank" rel="noopener">Ethics</a>
+      <a href="https://github.com/Security-Environment/RedBlueSkills/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+    </nav>
+  </div>
+
+  <div class="foot__bar">
+    <span class="foot__dots"><i class="d-red"></i><i class="d-blue"></i></span>
+    <span>© 2026 RedBlueSkills</span>
     <span class="foot__sp"></span>
-    <a href="https://github.com/Security-Environment/RedBlueSkills" target="_blank" rel="noopener">GitHub</a>
-    <a href="#catalog">Catalog</a>
-    <span class="foot__lic">Apache-2.0</span>
+    <span class="foot__lic">Apache-2.0 · authorized use only</span>
   </div>
 </footer>
 
