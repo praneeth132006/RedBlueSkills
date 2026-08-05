@@ -12,8 +12,18 @@ follow [Semantic Versioning](https://semver.org/).
   `api-authentication-monitoring`, `api-bfla` ↔ `api-function-authorization-monitoring`,
   `api-mass-assignment` ↔ `api-mass-assignment-hardening`, `api-excessive-data-exposure`
   ↔ `api-data-exposure-monitoring`, and `api-unrestricted-resource-consumption` ↔
-  `api-rate-limit-hardening`. Authored at `reviewed` maturity; they promote to
-  `validated` once reproduced against a live API lab (OWASP crAPI).
+  `api-rate-limit-hardening`.
+  - **9 of the 12 are `validated`** end-to-end against a live **OWASP crAPI** lab
+    (all 6 red skills, proven by running the attack; and the 3 blue detections,
+    proven by running the detection logic over the real paired-attack traffic).
+    Each skill's `## Validation` section records the concrete observation.
+  - **3 remain `reviewed`** with the blocker documented in-skill:
+    `api-function-authorization-monitoring` needs role-enriched access logs crAPI
+    does not emit by default, and the two hardening skills
+    (`api-mass-assignment-hardening`, `api-rate-limit-hardening`) can only be
+    validated by applying the fix to a target you can rebuild.
+- **`_lab/crapi/`** — the OWASP crAPI stack vendored as the `api` vertical's
+  validation target (served on `localhost:8888`); documented in `_lab/README.md`.
 - **Self-contained website** — every `SKILL.md` and repo doc is bundled into
   `site/content.json` (`tools/build_site_content.py`) and rendered in-page by a
   dependency-free reader (`site/reader.js`) at `#/skill/<name>`, `#/doc/<id>`, and

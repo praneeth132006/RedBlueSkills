@@ -77,10 +77,13 @@ skills/web-app/
 is the reference implementation for every surface. The **`api`** vertical follows
 it with 6 red↔blue pairs across OWASP API Security Top 10 #1–5 (BOLA, broken
 authentication, BFLA, mass assignment, excessive data exposure, unrestricted
-resource consumption); these are authored at `reviewed` maturity and promote to
-`validated` once reproduced against a live API lab (OWASP crAPI). The remaining
-surfaces (`cloud-native`, `mobile`, `network`, `ci-cd`) will follow the same
-schema, tooling, and pairing discipline.
+resource consumption). Nine of those twelve are `validated` end-to-end against a
+live **OWASP crAPI** lab (all six offensive skills, plus the three detections,
+proven by running each detection over the real paired-attack traffic); the
+remaining three — one role-log-dependent detection and the two hardening skills —
+stay `reviewed`, with the blocker documented in-skill. The remaining surfaces
+(`cloud-native`, `mobile`, `network`, `ci-cd`) will follow the same schema,
+tooling, and pairing discipline.
 
 ---
 

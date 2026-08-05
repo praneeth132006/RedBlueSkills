@@ -94,7 +94,7 @@ Reproduce against **OWASP crAPI** (or a staging build of your API) in a lab:
 3. Confirm the privileged property is no longer applied and, ideally, that the
    request is rejected with a clear 4xx.
 
-Promote to `validated` once the before/after behaviour is reproduced and recorded.
+**Status: reviewed, not yet validated.** Validating a hardening control means applying the fix and confirming the paired attack fails — which requires modifying the target's source. That is not meaningful against crAPI's pre-built images; validate this against a staging build of your own API and record the before/after there.
 
 ## References
 

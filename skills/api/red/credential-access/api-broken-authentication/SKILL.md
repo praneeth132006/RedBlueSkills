@@ -23,7 +23,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -96,7 +101,7 @@ Reproduce against **OWASP crAPI** in a lab:
 3. Against a test account, run a small capped credential-stuffing burst on the
    login endpoint and note whether lockout/throttling engages.
 
-Promote to `validated` once the forge/replay and throttling checks are recorded.
+**Validated 2026-08-05 against OWASP crAPI.** Against `GET /identity/api/v2/user/dashboard`, a token with its `role` claim tampered to `admin` (original signature retained) **and** an `alg:none` unsigned token were **both accepted (HTTP 200)** — the identity service does not verify the JWT signature. Additionally, 40 rapid failed logins produced no lockout (see `api-unrestricted-resource-consumption`).
 
 ## References
 

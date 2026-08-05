@@ -23,7 +23,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: not-required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -101,7 +106,7 @@ Reproduce against **OWASP crAPI** in a lab:
    endpoint.
 3. Confirm the schema-diff flags the surplus/sensitive field on that endpoint.
 
-Promote to `validated` once the diff/telemetry flags the exposure on the paired run.
+**Validated 2026-08-05 against OWASP crAPI.** Running the schema-diff over the live `/community/api/v2/community/posts/recent` response flagged surplus/sensitive `author.email` and `author.vehicleid` fields against the sanctioned feed schema — the excessive-data-exposure signal.
 
 ## References
 

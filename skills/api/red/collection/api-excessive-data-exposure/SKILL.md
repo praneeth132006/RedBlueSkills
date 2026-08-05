@@ -23,7 +23,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -93,7 +98,7 @@ Reproduce against **OWASP crAPI** in a lab:
 3. Confirm the response includes fields the UI does not display (e.g. internal or
    sensitive attributes).
 
-Promote to `validated` once the surplus-field exposure is reproduced and recorded.
+**Validated 2026-08-05 against OWASP crAPI.** `GET /community/api/v2/community/posts/recent` returned other users' `author.email` and `author.vehicleid` — fields the feed UI never shows — and `mechanic_report` responses leaked the vehicle owner's email and VIN.
 
 ## References
 

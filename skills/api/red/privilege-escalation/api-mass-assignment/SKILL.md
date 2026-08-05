@@ -24,7 +24,12 @@ risk:
   reversible: true
   data_touch: read-write
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -97,7 +102,7 @@ Reproduce against **OWASP crAPI** in a lab:
    (e.g. an elevated role or internal flag) not present in the normal form.
 3. Re-read the object and confirm whether the privileged property was applied.
 
-Promote to `validated` once the accepted-property behaviour is reproduced.
+**Validated 2026-08-05 against OWASP crAPI.** `POST /workshop/api/shop/apply_coupon` trusted a client-supplied `amount` property: sending `amount: 9999` for a coupon whose server-side value was 75 drove `available_credit` from `100.0` to `10099.0` — a privileged property set from the request body.
 
 ## References
 

@@ -23,7 +23,12 @@ risk:
   reversible: true
   data_touch: read-write
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -97,7 +102,7 @@ Reproduce against **OWASP crAPI** in a lab:
    management action) with the standard user's token.
 3. Confirm the privileged function executes for the low-privilege principal.
 
-Promote to `validated` once the privileged invocation is reproduced and recorded.
+**Validated 2026-08-05 against OWASP crAPI.** A `ROLE_USER` principal (non-mechanic) called the mechanic-scoped `GET /workshop/api/mechanic/service_requests` and received HTTP 200 rather than 403 — a missing function-level authorization check.
 
 ## References
 

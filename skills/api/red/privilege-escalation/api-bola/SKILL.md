@@ -24,7 +24,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -101,7 +106,7 @@ Reproduce against **OWASP crAPI** (Completely Ridiculous API) in a lab:
 3. As user A, request user B's order/vehicle-report id and confirm A receives B's
    object — a horizontal BOLA — then note whether ids are sequential.
 
-Promote this skill to `validated` once the run above is reproduced and recorded.
+**Validated 2026-08-05 against OWASP crAPI.** Authenticated as a brand-new user with no vehicles and called `GET /identity/api/v2/vehicle/{id}/location` with another user's vehicle id (harvested from the community feed): HTTP 200 returning that user's GPS coordinates and email. `GET /workshop/api/mechanic/mechanic_report?report_id=1..3` returned other users' reports (owner email + VIN) over sequential ids — horizontal BOLA plus enumeration.
 
 ## References
 

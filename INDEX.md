@@ -13,18 +13,18 @@
 
 | Skill | Team | Stage | ATT&CK | Risk | Maturity | Paired with |
 |---|---|---|---|---|---|---|
-| [`api-authentication-monitoring`](skills/api/blue/detect/api-authentication-monitoring/SKILL.md) | 🔵 blue | detect | T1110, T1078 | info | reviewed | `api-broken-authentication` |
-| [`api-bola-detection`](skills/api/blue/detect/api-bola-detection/SKILL.md) | 🔵 blue | detect | T1190, T1548 | info | reviewed | `api-bola` |
-| [`api-data-exposure-monitoring`](skills/api/blue/detect/api-data-exposure-monitoring/SKILL.md) | 🔵 blue | detect | T1213 | info | reviewed | `api-excessive-data-exposure` |
+| [`api-authentication-monitoring`](skills/api/blue/detect/api-authentication-monitoring/SKILL.md) | 🔵 blue | detect | T1110, T1078 | info | validated | `api-broken-authentication` |
+| [`api-bola-detection`](skills/api/blue/detect/api-bola-detection/SKILL.md) | 🔵 blue | detect | T1190, T1548 | info | validated | `api-bola` |
+| [`api-data-exposure-monitoring`](skills/api/blue/detect/api-data-exposure-monitoring/SKILL.md) | 🔵 blue | detect | T1213 | info | validated | `api-excessive-data-exposure` |
 | [`api-function-authorization-monitoring`](skills/api/blue/detect/api-function-authorization-monitoring/SKILL.md) | 🔵 blue | detect | T1190, T1078 | info | reviewed | `api-bfla` |
 | [`api-mass-assignment-hardening`](skills/api/blue/harden/api-mass-assignment-hardening/SKILL.md) | 🔵 blue | harden | T1190 | info | reviewed | `api-mass-assignment` |
 | [`api-rate-limit-hardening`](skills/api/blue/harden/api-rate-limit-hardening/SKILL.md) | 🔵 blue | harden | T1499 | info | reviewed | `api-unrestricted-resource-consumption` |
-| [`api-excessive-data-exposure`](skills/api/red/collection/api-excessive-data-exposure/SKILL.md) | 🔴 red | collection | T1213 | medium | reviewed | `api-data-exposure-monitoring` |
-| [`api-broken-authentication`](skills/api/red/credential-access/api-broken-authentication/SKILL.md) | 🔴 red | credential-access | T1110, T1078 | high | reviewed | `api-authentication-monitoring` |
-| [`api-unrestricted-resource-consumption`](skills/api/red/impact/api-unrestricted-resource-consumption/SKILL.md) | 🔴 red | impact | T1499 | medium | reviewed | `api-rate-limit-hardening` |
-| [`api-bfla`](skills/api/red/privilege-escalation/api-bfla/SKILL.md) | 🔴 red | privilege-escalation | T1190, T1078 | high | reviewed | `api-function-authorization-monitoring` |
-| [`api-bola`](skills/api/red/privilege-escalation/api-bola/SKILL.md) | 🔴 red | privilege-escalation | T1190, T1548 | high | reviewed | `api-bola-detection` |
-| [`api-mass-assignment`](skills/api/red/privilege-escalation/api-mass-assignment/SKILL.md) | 🔴 red | privilege-escalation | T1190 | high | reviewed | `api-mass-assignment-hardening` |
+| [`api-excessive-data-exposure`](skills/api/red/collection/api-excessive-data-exposure/SKILL.md) | 🔴 red | collection | T1213 | medium | validated | `api-data-exposure-monitoring` |
+| [`api-broken-authentication`](skills/api/red/credential-access/api-broken-authentication/SKILL.md) | 🔴 red | credential-access | T1110, T1078 | high | validated | `api-authentication-monitoring` |
+| [`api-unrestricted-resource-consumption`](skills/api/red/impact/api-unrestricted-resource-consumption/SKILL.md) | 🔴 red | impact | T1499 | medium | validated | `api-rate-limit-hardening` |
+| [`api-bfla`](skills/api/red/privilege-escalation/api-bfla/SKILL.md) | 🔴 red | privilege-escalation | T1190, T1078 | high | validated | `api-function-authorization-monitoring` |
+| [`api-bola`](skills/api/red/privilege-escalation/api-bola/SKILL.md) | 🔴 red | privilege-escalation | T1190, T1548 | high | validated | `api-bola-detection` |
+| [`api-mass-assignment`](skills/api/red/privilege-escalation/api-mass-assignment/SKILL.md) | 🔴 red | privilege-escalation | T1190 | high | validated | `api-mass-assignment-hardening` |
 
 ## web-app
 

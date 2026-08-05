@@ -92,7 +92,7 @@ lab:
 3. Confirm the rate probe returns `429` with `Retry-After` and the oversized
    pagination request is clamped.
 
-Promote to `validated` once the before/after limits are reproduced and recorded.
+**Status: reviewed, not yet validated.** As above, validating the ceiling requires applying rate limits to the target (app or a configured proxy in front of it) and re-running the paired `api-unrestricted-resource-consumption` probes to confirm they hit `429`/caps. Validate against a staging build or a rate-limiting proxy you control.
 
 ## References
 

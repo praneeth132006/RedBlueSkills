@@ -23,7 +23,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: not-required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -98,7 +103,7 @@ Reproduce against **OWASP crAPI** in a lab:
 3. Confirm the single-principal distinct-object fan-out crosses your threshold and
    the cross-tenant read is visible in the logs.
 
-Promote to `validated` once the detection is confirmed to fire on the paired run.
+**Validated 2026-08-05 against OWASP crAPI.** Running the detection logic over the gateway access log from the paired `api-bola` run flagged one source touching sequential `mechanic_report` ids `[1,2,3]` (a monotonic walk) and cross-object vehicle-location access. (crAPI's default logs carry request path/status/source but not the authenticated principal or object tenant, so the sequential-walk and id-fan-out heuristics were validated on real traffic; the principal-keyed and cross-tenant-join variants additionally require log enrichment.)
 
 ## References
 

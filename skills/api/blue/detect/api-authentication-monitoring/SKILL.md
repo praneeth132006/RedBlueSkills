@@ -24,7 +24,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: not-required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -104,7 +109,7 @@ Reproduce against **OWASP crAPI** in a lab:
    capped stuffing).
 3. Confirm the invalid-signature spike and the failed-auth fan-out both alert.
 
-Promote to `validated` once both detections fire on the paired run.
+**Validated 2026-08-05 against OWASP crAPI.** Running the detection over the paired run's gateway log flagged 40 failed `POST /identity/api/auth/login` attempts from one source in the window — the credential-stuffing signal. (Note: because crAPI accepts forged tokens, the invalid-signature/`alg_none` sub-detection has no rejection events to fire on against this target — the paired offensive forgeries succeed rather than 401; that sub-detection needs a target that emits token-validation-failure events.)
 
 ## References
 

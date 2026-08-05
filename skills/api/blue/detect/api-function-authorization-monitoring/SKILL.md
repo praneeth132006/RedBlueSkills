@@ -98,7 +98,7 @@ Reproduce against **OWASP crAPI** in a lab:
    administrative operation.
 3. Confirm the low-privilege-on-privileged-route alert fires.
 
-Promote to `validated` once the detection fires on the paired run.
+**Status: reviewed, not yet validated.** The paired `api-bfla` run reproduces the flaw against crAPI, but this detection keys on the caller's **server-side role**, which crAPI's default gateway logs do not emit. Validating it end-to-end requires role-enriched access logs (or an authorization-decision event stream); promote to `validated` once the detection fires on such logs from the paired run.
 
 ## References
 

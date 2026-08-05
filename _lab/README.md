@@ -17,15 +17,37 @@ proven against.
 | OWASP Juice Shop | `bkimminich/juice-shop` | http://localhost:3000 | all v1 web-app skills |
 | DVWA | `vulnerables/web-dvwa` | http://localhost:8080 | additional SQLi/XSS practice |
 | Hardening proxy | `nginx` | http://localhost:8443 | `web-security-headers` |
+| OWASP crAPI | `crapi/crapi-*` | http://localhost:8888 | all `api` skills |
 
 ## Usage
 
 ```bash
 cd _lab
-docker compose up -d juice-shop        # the default validation target
-docker compose --profile full up -d    # bring up everything
+docker compose up -d juice-shop        # the default web-app validation target
+docker compose --profile full up -d    # bring up every web-app target
 docker compose down                    # tear down
 ```
+
+### crAPI — the `api` vertical target
+
+crAPI (Completely Ridiculous API) is a large multi-service stack, so it lives in
+its own compose file under [`crapi/`](crapi/) (the official OWASP compose, vendored
+so the lab is self-contained). It is the validation target for every `api/**`
+skill. The web UI + API gateway is served on `http://localhost:8888`.
+
+```bash
+cd _lab/crapi
+# core services only — skips the chatbot/chromadb services that need an LLM key
+docker compose up -d --pull always \
+  crapi-identity crapi-community crapi-workshop crapi-web \
+  postgresdb mongodb mailhog api.mypremiumdealership.com
+# crAPI emails an OTP/verification link to MailHog; read it at http://localhost:8888/mailhog
+docker compose down -v                 # tear down (‑v also drops the seeded DBs)
+```
+
+crAPI needs ~4 CPU / 8 GB. On Apple Silicon without Docker Desktop, `colima start
+--cpu 4 --memory 8 --disk 60` provides a daemon. First boot seeds demo users and
+vehicles; give it 1–2 minutes after the containers report healthy.
 
 Reproduce a skill's validation by following its `## Validation` section against
 the URL above, then record the method/target/date/handle in the skill's

@@ -24,7 +24,12 @@ risk:
   reversible: true
   data_touch: read
 authorization: required
-maturity: reviewed
+maturity: validated
+validation:
+  method: lab
+  target: owasp-crapi
+  last_validated: 2026-08-05
+  validated_by: praneeth132006
 license: Apache-2.0
 ---
 
@@ -100,7 +105,7 @@ control — never a shared environment:
    absence of rate-limit responses/headers.
 3. Request an oversized pagination limit and confirm it is not capped.
 
-Promote to `validated` once the missing-limit behaviour is reproduced and recorded.
+**Validated 2026-08-05 against OWASP crAPI.** 40 rapid failed logins against `POST /identity/api/auth/login` all returned `401` with no `429`, no lockout, and no `RateLimit-*`/`Retry-After` headers — no request-rate ceiling is enforced.
 
 ## References
 
