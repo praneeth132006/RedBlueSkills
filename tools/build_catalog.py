@@ -25,6 +25,7 @@ REPO = Path(__file__).resolve().parent.parent
 SKILLS = REPO / "skills"
 CATALOG_JSON = REPO / "catalog.json"
 INDEX_MD = REPO / "INDEX.md"
+SITE_CATALOG = REPO / "site" / "catalog.json"  # served copy the website fetches
 
 TEAM_BADGE = {"red": "🔴 red", "blue": "🔵 blue", "purple": "🟣 purple"}
 
@@ -112,6 +113,10 @@ def main() -> int:
             stale.append("catalog.json")
         if not INDEX_MD.exists() or INDEX_MD.read_text(encoding="utf-8") != index:
             stale.append("INDEX.md")
+        if SITE_CATALOG.parent.is_dir() and (
+            not SITE_CATALOG.exists() or SITE_CATALOG.read_text(encoding="utf-8") != catalog
+        ):
+            stale.append("site/catalog.json")
         if stale:
             print(f"STALE: {', '.join(stale)} out of date — run `make catalog`", file=sys.stderr)
             return 1
@@ -120,7 +125,11 @@ def main() -> int:
 
     CATALOG_JSON.write_text(catalog, encoding="utf-8")
     INDEX_MD.write_text(index, encoding="utf-8")
-    print(f"wrote catalog.json and INDEX.md ({len(rows)} skills)")
+    wrote = ["catalog.json", "INDEX.md"]
+    if SITE_CATALOG.parent.is_dir():
+        SITE_CATALOG.write_text(catalog, encoding="utf-8")
+        wrote.append("site/catalog.json")
+    print(f"wrote {', '.join(wrote)} ({len(rows)} skills)")
     return 0
 
 

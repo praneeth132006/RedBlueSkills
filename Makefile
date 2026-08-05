@@ -1,4 +1,4 @@
-.PHONY: help install validate catalog check test clean
+.PHONY: help install validate catalog check test clean site
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -20,6 +20,10 @@ check: ## Full CI gate: validate + catalog freshness + tests
 	python tools/validate.py
 	python tools/build_catalog.py --check
 	python -m pytest tools/tests -q
+
+site: catalog ## Serve the website locally (regenerates the served catalog first)
+	@echo "→ http://localhost:8799/site/"
+	python -m http.server 8799
 
 clean: ## Remove Python caches
 	find . -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true

@@ -4,7 +4,8 @@
 
 [![Validate](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-6-informational)](INDEX.md)
+[![Skills](https://img.shields.io/badge/skills-20-informational)](INDEX.md)
+[![npm](https://img.shields.io/badge/npm-redblueskills-c4362a)](https://www.npmjs.com/package/redblueskills)
 
 RedBlueSkills is a library of [Claude Agent Skills](https://docs.claude.com/en/docs/agents/skills) —
 `SKILL.md` packages an AI agent (or a human) can load to actually *perform*
@@ -37,25 +38,70 @@ Skills are organized by **application type → team → kill-chain stage**:
 
 ```
 skills/web-app/
-├── red/                        # offense
-│   ├── recon/web-http-fingerprinting/
-│   └── initial-access/
-│       ├── web-sql-injection/
-│       └── web-reflected-xss/
-└── blue/                       # defense
-    ├── detect/
-    │   ├── web-sqli-detection/     ⟷ pairs with web-sql-injection
-    │   └── web-xss-detection/      ⟷ pairs with web-reflected-xss
-    └── harden/web-security-headers/  ⟷ pairs with web-http-fingerprinting
+├── red/                          # offense                    ⟷ paired blue skill
+│   ├── recon/web-http-fingerprinting/          ⟷ web-security-headers
+│   ├── initial-access/
+│   │   ├── web-sql-injection/                  ⟷ web-sqli-detection
+│   │   ├── web-reflected-xss/                  ⟷ web-xss-detection
+│   │   ├── web-command-injection/              ⟷ web-command-injection-detection
+│   │   ├── web-path-traversal/                 ⟷ web-path-traversal-detection
+│   │   ├── web-ssrf/                           ⟷ web-ssrf-hardening
+│   │   └── web-xxe/                            ⟷ web-xxe-hardening
+│   ├── privilege-escalation/web-idor/          ⟷ web-access-control-monitoring
+│   ├── credential-access/web-broken-authentication/ ⟷ web-authentication-hardening
+│   └── execution/web-csrf/                     ⟷ web-csrf-hardening
+└── blue/                         # defense
+    ├── detect/    web-sqli-detection · web-xss-detection · web-command-injection-detection
+    │              web-path-traversal-detection · web-access-control-monitoring
+    └── harden/    web-security-headers · web-ssrf-hardening · web-xxe-hardening
+                   web-authentication-hardening · web-csrf-hardening
 ```
 
-**v1 ships the `web-app` vertical, deeply.** It is the reference implementation
-for every future surface (`api`, `cloud-native`, `mobile`, `network`, `ci-cd`) —
-each will follow the same schema, tooling, and pairing discipline.
+**v1 ships the `web-app` vertical, deeply** — 10 red↔blue pairs covering the OWASP
+Top 10 core. It is the reference implementation for every future surface (`api`,
+`cloud-native`, `mobile`, `network`, `ci-cd`) — each will follow the same schema,
+tooling, and pairing discipline.
 
 ---
 
-## Use a skill
+## Install into your agent — one command
+
+You don't need to clone this repo to use it. The library is published to npm, so
+any coding LLM (Claude Code and friends) can pull the whole thing — skills,
+`catalog.json`, and the `attack-my-application` orchestrator — into its skills
+path in one step:
+
+```bash
+npx redblueskills init          # all skills + orchestrator → ./.claude/skills/redblueskills
+npx redblueskills add web-ssrf  # just one (its paired defense comes along)
+npx redblueskills list red      # browse offense (or: blue, a stage, or free text)
+```
+
+Then simply tell your agent **"attack my application"** (see below), or point it
+at any `skills/**/SKILL.md`. A generated `README` in the install directory tells
+the agent when to load each skill.
+
+There's also a **website** — a browsable catalog with the same install flow — in
+[`site/`](site/) (deployable to any static host; run `make site` to preview).
+
+## The `attack-my-application` orchestrator
+
+The headline capability. One instruction runs a full, authorized assessment: the
+orchestrator ([`orchestrators/attack-my-application/SKILL.md`](orchestrators/attack-my-application/SKILL.md))
+**fingerprints** the target, **selects** the skills whose preconditions the app
+satisfies, **runs** them in kill-chain order (minimal-proof first), **verifies**
+each finding against its paired blue skill, and produces a prioritized report —
+behind a hard **authorization gate** it will not cross.
+
+```bash
+npx redblueskills attack https://staging.example.com     # prints the instruction
+npx redblueskills attack --print                          # the full playbook
+```
+
+> ⚠️ It only assesses systems you own or are explicitly authorized to test. The
+> authorization gate is non-negotiable and per-session.
+
+## Use a single skill
 
 **With an AI agent (e.g. Claude Code):** point the agent at a skill directory, or
 copy the skill into your agent's skills path. The frontmatter `description` tells
@@ -99,6 +145,9 @@ automatically. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and
 | Path | What it is |
 |---|---|
 | [`skills/`](skills/) | The skill library. |
+| [`orchestrators/`](orchestrators/) | Multi-skill playbooks — home of `attack-my-application`. |
+| [`bin/cli.js`](bin/cli.js) · [`package.json`](package.json) | The `redblueskills` npm CLI (`init` / `add` / `list` / `attack`). |
+| [`site/`](site/) | The browsable website (static; reads `catalog.json`). |
 | [`SKILL-SPEC.md`](SKILL-SPEC.md) | The frontmatter schema + body structure every skill follows. |
 | [`_template/`](_template/) | Copy-to-start skeleton for a new skill. |
 | [`tools/`](tools/) | Validator, catalog generator, tests. |
