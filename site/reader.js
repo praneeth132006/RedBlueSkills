@@ -342,14 +342,21 @@
       var teamStr = teamMatch ? teamMatch[1].toLowerCase() : 'red';
       var stageMatch = s.body.match(/stage:\s*([^\r\n]+)/i);
       var stageStr = stageMatch ? stageMatch[1] : '';
-      return '<li><a href="#/skill/' + esc(name) + '"><b><span class="rmeta rmeta--' + teamStr + '">' + teamStr.toUpperCase() + '</span> ' + esc(name) + '</b><span>' + esc(stageStr) + '</span>' +
-             '<code>' + esc(s.path) + '</code></a></li>';
+      
+      return '<a href="#/skill/' + esc(name) + '" class="skill-card skill-card--' + teamStr + '">' +
+               '<div class="skill-card__head">' +
+                 '<span class="rmeta rmeta--' + teamStr + '"><b>' + teamStr.toUpperCase() + '</b></span>' +
+                 '<span class="skill-card__title">' + esc(name) + '</span>' +
+               '</div>' +
+               '<div class="skill-card__stage">' + esc(stageStr) + '</div>' +
+               '<div class="skill-card__path">' + esc(s.path) + '</div>' +
+             '</a>';
     }).join('');
     panelKicker.textContent = 'catalog';
     panelTitle.textContent = 'All Skills';
     panelPath.textContent = 'complete index of offensive and defensive capabilities';
     panelMeta.innerHTML = ''; panelMeta.setAttribute('hidden', '');
-    panelBody.innerHTML = '<ul class="doclist">' + items + '</ul>';
+    panelBody.innerHTML = '<div class="skill-grid">' + items + '</div>';
     open();
   }
 

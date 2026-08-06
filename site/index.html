@@ -131,33 +131,49 @@
 
   <div class="split split--even">
     <!-- Panel 1: Showing a vague, hallucinated AI output with red/error styling -->
-    <div class="panel">
-      <div class="panel__bar"><span class="panel__title">Without RedBlueSkills (Hallucination)</span></div>
-      <pre class="pane" style="color: var(--red, #ff5555);"><code><span class="d">AI AGENT LOG:</span>
+    <div class="term-window">
+      <div class="term-window__bar">
+        <div class="term-window__dots">
+          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
+        </div>
+        <div class="term-window__title">ai_agent.log</div>
+      </div>
+      <div class="term-window__body">
+<span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
+<span class="hl-prompt">user@agent:~$</span> run_scan target.app
+
 I scanned the application. 
-It might be vulnerable to SQL injection on the login page.
+It <span class="hl-err">might be vulnerable</span> to SQL injection on the login page.
 You should probably use parameterized queries to fix it.
-I am not sure if it actually works, but standard practice
+I am <span class="hl-err">not sure if it actually works</span>, but standard practice
 recommends checking all inputs.
 
-STATUS: UNCERTAIN
-PROOF: NONE</code></pre>
+<span class="hl-key">STATUS:</span> <span class="hl-err">UNCERTAIN</span>
+<span class="hl-key">PROOF:</span>  NONE
+      </div>
     </div>
 
     <!-- Panel 2: Showing a definitive, exact JSON output for a confirmed vulnerability and mitigation, using blue/success styling -->
-    <div class="panel">
-      <div class="panel__bar"><span class="panel__title">With RedBlueSkills (Empowerment)</span></div>
-      <pre class="pane" style="color: var(--blue, #55aaff);"><code><span class="d">REDBLUESKILLS EXECUTION:</span>
+    <div class="term-window">
+      <div class="term-window__bar">
+        <div class="term-window__dots">
+          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
+        </div>
+        <div class="term-window__title">redblueskills_execution.json</div>
+      </div>
+      <div class="term-window__body">
+<span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
 {
-  "finding": "SSRF in /api/webhook",
-  "status": "CONFIRMED",
-  "proof_of_concept": {
-    "payload": "http://127.0.0.1/admin-console",
-    "response_received": "HTTP 200 OK (Internal Admin Panel)"
+  <span class="hl-key">"finding"</span>: <span class="hl-str">"SSRF in /api/webhook"</span>,
+  <span class="hl-key">"status"</span>: <span class="hl-prompt">"CONFIRMED"</span>,
+  <span class="hl-key">"proof_of_concept"</span>: {
+    <span class="hl-key">"payload"</span>: <span class="hl-str">"http://127.0.0.1/admin-console"</span>,
+    <span class="hl-key">"response_received"</span>: <span class="hl-str">"HTTP 200 OK (Internal Admin Panel)"</span>
   },
-  "mitigation_enforced": "skill: blue-ssrf-guard",
-  "action": "Deployed network egress filter rules."
-}</code></pre>
+  <span class="hl-key">"mitigation_enforced"</span>: <span class="hl-str">"skill: blue-ssrf-guard"</span>,
+  <span class="hl-key">"action"</span>: <span class="hl-str">"Deployed network egress filter rules."</span>
+}
+      </div>
     </div>
   </div>
 </section>
@@ -237,20 +253,25 @@ PROOF: NONE</code></pre>
     <div class="table__body" data-flat></div>
   </div>
 
-  <div class="hintbar">
-    <span><kbd>j</kbd><kbd>k</kbd> move</span>
-    <span><kbd>↵</kbd> open</span>
-    <span><kbd>/</kbd> search</span>
-    <span><kbd>esc</kbd> clear</span>
-    <span><kbd>g</kbd><kbd>G</kbd> top / bottom</span>
-  </div>
-
-  <div class="row-actions">
-    <a class="key key--wide" href="#/doc/index">full index →</a>
-    <button class="cmd cmd--sm" data-copy="npx redblueskills list" type="button">
-      <span class="cmd__p">$</span><span class="cmd__t">npx redblueskills list</span><span class="cmd__k">[copy]</span>
-    </button>
-    <a class="key" href="./catalog.json">catalog.json ↗</a>
+  <div class="table__controls">
+    <div class="table__controls-left">
+      <div class="hintbar">
+        <span><kbd>j</kbd><kbd>k</kbd> move</span>
+        <span><kbd>↵</kbd> open</span>
+        <span><kbd>/</kbd> search</span>
+        <span><kbd>esc</kbd> clear</span>
+        <span><kbd>g</kbd><kbd>G</kbd> top / bottom</span>
+      </div>
+    </div>
+    <div class="table__controls-right">
+      <a class="key key--solid" href="#/doc/index">full index →</a>
+      <button class="cmd cmd--glow" data-copy="npx redblueskills list" type="button">
+        <span class="cmd__p">$</span><span class="cmd__t">npx redblueskills list</span><span class="cmd__k">[copy]</span>
+      </button>
+      <a class="cmd cmd--glow" href="./catalog.json" target="_blank">
+        <span class="cmd__t">catalog.json</span><span class="cmd__k">↗</span>
+      </a>
+    </div>
   </div>
 </section>
 

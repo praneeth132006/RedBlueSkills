@@ -506,11 +506,9 @@
     showingRows.forEach(function (p, i) { frag.appendChild(pairRow(p, i + 1)); });
     
     if (isTruncated) {
-      var moreContainer = el('div', 'row-actions row-actions--center');
-      var moreBtn = el('a', 'key key--wide', 'See all ' + rows.length + ' pairs →');
+      var moreBtn = el('a', 'catalog-expand-btn', 'See all ' + rows.length + ' pairs →');
       moreBtn.href = '#/skills';
-      moreContainer.appendChild(moreBtn);
-      frag.appendChild(moreContainer);
+      frag.appendChild(moreBtn);
     }
     
     ledgerBody.appendChild(frag);
@@ -611,11 +609,9 @@
     showingRows.forEach(function (s, i) { frag.appendChild(flatRow(s, i + 1)); });
     
     if (isTruncated) {
-      var moreContainer = el('div', 'row-actions row-actions--center');
-      var moreBtn = el('a', 'key key--wide', 'See all ' + rows.length + ' skills →');
+      var moreBtn = el('a', 'catalog-expand-btn', 'See all ' + rows.length + ' skills →');
       moreBtn.href = '#/skills';
-      moreContainer.appendChild(moreBtn);
-      frag.appendChild(moreContainer);
+      frag.appendChild(moreBtn);
     }
 
     flatBody.appendChild(frag);
