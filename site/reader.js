@@ -220,23 +220,44 @@
     });
   }
 
+  /* open the reader panel — triggers CSS slide-in animation automatically */
   function open() {
     if (panel.hasAttribute('hidden')) {
+      /* save the element that had focus so we can restore it on close */
       lastFocus = document.activeElement;
+      /* remove the closing class in case a previous close was interrupted */
+      panel.classList.remove('is-closing');
+      /* show the panel — CSS animations (panelSlideIn + scrimIn) play immediately */
       panel.removeAttribute('hidden');
+      /* lock the body scroll so the page doesn't scroll behind the panel */
       document.body.classList.add('reader-open');
     }
+    /* focus the panel for keyboard accessibility */
     panel.querySelector('.reader__panel').focus();
   }
 
+  /* close the reader panel — plays CSS slide-out animation before hiding */
   function close() {
     if (panel.hasAttribute('hidden')) return;
-    panel.setAttribute('hidden', '');
-    document.body.classList.remove('reader-open');
-    if (location.hash.indexOf('#/') === 0) {
-      history.pushState('', document.title, location.pathname + location.search);
+    /* add the closing class which triggers panelSlideOut + scrimOut CSS animations */
+    panel.classList.add('is-closing');
+    /* listen for the slide-out animation to finish before actually hiding the panel */
+    var readerPanel = panel.querySelector('.reader__panel');
+    function onAnimEnd() {
+      readerPanel.removeEventListener('animationend', onAnimEnd);
+      /* now hide the panel in the DOM */
+      panel.setAttribute('hidden', '');
+      panel.classList.remove('is-closing');
+      /* unlock body scroll */
+      document.body.classList.remove('reader-open');
+      /* clean up the URL hash so navigation state stays consistent */
+      if (location.hash.indexOf('#/') === 0) {
+        history.pushState('', document.title, location.pathname + location.search);
+      }
+      /* restore focus to the element that opened the panel */
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    readerPanel.addEventListener('animationend', onAnimEnd);
   }
 
   function show(kicker, title, path, metaHtml, markdown) {
