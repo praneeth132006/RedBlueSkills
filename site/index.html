@@ -22,21 +22,6 @@
 </head>
 <body>
 
-<!-- ═══ TOP STATUS BAR — tmux-style, always pinned ═══ -->
-<div class="statusbar statusbar--top">
-  <span class="statusbar__l">
-    <b class="statusbar__tag">RBSK</b>
-    <span>~/redblueskills</span>
-  </span>
-  <span class="statusbar__r">
-    <span data-clock>--:--:--</span>
-    <span class="sep">│</span>
-    <span><b data-sb-count>--</b> skills</span>
-    <span class="sep">│</span>
-    <span>v0.4.0</span>
-  </span>
-</div>
-
 <!-- ═══ NAV — a terminal tab bar ═══ -->
 <header class="tabbar" id="nav">
   <a class="tabbar__brand" href="#top">
@@ -491,20 +476,11 @@
 │<span class="r">████████████</span>│<span class="b">░░░░░░░░░░░░</span>│
 └─ offense ──┴─ defense ──┘
  bound, or it does not ship</pre>
+  <!-- back-to-top button — smooth scroll back to the hero section -->
+  <div class="foot__top">
+    <a href="#top">back to top</a>
+  </div>
 </footer>
-
-<!-- ═══ BOTTOM STATUS BAR ═══ -->
-<div class="statusbar statusbar--bottom">
-  <span class="statusbar__l">
-    <b class="statusbar__tag">NORMAL</b>
-    <span>apache-2.0 · authorized use only</span>
-  </span>
-  <span class="statusbar__r">
-    <span>© 2026 redblueskills</span>
-    <span class="sep">│</span>
-    <span data-pos>0%</span>
-  </span>
-</div>
 
 <div class="toast" data-toast role="status" aria-live="polite"></div>
 
