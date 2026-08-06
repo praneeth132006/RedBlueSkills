@@ -206,9 +206,14 @@ main{
 .sect{padding-block:clamp(44px,6vw,78px)}
 .sect + .sect{border-top:1px solid var(--line)}
 
+/* Update: Adds spacing for section header */
 .sect__head{margin-bottom:clamp(26px,4vw,44px);max-width:82ch}
+/* Update: Applies a red-to-blue linear gradient to section numbers. Gives them a distinct visual punch. */
 .sect__num{
-  display:block;color:var(--ink-4);font-size:11px;letter-spacing:.24em;margin-bottom:14px;
+  display:block;font-size:11px;letter-spacing:.24em;margin-bottom:14px;
+  background: linear-gradient(90deg, var(--red), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .sect__num::before{content:"── "}
 .sect h2{
@@ -341,15 +346,16 @@ main{
 .hero__lede b{color:#ffffff;font-weight:700}
 .hero__act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
-/* hero CTA command button — prominent with a glowing blue border */
+/* hero CTA command button — prominent with a subtle glowing border, harsh borders removed */
 .hero__act .cmd{
-  border-color:var(--blue-3);
+  border-color:transparent; /* Update: Removes harsh borders */
   box-shadow:0 0 16px rgba(77,155,255,.15);
   transition:border-color .2s,box-shadow .2s,background .2s;
 }
+/* Update: Adds subtle glowing hover state instead of harsh borders */
 .hero__act .cmd:hover{
-  border-color:var(--blue);
-  box-shadow:0 0 28px rgba(77,155,255,.3);
+  border-color:transparent;
+  box-shadow:0 0 28px rgba(77,155,255,.3), 0 0 12px var(--blue-bleed);
   background:var(--bg-2);
 }
 
@@ -623,13 +629,15 @@ kbd{
    COMMAND BUTTON
    ───────────────────────────────────────────────────────────────────── */
 /* command button — the copyable terminal command affordance */
+/* Update: Applies pill-shape (border-radius: 100px) and removes harsh borders */
 .cmd{
   display:inline-flex;align-items:center;gap:11px;max-width:100%;
-  padding:10px 13px;border:1px solid var(--line-2);background:var(--bg-1);
+  padding:10px 13px;border:1px solid transparent;border-radius:100px;background:var(--bg-1);
   transition:border-color .18s,background .18s,box-shadow .18s;
 }
 /* hover: blue border glow to indicate interactivity */
-.cmd:hover{border-color:var(--blue-3);background:var(--bg-2);box-shadow:0 0 10px rgba(77,155,255,.08)}
+/* Update: Subtle glowing hover state without border color change */
+.cmd:hover{background:var(--bg-2);box-shadow:0 0 15px rgba(77,155,255,.15)}
 .cmd--sm{padding:6px 11px;font-size:12.5px}
 /* red $ prompt in commands */
 .cmd__p{color:var(--red);flex:none}
