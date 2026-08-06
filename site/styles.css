@@ -656,23 +656,49 @@ kbd{
    ───────────────────────────────────────────────────────────────────── */
 .pipe{
   display:grid;grid-template-columns:repeat(3,1fr);
-  border:1px solid var(--line);margin-bottom:clamp(18px,3vw,30px);
+  /* REPLACED: border with gap for spaced out components */
+  gap:24px;
+  margin-bottom:clamp(18px,3vw,30px);
 }
 .pipe__s{
-  position:relative;padding:18px 18px 20px;
-  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
-  transition:background .12s;
+  position:relative;
+  /* REPLACED: padding adjusted for rounded corners */
+  padding:24px;
+  /* ADDED: soft subtle border for glassmorphic effect */
+  border:1px solid rgba(255,255,255,0.06);
+  /* ADDED: 16px rounded corners */
+  border-radius:16px;
+  /* ADDED: subtle glassmorphic background */
+  background:rgba(255,255,255,0.03);
+  /* ADDED: backdrop filter for blur effect */
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  /* REPLACED: transitions added for hover micro-animations */
+  transition:background .2s, transform .2s, box-shadow .2s;
 }
 .pipe__s::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;
-  transform:scaleY(0);transform-origin:top;transition:transform .3s;
+  content:"";position:absolute;
+  /* REPLACED: left offset and vertical padding to match border radius */
+  left:-1px;top:24px;bottom:24px;width:3px;background:transparent;
+  /* ADDED: rounded border for the left pipe line */
+  border-radius:3px;
+  transform:scaleY(0);transform-origin:center;
+  /* REPLACED: added background and box-shadow transitions */
+  transition:transform .3s, background .3s, box-shadow .3s;
 }
-.pipe__s--red::before{background:var(--red)}
-.pipe__s--blue::before{background:var(--blue)}
+/* ADDED: box-shadow using var(--red-bleed) for cyberpunk glow */
+.pipe__s--red::before{background:var(--red);box-shadow:0 0 10px var(--red-bleed)}
+/* ADDED: box-shadow using var(--blue-bleed) for cyberpunk glow */
+.pipe__s--blue::before{background:var(--blue);box-shadow:0 0 10px var(--blue-bleed)}
 .pipe__s:hover::before{transform:scaleY(1)}
-.pipe__s:nth-child(3n){border-right:none}
-.pipe__s:nth-last-child(-n+3){border-bottom:none}
-.pipe__s:hover{background:var(--bg-1)}
+.pipe__s:hover{
+  /* REPLACED: enhanced glassmorphic background on hover */
+  background:rgba(255,255,255,0.06);
+  /* ADDED: floating effect on hover */
+  transform:translateY(-2px);
+  /* ADDED: glowing box-shadow for depth */
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+}
 .pipe__n{
   display:block;font-size:11px;letter-spacing:.16em;color:var(--ink-5);margin-bottom:11px;
 }
@@ -732,19 +758,45 @@ kbd{
 /* ─────────────────────────────────────────────────────────────────────
    STEPS
    ───────────────────────────────────────────────────────────────────── */
-.steps{counter-reset:s;border:1px solid var(--line)}
+.steps{
+  counter-reset:s;
+  /* REPLACED: border removed, switched to flex with gap for spaced out items */
+  display:flex;flex-direction:column;gap:16px;
+}
 .steps li{
   counter-increment:s;position:relative;
-  padding:15px 16px 16px 52px;border-bottom:1px solid var(--line);
-  transition:background .12s;
+  padding:20px 24px 20px 58px;
+  /* ADDED: soft subtle border */
+  border:1px solid rgba(255,255,255,0.06);
+  /* ADDED: 16px rounded corners */
+  border-radius:16px;
+  /* ADDED: glassmorphic background */
+  background:rgba(255,255,255,0.03);
+  /* ADDED: backdrop filter for blur effect */
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  /* ADDED: transitions for hover animations */
+  transition:background .2s, transform .2s, box-shadow .2s;
 }
-.steps li:last-child{border-bottom:none}
-.steps li:hover{background:var(--bg-1)}
+.steps li:hover{
+  /* REPLACED: background highlight on hover */
+  background:rgba(255,255,255,0.06);
+  /* ADDED: floating transform on hover */
+  transform:translateY(-2px);
+  /* ADDED: subtle shadow for elevation */
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+}
 .steps li::before{
   content:"[" counter(s,decimal-leading-zero) "]";
-  position:absolute;left:14px;top:15px;color:var(--ink-5);font-size:11.5px;
+  position:absolute;left:20px;top:20px;color:var(--ink-5);font-size:11.5px;
+  /* ADDED: transition for text-shadow */
+  transition:color .2s, text-shadow .2s;
 }
-.steps li:hover::before{color:var(--blue)}
+.steps li:hover::before{
+  color:var(--blue);
+  /* ADDED: text glow effect on hover */
+  text-shadow:0 0 8px var(--blue-bleed);
+}
 .steps h3{font-size:13.5px;margin-bottom:4px;text-transform:lowercase}
 .steps p{font-size:12.5px;color:var(--ink-3)}
 .steps i{font-style:normal;color:var(--ink-2)}
@@ -772,17 +824,43 @@ kbd{
 /* ─────────────────────────────────────────────────────────────────────
    DOCTRINE
    ───────────────────────────────────────────────────────────────────── */
-.tenets{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
-.tenet{
-  padding:22px 22px 24px;
-  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
-  transition:background .12s;
+.tenets{
+  display:grid;grid-template-columns:1fr 1fr;
+  /* REPLACED: border removed, added gap for spacing */
+  gap:20px;
 }
-.tenet:nth-child(2n){border-right:none}
-.tenet:nth-last-child(-n+2){border-bottom:none}
-.tenet:hover{background:var(--bg-1)}
-.tenet__k{display:block;color:var(--ink-5);font-size:11.5px;margin-bottom:12px}
-.tenet:hover .tenet__k{color:var(--blue)}
+.tenet{
+  padding:24px;
+  /* ADDED: soft subtle border */
+  border:1px solid rgba(255,255,255,0.06);
+  /* ADDED: 16px rounded corners */
+  border-radius:16px;
+  /* ADDED: glassmorphic background */
+  background:rgba(255,255,255,0.03);
+  /* ADDED: backdrop filter for blur */
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  /* ADDED: transitions for hover state */
+  transition:background .2s, transform .2s, box-shadow .2s;
+}
+.tenet:hover{
+  /* REPLACED: background color on hover */
+  background:rgba(255,255,255,0.06);
+  /* ADDED: lift effect on hover */
+  transform:translateY(-2px);
+  /* ADDED: box-shadow on hover for elevation */
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+}
+.tenet__k{
+  display:block;color:var(--ink-5);font-size:11.5px;margin-bottom:12px;
+  /* ADDED: transitions for hover text shadow */
+  transition:color .2s, text-shadow .2s;
+}
+.tenet:hover .tenet__k{
+  color:var(--blue);
+  /* ADDED: text glow on hover */
+  text-shadow:0 0 8px var(--blue-bleed);
+}
 .tenet h3{font-size:15px;margin-bottom:8px;text-transform:lowercase}
 .tenet p{font-size:12.5px;color:var(--ink-3);max-width:52ch}
 
