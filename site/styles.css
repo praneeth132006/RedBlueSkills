@@ -190,12 +190,12 @@ body::before{
 .key{
   display:inline-flex;align-items:center;gap:7px;
   padding:6px 14px;border:1px solid var(--line-2);
-  border-radius:100px;
   color:var(--ink-2);white-space:nowrap;
   transition:color .12s,background .12s,border-color .12s;
 }
 .key:hover{color:#000;background:var(--blue);border-color:var(--blue)}
 .key--wide{padding:7px 14px;color:var(--ink)}
+.tabbar .key{border-radius:100px}
 
 /* ─────────────────────────────────────────────────────────────────────
    LAYOUT
@@ -239,8 +239,7 @@ main{
   /* Blurs elements behind the wrapper for true glassmorphism */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px); /* Safari support for blur */
-  /* Increased border-radius to 24px for a smoother, softer, premium feel */
-  border-radius: 24px;
+  /* Removed border-radius */
   /* Hides child elements that overflow the rounded corners, like headers */
   overflow: hidden;
 }
@@ -638,7 +637,7 @@ kbd{
 /* Update: Applies pill-shape (border-radius: 100px) and removes harsh borders */
 .cmd{
   display:inline-flex;align-items:center;gap:11px;max-width:100%;
-  padding:10px 13px;border:1px solid transparent;border-radius:100px;background:var(--bg-1);
+  padding:10px 13px;border:1px solid transparent;background:var(--bg-1);
   transition:border-color .18s,background .18s,box-shadow .18s;
 }
 /* hover: blue border glow to indicate interactivity */
@@ -671,9 +670,9 @@ kbd{
   /* REPLACED: padding adjusted for rounded corners */
   padding:24px;
   /* ADDED: soft subtle border for glassmorphic effect */
+  /* ADDED: soft subtle border for glassmorphic effect */
   border:1px solid rgba(255,255,255,0.06);
-  /* ADDED: 16px rounded corners */
-  border-radius:16px;
+  /* Removed border-radius */
   /* ADDED: subtle glassmorphic background */
   background:rgba(255,255,255,0.03);
   /* ADDED: backdrop filter for blur effect */
@@ -686,8 +685,7 @@ kbd{
   content:"";position:absolute;
   /* REPLACED: left offset and vertical padding to match border radius */
   left:-1px;top:24px;bottom:24px;width:3px;background:transparent;
-  /* ADDED: rounded border for the left pipe line */
-  border-radius:3px;
+  /* Removed border-radius */
   transform:scaleY(0);transform-origin:center;
   /* REPLACED: added background and box-shadow transitions */
   transition:transform .3s, background .3s, box-shadow .3s;
@@ -773,9 +771,9 @@ kbd{
   counter-increment:s;position:relative;
   padding:20px 24px 20px 58px;
   /* ADDED: soft subtle border */
+  /* ADDED: soft subtle border */
   border:1px solid rgba(255,255,255,0.06);
-  /* ADDED: 16px rounded corners */
-  border-radius:16px;
+  /* Removed border-radius */
   /* ADDED: glassmorphic background */
   background:rgba(255,255,255,0.03);
   /* ADDED: backdrop filter for blur effect */
@@ -831,9 +829,9 @@ kbd{
   background: rgba(10, 10, 10, 0.7);
   /* Blur for backdrop elements */
   backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  /* Rounded corners mirroring the panels */
-  border-radius: 24px;
+  /* Removed border-radius */
 }
 .ex__c:hover{
   /* Slightly brighter background on hover for interaction feedback */
@@ -862,9 +860,9 @@ kbd{
 .tenet{
   padding:24px;
   /* ADDED: soft subtle border */
+  /* ADDED: soft subtle border */
   border:1px solid rgba(255,255,255,0.06);
-  /* ADDED: 16px rounded corners */
-  border-radius:16px;
+  /* Removed border-radius */
   /* ADDED: glassmorphic background */
   background:rgba(255,255,255,0.03);
   /* ADDED: backdrop filter for blur */
