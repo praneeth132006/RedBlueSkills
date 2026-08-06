@@ -225,19 +225,25 @@ main{
 .sect__head p b{color:var(--ink);font-weight:700}
 
 /* ─────────────────────────────────────────────────────────────────────
-   PANEL — the ASCII box. 1px rules + "+" corner marks.
+   PANEL — Premium Glassmorphic Wrappers
    ───────────────────────────────────────────────────────────────────── */
-.panel{
-  position:relative;
-  border:1px solid var(--line);
-  background:var(--bg-1);
+/* [RULE] Updated .panel, .table, .matrix, and .split to a premium glassmorphic aesthetic */
+/* This brings a modern, sleek look to all wrapper components. Changes can be seen in UI wrappers globally. */
+.panel, .table, .matrix, .split {
+  /* relative positioning for internal elements */
+  position: relative;
+  /* Removed harsh borders, replaced with subtle translucent white border for glass edge effect */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  /* Semi-transparent dark background for depth */
+  background: rgba(10, 10, 10, 0.7);
+  /* Blurs elements behind the wrapper for true glassmorphism */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Safari support for blur */
+  /* Increased border-radius to 24px for a smoother, softer, premium feel */
+  border-radius: 24px;
+  /* Hides child elements that overflow the rounded corners, like headers */
+  overflow: hidden;
 }
-.panel::before,.panel::after{
-  position:absolute;color:var(--line-3);font-size:12px;line-height:1;
-  pointer-events:none;
-}
-.panel::before{content:"+";top:-6.5px;left:-3.5px}
-.panel::after{content:"+";bottom:-6.5px;right:-3.5px}
 
 .panel__bar{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -810,11 +816,35 @@ kbd{
 
 /* examples */
 .ex{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(26px,4vw,44px)}
+/* [RULE] Updated .ex__c (example cards) to have similar glass borders and glowing drop-shadows */
+/* This brings an interactive, tactile feel to cards. Changes can be seen on example cards across the site. */
 .ex__c{
+  /* Keep existing flexbox layout */
   display:flex;flex-direction:column;gap:9px;padding:18px;
-  min-height:190px;transition:background .12s,border-color .12s;
+  /* Keeps the card height consistent */
+  min-height:190px;
+  /* Smoother transition durations for hover effects (background, border, shadow, transform) */
+  transition:background .3s,border-color .3s,box-shadow .3s,transform .3s;
+  /* Glass border to match the wrappers */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  /* Translucent background for glassmorphic style */
+  background: rgba(10, 10, 10, 0.7);
+  /* Blur for backdrop elements */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* Rounded corners mirroring the panels */
+  border-radius: 24px;
 }
-.ex__c:hover{background:var(--bg-2);border-color:var(--blue-3)}
+.ex__c:hover{
+  /* Slightly brighter background on hover for interaction feedback */
+  background: rgba(15, 15, 15, 0.8);
+  /* Brighter border on hover to catch the eye */
+  border-color: rgba(255, 255, 255, 0.15);
+  /* Smooth, glowing blue drop-shadow to make the card "pop" */
+  box-shadow: 0 10px 40px rgba(77, 155, 255, 0.15);
+  /* Subtle lift effect */
+  transform: translateY(-2px);
+}
 .ex__lang{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-5)}
 .ex__c h3{font-size:clamp(19px,2.4vw,26px);letter-spacing:-.02em;text-transform:lowercase}
 .ex__c p{font-size:12.5px;color:var(--ink-3)}
