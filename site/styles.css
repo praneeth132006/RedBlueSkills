@@ -227,9 +227,9 @@ main{
 /* ─────────────────────────────────────────────────────────────────────
    PANEL — Premium Glassmorphic Wrappers
    ───────────────────────────────────────────────────────────────────── */
-/* [RULE] Updated .panel, .table, .matrix, and .split to a premium glassmorphic aesthetic */
+/* [RULE] Updated .panel, .table, and .matrix to a premium glassmorphic aesthetic */
 /* This brings a modern, sleek look to all wrapper components. Changes can be seen in UI wrappers globally. */
-.panel, .table, .matrix, .split {
+.panel, .table, .matrix {
   /* relative positioning for internal elements */
   position: relative;
   /* Removed harsh borders, replaced with subtle translucent white border for glass edge effect */
