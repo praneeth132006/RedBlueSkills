@@ -73,17 +73,24 @@ skills/web-app/
                    web-authentication-hardening · web-csrf-hardening
 ```
 
-**`web-app` ships deeply** — 10 red↔blue pairs covering the OWASP Top 10 core — and
-is the reference implementation for every surface. The **`api`** vertical follows
-it with 6 red↔blue pairs across OWASP API Security Top 10 #1–5 (BOLA, broken
-authentication, BFLA, mass assignment, excessive data exposure, unrestricted
-resource consumption). Nine of those twelve are `validated` end-to-end against a
-live **OWASP crAPI** lab (all six offensive skills, plus the three detections,
-proven by running each detection over the real paired-attack traffic); the
-remaining three — one role-log-dependent detection and the two hardening skills —
-stay `reviewed`, with the blocker documented in-skill. The remaining surfaces
-(`cloud-native`, `mobile`, `network`, `ci-cd`) will follow the same schema,
-tooling, and pairing discipline.
+**58 skills across four live surfaces**, every one paired red↔blue. **`web-app`**
+is the reference implementation — 10 pairs covering the OWASP Top 10 core. The
+**`api`** vertical is complete across the **OWASP API Security Top 10 (2023),
+API1–API10**: BOLA, broken authentication, BFLA, mass assignment, excessive data
+exposure, unrestricted resource consumption, plus SSRF, security misconfiguration,
+improper inventory management, unsafe consumption, and sensitive-business-flow
+abuse. **`cloud-native`** covers IMDS credential theft, public object-storage
+exposure, and privileged-container escape; **`ci-cd`** maps the **OWASP Top 10
+CI/CD Security Risks** (poisoned pipeline execution, credential hygiene,
+dependency-chain abuse, artifact provenance, runner abuse). **41 of the 58 are
+`validated` end-to-end** against live labs — OWASP crAPI, Docker/Colima, a mock EC2
+IMDS, and MinIO — with the exact evidence recorded in each skill's `## Validation`
+section; the rest stay `reviewed` with the blocker documented in-skill.
+
+See the [**coverage map**](site/) (a radial *surface × kill-chain* map plus matrix,
+lit where covered and dark where planned) and [`COVERAGE.md`](COVERAGE.md) for the
+full taxonomy and every field a skill is classified on. The remaining surfaces
+(`mobile`, `network`) will follow the same schema, tooling, and pairing discipline.
 
 ---
 

@@ -1,6 +1,283 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 32,
+  "count": 58,
+  "coverage": {
+    "surfaces_order": [
+      "web-app",
+      "api",
+      "cloud-native",
+      "ci-cd",
+      "mobile",
+      "network"
+    ],
+    "planned": [
+      "mobile",
+      "network"
+    ],
+    "stage_order": [
+      "recon",
+      "initial-access",
+      "execution",
+      "persistence",
+      "privilege-escalation",
+      "defense-evasion",
+      "credential-access",
+      "lateral-movement",
+      "collection",
+      "exfiltration",
+      "impact",
+      "harden",
+      "detect",
+      "respond",
+      "recover",
+      "hunt"
+    ],
+    "cells": {
+      "web-app": {
+        "detect": {
+          "red": 0,
+          "blue": 5,
+          "purple": 0,
+          "validated": 5,
+          "total": 5
+        },
+        "harden": {
+          "red": 0,
+          "blue": 5,
+          "purple": 0,
+          "validated": 5,
+          "total": 5
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "execution": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "initial-access": {
+          "red": 6,
+          "blue": 0,
+          "purple": 0,
+          "validated": 6,
+          "total": 6
+        },
+        "privilege-escalation": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "recon": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        }
+      },
+      "api": {
+        "detect": {
+          "red": 0,
+          "blue": 5,
+          "purple": 0,
+          "validated": 4,
+          "total": 5
+        },
+        "harden": {
+          "red": 0,
+          "blue": 6,
+          "purple": 0,
+          "validated": 0,
+          "total": 6
+        },
+        "collection": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "impact": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 2,
+          "total": 2
+        },
+        "initial-access": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 2,
+          "total": 2
+        },
+        "privilege-escalation": {
+          "red": 3,
+          "blue": 0,
+          "purple": 0,
+          "validated": 3,
+          "total": 3
+        },
+        "recon": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 2,
+          "total": 2
+        }
+      },
+      "cloud-native": {
+        "detect": {
+          "red": 0,
+          "blue": 1,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "harden": {
+          "red": 0,
+          "blue": 2,
+          "purple": 0,
+          "validated": 2,
+          "total": 2
+        },
+        "collection": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "privilege-escalation": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        }
+      },
+      "ci-cd": {
+        "detect": {
+          "red": 0,
+          "blue": 2,
+          "purple": 0,
+          "validated": 0,
+          "total": 2
+        },
+        "harden": {
+          "red": 0,
+          "blue": 3,
+          "purple": 0,
+          "validated": 0,
+          "total": 3
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "execution": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "impact": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "initial-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "privilege-escalation": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        }
+      },
+      "mobile": {},
+      "network": {}
+    },
+    "totals": {
+      "web-app": {
+        "total": 20,
+        "validated": 20,
+        "red": 10,
+        "blue": 10,
+        "purple": 0
+      },
+      "api": {
+        "total": 22,
+        "validated": 15,
+        "red": 11,
+        "blue": 11,
+        "purple": 0
+      },
+      "cloud-native": {
+        "total": 6,
+        "validated": 6,
+        "red": 3,
+        "blue": 3,
+        "purple": 0
+      },
+      "ci-cd": {
+        "total": 10,
+        "validated": 0,
+        "red": 5,
+        "blue": 5,
+        "purple": 0
+      },
+      "mobile": {
+        "total": 0,
+        "validated": 0,
+        "red": 0,
+        "blue": 0,
+        "purple": 0
+      },
+      "network": {
+        "total": 0,
+        "validated": 0,
+        "red": 0,
+        "blue": 0,
+        "purple": 0
+      }
+    }
+  },
   "skills": [
     {
       "name": "api-authentication-monitoring",
@@ -142,6 +419,78 @@
       "path": "skills/api/blue/detect/api-function-authorization-monitoring/SKILL.md"
     },
     {
+      "name": "api-inventory-monitoring",
+      "description": "Detect and close Improper Inventory Management (API9:2023) for a REST or GraphQL API. Use when building an authoritative API inventory and reconciling live traffic against it to surface shadow endpoints, zombie hosts, and deprecated versions still receiving requests — and to catch access to undocumented or non-production surfaces.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1595.003",
+          "T1590.005"
+        ],
+        "capec": [
+          "CAPEC-169"
+        ],
+        "cwe": [
+          "CWE-1059",
+          "CWE-1002"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": [
+          "D3-NM",
+          "D3-ANAA"
+        ]
+      },
+      "pairs_with": [
+        "api-improper-inventory"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/blue/detect/api-inventory-monitoring/SKILL.md"
+    },
+    {
+      "name": "api-business-flow-hardening",
+      "description": "Harden sensitive business flows against Unrestricted Access (API6:2023) and detect automated abuse. Use when a business-critical flow (checkout, inventory/ seat reservation, referral/reward redemption, signup, booking, voting) must be protected from scripted abuse — adding device/human verification, server-side quantity and rate caps, and behavioural detection of machine-speed completion.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1499.003",
+          "T1583.006"
+        ],
+        "capec": [
+          "CAPEC-210"
+        ],
+        "cwe": [
+          "CWE-799",
+          "CWE-841"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": [
+          "D3-NTA",
+          "D3-RA"
+        ]
+      },
+      "pairs_with": [
+        "api-sensitive-business-flow-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-business-flow-hardening/SKILL.md"
+    },
+    {
       "name": "api-mass-assignment-hardening",
       "description": "Harden an API against mass assignment / Broken Object Property Level Authorization (API3:2023) by binding only allowlisted, client-writable fields and authorizing sensitive property changes server-side. Use when designing or reviewing create/update endpoints that bind request bodies to objects.",
       "team": "blue",
@@ -203,6 +552,113 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/api/blue/harden/api-rate-limit-hardening/SKILL.md"
+    },
+    {
+      "name": "api-security-configuration-hardening",
+      "description": "Harden a REST or GraphQL API against Security Misconfiguration (API8:2023). Use when establishing a secure configuration baseline: strict CORS, a global error handler that never leaks internals, a security-header set, removal or authentication of debug/management/introspection endpoints, safe HTTP methods, and TLS enforcement — plus the config-drift checks that keep it that way.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1592.002"
+        ],
+        "capec": [
+          "CAPEC-541"
+        ],
+        "cwe": [
+          "CWE-16",
+          "CWE-756",
+          "CWE-942"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": [
+          "D3-PH",
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "api-security-misconfiguration"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-security-configuration-hardening/SKILL.md"
+    },
+    {
+      "name": "api-ssrf-hardening",
+      "description": "Harden a REST or GraphQL API against Server-Side Request Forgery (SSRF / API7:2023) and detect exploitation attempts. Use when the API fetches client-supplied URLs (webhooks, importers, link previews, image/URL fields) and you need to constrain outbound destinations, enforce IMDSv2, and alert on egress to internal or metadata addresses.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-664"
+        ],
+        "cwe": [
+          "CWE-918"
+        ],
+        "owasp": [
+          "A10:2021"
+        ],
+        "d3fend": [
+          "D3-OTF",
+          "D3-NTF"
+        ]
+      },
+      "pairs_with": [
+        "api-ssrf"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-ssrf-hardening/SKILL.md"
+    },
+    {
+      "name": "api-third-party-consumption-hardening",
+      "description": "Harden an application against Unsafe Consumption of APIs (API10:2023). Use when your service integrates third-party/upstream APIs (identity, payment, enrichment, shipping, inbound webhooks) and you need to treat their responses as untrusted: validating and sanitizing upstream data, enforcing TLS validation/pinning, refusing to blindly follow upstream-supplied redirects, and monitoring integrations for anomalous responses.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.001",
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-137"
+        ],
+        "cwe": [
+          "CWE-20",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": [
+          "D3-MA",
+          "D3-OTF"
+        ]
+      },
+      "pairs_with": [
+        "api-unsafe-consumption"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/api/blue/harden/api-third-party-consumption-hardening/SKILL.md"
     },
     {
       "name": "api-excessive-data-exposure",
@@ -271,6 +727,39 @@
       "path": "skills/api/red/credential-access/api-broken-authentication/SKILL.md"
     },
     {
+      "name": "api-sensitive-business-flow-abuse",
+      "description": "Prove Unrestricted Access to Sensitive Business Flows (API6:2023) during an authorized assessment — automating a business-critical flow (checkout, ticket/ inventory reservation, referral/reward redemption, signup, comment/booking) at a rate or scale the business never intended. Use when an endpoint is technically authorized per request but lacks anti-automation controls, so a script can abuse the flow to cause business harm.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "impact",
+      "techniques": {
+        "attack": [
+          "T1499.003",
+          "T1583.006"
+        ],
+        "capec": [
+          "CAPEC-210"
+        ],
+        "cwe": [
+          "CWE-799",
+          "CWE-841"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-business-flow-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/red/impact/api-sensitive-business-flow-abuse/SKILL.md"
+    },
+    {
       "name": "api-unrestricted-resource-consumption",
       "description": "Assess Unrestricted Resource Consumption (API4:2023) in an API during an authorized test — missing rate limits, pagination caps, payload-size limits, and cost controls that let a caller exhaust CPU, memory, money, or third-party quota. Use when you need to confirm an API lacks the throttling and limits that bound a single caller's resource use.",
       "team": "red",
@@ -301,6 +790,70 @@
       "version": "1.0.0",
       "last_validated": "2026-08-05",
       "path": "skills/api/red/impact/api-unrestricted-resource-consumption/SKILL.md"
+    },
+    {
+      "name": "api-ssrf",
+      "description": "Find and prove Server-Side Request Forgery (SSRF / API7:2023) in a REST or GraphQL API during an authorized assessment. Use when the API fetches a client-supplied URL, hostname, or resource reference — webhooks, url/image/ callback parameters, document importers, link previews, PDF renderers — and you need to confirm the server can be coerced into requesting attacker-chosen internal or cloud-metadata endpoints.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-664"
+        ],
+        "cwe": [
+          "CWE-918"
+        ],
+        "owasp": [
+          "A10:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-ssrf-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/red/initial-access/api-ssrf/SKILL.md"
+    },
+    {
+      "name": "api-unsafe-consumption",
+      "description": "Prove Unsafe Consumption of APIs (API10:2023) during an authorized assessment — a target application that blindly trusts data from a third-party/upstream API it consumes. Use when the target integrates an external or partner API (payment, enrichment, OAuth/identity, shipping, webhooks-in) and you can influence that upstream's response to inject into the target: unvalidated data, redirects to attacker infrastructure, or oversized/malformed payloads.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1195.001",
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-137"
+        ],
+        "cwe": [
+          "CWE-20",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-third-party-consumption-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/red/initial-access/api-unsafe-consumption/SKILL.md"
     },
     {
       "name": "api-bfla",
@@ -398,6 +951,625 @@
       "version": "1.0.0",
       "last_validated": "2026-08-05",
       "path": "skills/api/red/privilege-escalation/api-mass-assignment/SKILL.md"
+    },
+    {
+      "name": "api-improper-inventory",
+      "description": "Discover Improper Inventory Management (API9:2023) during an authorized assessment — shadow, zombie, and deprecated API versions; undocumented hosts and environments; and endpoints missing from the official spec. Use when the current API is well-guarded but older versions, non-production hosts, or forgotten endpoints may still be reachable and less protected.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1595.003",
+          "T1590.005"
+        ],
+        "capec": [
+          "CAPEC-169"
+        ],
+        "cwe": [
+          "CWE-1059",
+          "CWE-1002"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-inventory-monitoring"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/red/recon/api-improper-inventory/SKILL.md"
+    },
+    {
+      "name": "api-security-misconfiguration",
+      "description": "Discover and characterize API Security Misconfiguration (API8:2023) during an authorized assessment — permissive CORS, verbose error/stack-trace leakage, missing security headers, unauthenticated debug/actuator endpoints, default credentials, dangerous HTTP methods, and unpatched framework defaults. Use when fingerprinting an API's configuration hygiene and turning misconfigurations into concrete, demonstrable weaknesses.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1592.002"
+        ],
+        "capec": [
+          "CAPEC-541"
+        ],
+        "cwe": [
+          "CWE-16",
+          "CWE-756",
+          "CWE-942"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "api-security-configuration-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/api/red/recon/api-security-misconfiguration/SKILL.md"
+    },
+    {
+      "name": "ci-runner-abuse-detection",
+      "description": "Detect and prevent self-hosted CI runner abuse (CICD-SEC-7). Use when hardening and monitoring build runners: enforcing ephemeral one-job runners, least-privilege and network isolation, keeping untrusted builds off self-hosted runners, and alerting on reused-workspace access, persistence-hook writes, and build jobs reaching internal networks.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1078",
+          "T1195.002"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-668"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": [
+          "D3-PH",
+          "D3-PSMD"
+        ]
+      },
+      "pairs_with": [
+        "ci-self-hosted-runner-abuse"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/detect/ci-runner-abuse-detection/SKILL.md"
+    },
+    {
+      "name": "ci-secret-exposure-monitoring",
+      "description": "Detect and prevent CI/CD secret exposure (CICD-SEC-6). Use when instrumenting pipelines against credential leakage: scanning repos/history and build outputs for secrets, enforcing masking, alerting on secrets in logs/artifacts/caches, right-sizing token and OIDC scope, and driving rotation when a credential leaks.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1552.004"
+        ],
+        "capec": [
+          "CAPEC-118"
+        ],
+        "cwe": [
+          "CWE-522",
+          "CWE-532"
+        ],
+        "owasp": [
+          "A07:2021"
+        ],
+        "d3fend": [
+          "D3-FA",
+          "D3-CA"
+        ]
+      },
+      "pairs_with": [
+        "ci-secret-exfiltration"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/detect/ci-secret-exposure-monitoring/SKILL.md"
+    },
+    {
+      "name": "ci-artifact-provenance-hardening",
+      "description": "Harden the build→release path against artifact tampering by establishing signing and provenance (CICD-SEC-4/9, SLSA). Use when securing artifact integrity: signing build outputs, generating SLSA provenance/attestations, enforcing signature and provenance verification at the deploy/consumption gate, and pinning artifacts by immutable digest.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1565.001"
+        ],
+        "capec": [
+          "CAPEC-186"
+        ],
+        "cwe": [
+          "CWE-494",
+          "CWE-345"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "ci-artifact-tampering"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/harden/ci-artifact-provenance-hardening/SKILL.md"
+    },
+    {
+      "name": "ci-dependency-integrity-hardening",
+      "description": "Harden builds against dependency confusion / substitution and dependency-chain abuse (CICD-SEC-3). Use when securing dependency resolution: pinning internal names to a private/mirrored source, reserving public namespaces, enforcing integrity-hashed lockfiles, disabling untrusted install scripts, and detecting unexpected public resolution of internal packages.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.002"
+        ],
+        "capec": [
+          "CAPEC-538"
+        ],
+        "cwe": [
+          "CWE-829",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A06:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "ci-dependency-confusion"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/harden/ci-dependency-integrity-hardening/SKILL.md"
+    },
+    {
+      "name": "ci-pipeline-execution-hardening",
+      "description": "Harden a CI/CD pipeline against Poisoned Pipeline Execution (PPE / CICD-SEC-4). Use when protecting pipelines from attacker-controlled build steps: gating PR/untrusted triggers behind approval, denying secrets to fork/untrusted builds, pinning and quoting untrusted inputs, least-privileging the pipeline token, and auditing pipeline-definition changes.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1059"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-94",
+          "CWE-829"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "ci-poisoned-pipeline-execution"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/harden/ci-pipeline-execution-hardening/SKILL.md"
+    },
+    {
+      "name": "ci-secret-exfiltration",
+      "description": "Demonstrate CI/CD secret exfiltration (CICD-SEC-6, Insufficient Credential Hygiene) during an authorized assessment — recovering pipeline secrets, registry tokens, cloud/OIDC credentials, and deploy keys from build logs, environment dumps, caches/artifacts, and over-scoped tokens. Use when you have a foothold in a pipeline (via PPE or a malicious dependency) and need to prove which credentials a job can reach and how they leak.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1552.004"
+        ],
+        "capec": [
+          "CAPEC-118"
+        ],
+        "cwe": [
+          "CWE-522",
+          "CWE-532"
+        ],
+        "owasp": [
+          "A07:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-secret-exposure-monitoring"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/credential-access/ci-secret-exfiltration/SKILL.md"
+    },
+    {
+      "name": "ci-poisoned-pipeline-execution",
+      "description": "Demonstrate Poisoned Pipeline Execution (PPE / CICD-SEC-4) during an authorized assessment — injecting attacker-controlled build steps into a CI/CD pipeline via a pull request, a modifiable pipeline-definition file, or an injectable build input. Use when a pipeline runs configuration or scripts that a lower-privileged contributor can influence, so untrusted input reaches the runner as executed code with access to pipeline secrets and deploy credentials.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "execution",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1059"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-94",
+          "CWE-829"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-pipeline-execution-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/execution/ci-poisoned-pipeline-execution/SKILL.md"
+    },
+    {
+      "name": "ci-artifact-tampering",
+      "description": "Demonstrate build-artifact tampering and lack of provenance (CICD-SEC-4/CICD-SEC-9 artifact integrity) during an authorized assessment — modifying a build output, image, or release artifact between build and deploy, or publishing an artifact with no verifiable provenance, so consumers install code that never came from the trusted build. Use when the path from source to artifact to deployment lacks signing, provenance attestation, or integrity verification.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "impact",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1565.001"
+        ],
+        "capec": [
+          "CAPEC-186"
+        ],
+        "cwe": [
+          "CWE-494",
+          "CWE-345"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-artifact-provenance-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/impact/ci-artifact-tampering/SKILL.md"
+    },
+    {
+      "name": "ci-dependency-confusion",
+      "description": "Demonstrate dependency confusion / substitution (CICD-SEC-3, dependency-chain abuse) during an authorized assessment — getting a build to resolve an attacker-published package from a public registry in place of an intended internal one. Use when a project references internal/private package names and the build's resolver can be tricked into preferring a same-named public package, executing attacker code at install time on the developer or CI host.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1195.002"
+        ],
+        "capec": [
+          "CAPEC-538"
+        ],
+        "cwe": [
+          "CWE-829",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A06:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-dependency-integrity-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/initial-access/ci-dependency-confusion/SKILL.md"
+    },
+    {
+      "name": "ci-self-hosted-runner-abuse",
+      "description": "Demonstrate self-hosted CI runner abuse (CICD-SEC-7, insecure system configuration) during an authorized assessment — abusing a persistent, non-ephemeral, or over-privileged build runner to escalate from a build job into the runner host, its network, cached credentials, or other tenants' jobs. Use when a project uses self-hosted runners that survive between jobs, run untrusted PR builds, or sit inside a trusted network.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1078",
+          "T1195.002"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-668"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-runner-abuse-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/privilege-escalation/ci-self-hosted-runner-abuse/SKILL.md"
+    },
+    {
+      "name": "cloud-storage-exposure-monitoring",
+      "description": "Detect and prevent publicly exposed cloud object storage (S3/GCS/Azure Blob). Use when building continuous posture checks and runtime detections for world-readable/ writable buckets and objects: enforcing account-level public-access blocks, catching policy/ACL drift toward public, and alerting on anonymous access and bucket-enumeration patterns in access logs.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1530",
+          "T1580"
+        ],
+        "capec": [
+          "CAPEC-150"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-732"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-RAPA"
+        ]
+      },
+      "pairs_with": [
+        "cloud-public-storage-exposure"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/blue/detect/cloud-storage-exposure-monitoring/SKILL.md"
+    },
+    {
+      "name": "cloud-container-hardening",
+      "description": "Harden containerized workloads against container-to-host escape and detect attempts. Use when protecting Docker/Kubernetes nodes from over-privileged containers: enforcing restricted Pod Security Standards, dropping capabilities, forbidding privileged mode/host namespaces/sensitive host mounts, applying seccomp/AppArmor, and detecting the runtime behaviour of an escape.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1611",
+          "T1610"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-250"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": [
+          "D3-PH",
+          "D3-EAL",
+          "D3-PSMD"
+        ]
+      },
+      "pairs_with": [
+        "cloud-privileged-container-escape"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/blue/harden/cloud-container-hardening/SKILL.md"
+    },
+    {
+      "name": "cloud-imds-hardening",
+      "description": "Harden cloud workloads against instance-metadata (IMDS) credential theft and detect attempts. Use when protecting EC2/GCE/Azure VMs, ECS/EKS tasks, or Cloud Run services from the app-to-cloud pivot: enforcing IMDSv2 with a minimal hop limit, blocking app-tier egress to link-local, scoping workload roles to least privilege, and alerting on metadata access from unexpected processes or on stolen credentials used off-instance.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552.005",
+          "T1078.004"
+        ],
+        "capec": [
+          "CAPEC-664"
+        ],
+        "cwe": [
+          "CWE-918",
+          "CWE-522"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-PH",
+          "D3-OTF",
+          "D3-CA"
+        ]
+      },
+      "pairs_with": [
+        "cloud-imds-credential-theft"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/blue/harden/cloud-imds-hardening/SKILL.md"
+    },
+    {
+      "name": "cloud-public-storage-exposure",
+      "description": "Discover and prove publicly exposed cloud object storage during an authorized assessment — world-readable/writable S3 buckets, GCS buckets, and Azure Blob containers, and objects made public by ACLs or bucket policy. Use when an organization's data may be reachable without authentication and you need to confirm exposure and characterize its sensitivity with minimal, non-exfiltrating proof.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1530",
+          "T1580"
+        ],
+        "capec": [
+          "CAPEC-150"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-732"
+        ],
+        "owasp": [
+          "A05:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-storage-exposure-monitoring"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/red/collection/cloud-public-storage-exposure/SKILL.md"
+    },
+    {
+      "name": "cloud-imds-credential-theft",
+      "description": "Demonstrate cloud credential theft via the instance metadata service (IMDS) during an authorized cloud assessment. Use when you have code execution, SSRF, or a request-proxying primitive on a cloud workload (EC2/GCE/Azure VM, ECS/EKS task, Cloud Run) and need to prove that the workload's IAM role credentials are reachable through `169.254.169.254` / the metadata endpoint — the classic pivot from app compromise to cloud account access.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1552.005",
+          "T1078.004"
+        ],
+        "capec": [
+          "CAPEC-664"
+        ],
+        "cwe": [
+          "CWE-918",
+          "CWE-522"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-imds-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/red/credential-access/cloud-imds-credential-theft/SKILL.md"
+    },
+    {
+      "name": "cloud-privileged-container-escape",
+      "description": "Demonstrate container-to-host escape from an over-privileged container during an authorized assessment — privileged mode, host namespace sharing, dangerous capabilities (CAP_SYS_ADMIN), sensitive host mounts (docker.sock, host root), or writable cgroup/procfs paths. Use when you have execution inside a container and need to prove it can break isolation to reach the node, other tenants' workloads, or node credentials.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1611",
+          "T1610"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-250"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-container-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-06",
+      "path": "skills/cloud-native/red/privilege-escalation/cloud-privileged-container-escape/SKILL.md"
     },
     {
       "name": "web-access-control-monitoring",

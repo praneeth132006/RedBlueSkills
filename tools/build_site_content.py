@@ -24,6 +24,7 @@ OUT = ROOT / "site" / "content.json"
 DOCS: dict[str, tuple[str, str, str]] = {
     "quickstart": ("QUICKSTART.md", "Quickstart", "Zero to a report in five minutes."),
     "index": ("INDEX.md", "Full index", "Every skill, grouped by team and stage."),
+    "coverage": ("COVERAGE.md", "Coverage & taxonomy", "Every field a skill is classified on, and what each surface covers."),
     "orchestrator": ("docs/orchestrator.md", "Orchestrator walkthrough", "What happens when you say \"attack my application\"."),
     "adding-a-skill": ("docs/adding-a-skill.md", "Adding a skill", "The contributor path, end to end."),
     "example-flask": ("docs/examples/flask.md", "Example · Flask", "A worked run against a Python/Flask app."),
