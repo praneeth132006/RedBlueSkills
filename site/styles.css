@@ -907,51 +907,38 @@ kbd{
    DOM built by reader.js
    ═════════════════════════════════════════════════════════════════════ */
 .reader{
-  position:fixed;inset:0;z-index:150;display:flex;justify-content:flex-end;
+  position:fixed;inset:0;z-index:150;display:flex;justify-content:center;
+  background:var(--bg);
 }
 /* hidden state — completely removed from layout */
 .reader[hidden]{display:none}
 
 /* backdrop scrim — fades in from transparent */
-.reader__scrim{
-  position:absolute;inset:0;
-  background:rgba(0,0,0,0);
-  animation:scrimIn .3s ease-out forwards;
-}
-/* scrim fade-in animation */
-@keyframes scrimIn{to{background:rgba(0,0,0,.82)}}
-
-/* closing state — scrim fades back out */
-.reader.is-closing .reader__scrim{
-  animation:scrimOut .25s ease-in forwards;
-}
-@keyframes scrimOut{from{background:rgba(0,0,0,.82)}to{background:rgba(0,0,0,0)}}
+.reader__scrim{ display:none; }
 
 /* the slide-in panel — slides from right edge with a subtle ease */
 .reader__panel{
-  position:relative;width:min(900px,100%);height:100%;overflow-y:auto;
-  background:var(--bg);border-left:1px solid var(--blue-3);outline:none;
-  animation:panelSlideIn .35s cubic-bezier(.22,1,.36,1) forwards;
+  position:relative;width:100%;height:100%;overflow-y:auto;
+  background:transparent;border:none;outline:none;
+  animation:panelFadeIn .25s cubic-bezier(.22,1,.36,1) forwards;
 }
-/* panel slides in from 100% right to 0 (its natural position) */
-@keyframes panelSlideIn{
-  from{transform:translateX(100%);opacity:.7}
-  to{transform:translateX(0);opacity:1}
+@keyframes panelFadeIn{
+  from{opacity:0; transform:translateY(15px)}
+  to{opacity:1; transform:translateY(0)}
 }
-/* closing state — slides back out to the right */
 .reader.is-closing .reader__panel{
-  animation:panelSlideOut .25s ease-in forwards;
+  animation:panelFadeOut .2s ease-in forwards;
 }
-@keyframes panelSlideOut{
-  from{transform:translateX(0);opacity:1}
-  to{transform:translateX(100%);opacity:.7}
+@keyframes panelFadeOut{
+  from{opacity:1; transform:translateY(0)}
+  to{opacity:0; transform:translateY(15px)}
 }
 
 /* reader header — sticky at top with subtle backdrop blur */
 .reader__head{
   position:sticky;top:0;z-index:2;
   display:flex;align-items:flex-start;gap:16px;
-  padding:22px clamp(16px,3vw,34px) 18px;
+  padding:22px max(clamp(16px,3vw,34px), calc((100% - 900px) / 2)) 18px;
   background:rgba(0,0,0,.92);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
@@ -985,7 +972,7 @@ kbd{
 /* meta chips row — technique tags, team, risk, etc */
 .reader__meta{
   display:flex;flex-wrap:wrap;gap:7px;
-  padding:16px clamp(16px,3vw,34px);border-bottom:1px solid var(--line);
+  padding:16px max(clamp(16px,3vw,34px), calc((100% - 900px) / 2));border-bottom:1px solid var(--line);
 }
 /* individual meta chip */
 .rmeta{
@@ -1006,7 +993,7 @@ kbd{
 .rmeta--risk-low,.rmeta--risk-info{border-color:var(--blue-3);color:var(--blue-2)}
 
 /* reader body — generous padding for comfortable reading */
-.reader__body{padding:28px clamp(18px,3vw,38px) 90px}
+.reader__body{padding:28px max(clamp(18px,3vw,38px), calc((100% - 900px) / 2)) 90px}
 
 /* ── MARKDOWN — high-contrast, readable rendering ──────────────────── */
 /* base markdown text — brighter color and slightly larger for readability */
