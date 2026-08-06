@@ -148,12 +148,17 @@ body::before{
    TAB BAR (nav)
    ───────────────────────────────────────────────────────────────────── */
 .tabbar{
-  position:sticky;top:26px;z-index:110;
+  position:sticky;top:20px;z-index:110;
   display:flex;align-items:stretch;gap:0;
-  width:100%;
-  background:var(--bg);
-  border-bottom:1px solid var(--line);
-  padding:0 var(--gut);
+  width:calc(100% - var(--gut) * 2);
+  max-width:var(--maxw);
+  margin:0 auto;
+  background:rgba(10, 10, 10, 0.85);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--line-2);
+  border-radius:16px; /* rounder corners as requested */
+  padding:0 clamp(16px, 3vw, 24px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
 .tabbar__brand{
   display:inline-flex;align-items:center;gap:9px;flex:none;
