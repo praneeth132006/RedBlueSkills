@@ -498,8 +498,21 @@
       return;
     }
 
+    var limit = 12;
+    var isTruncated = !state.q && state.team === 'all' && state.vertical === 'all' && rows.length > limit;
+    var showingRows = isTruncated ? rows.slice(0, limit) : rows;
+
     var frag = document.createDocumentFragment();
-    rows.forEach(function (p, i) { frag.appendChild(pairRow(p, i + 1)); });
+    showingRows.forEach(function (p, i) { frag.appendChild(pairRow(p, i + 1)); });
+    
+    if (isTruncated) {
+      var moreContainer = el('div', 'row-actions row-actions--center');
+      var moreBtn = el('a', 'key key--wide', 'See all ' + rows.length + ' pairs →');
+      moreBtn.href = '#/skills';
+      moreContainer.appendChild(moreBtn);
+      frag.appendChild(moreContainer);
+    }
+    
     ledgerBody.appendChild(frag);
   }
 
@@ -590,8 +603,21 @@
       return;
     }
 
+    var limit = 15;
+    var isTruncated = !state.q && state.team === 'all' && state.vertical === 'all' && rows.length > limit;
+    var showingRows = isTruncated ? rows.slice(0, limit) : rows;
+
     var frag = document.createDocumentFragment();
-    rows.forEach(function (s, i) { frag.appendChild(flatRow(s, i + 1)); });
+    showingRows.forEach(function (s, i) { frag.appendChild(flatRow(s, i + 1)); });
+    
+    if (isTruncated) {
+      var moreContainer = el('div', 'row-actions row-actions--center');
+      var moreBtn = el('a', 'key key--wide', 'See all ' + rows.length + ' skills →');
+      moreBtn.href = '#/skills';
+      moreContainer.appendChild(moreBtn);
+      frag.appendChild(moreContainer);
+    }
+
     flatBody.appendChild(frag);
   }
 

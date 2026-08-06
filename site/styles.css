@@ -1167,3 +1167,6 @@ kbd{
   .boot__line{opacity:1;transform:none}
   body::before{display:none}
 }
+
+.row-actions { padding: 16px; border-top: 1px solid var(--line); }
+.row-actions--center { text-align: center; }

@@ -334,6 +334,25 @@
       '', 'Nothing in the bundle matches `' + id + '`. Try the [documentation index](#/docs).');
   }
 
+  function openSkillIndex() {
+    var items = Object.keys(content.skills).sort().map(function (name) {
+      var s = content.skills[name];
+      // Try to parse basic meta from the markdown frontmatter for styling
+      var teamMatch = s.body.match(/team:\s*(red|blue)/i);
+      var teamStr = teamMatch ? teamMatch[1].toLowerCase() : 'red';
+      var stageMatch = s.body.match(/stage:\s*([^\r\n]+)/i);
+      var stageStr = stageMatch ? stageMatch[1] : '';
+      return '<li><a href="#/skill/' + esc(name) + '"><b><span class="rmeta rmeta--' + teamStr + '">' + teamStr.toUpperCase() + '</span> ' + esc(name) + '</b><span>' + esc(stageStr) + '</span>' +
+             '<code>' + esc(s.path) + '</code></a></li>';
+    }).join('');
+    panelKicker.textContent = 'catalog';
+    panelTitle.textContent = 'All Skills';
+    panelPath.textContent = 'complete index of offensive and defensive capabilities';
+    panelMeta.innerHTML = ''; panelMeta.setAttribute('hidden', '');
+    panelBody.innerHTML = '<ul class="doclist">' + items + '</ul>';
+    open();
+  }
+
   /* ------------------------------------------------------------------ *
    * router
    * ------------------------------------------------------------------ */
@@ -347,6 +366,7 @@
     if ((m = /^#\/skill\/(.+)$/.exec(h))) return openSkill(decodeURIComponent(m[1]));
     if ((m = /^#\/doc\/(.+)$/.exec(h))) return openDoc(decodeURIComponent(m[1]));
     if (/^#\/docs\/?$/.test(h)) return openDocIndex();
+    if (/^#\/skills\/?$/.test(h)) return openSkillIndex();
     close();
   }
 
