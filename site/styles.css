@@ -153,12 +153,12 @@ body::before{
   width:calc(100% - var(--gut) * 2);
   max-width:var(--maxw);
   margin:0 auto;
-  background:rgba(10, 10, 10, 0.85);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border:1px solid var(--line-2);
-  border-radius:16px; /* rounder corners as requested */
+  background:rgba(10, 10, 10, 0.7);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:100px;
   padding:0 clamp(16px, 3vw, 24px);
-  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
 }
 .tabbar__brand{
   display:inline-flex;align-items:center;gap:9px;flex:none;
@@ -173,12 +173,12 @@ body::before{
 
 .tabbar__tabs{display:flex;align-items:stretch;margin-left:8px}
 .tabbar__tabs a{
-  display:inline-flex;align-items:center;padding:0 15px;
-  color:var(--ink-3);border-bottom:1px solid transparent;margin-bottom:-1px;
+  display:inline-flex;align-items:center;padding:6px 14px; margin:auto 4px;
+  color:var(--ink-3);border-radius:100px;
   transition:color .12s,background .12s,border-color .12s;
 }
 .tabbar__tabs a:hover{color:var(--ink);background:var(--bg-2)}
-.tabbar__tabs a.is-here{color:var(--ink);border-bottom-color:var(--blue)}
+.tabbar__tabs a.is-here{color:#fff;background:rgba(255,255,255,0.06)}
 
 .tabbar__end{display:flex;align-items:center;gap:8px;margin-left:auto;padding-left:12px}
 .tabbar__burger{
@@ -189,7 +189,8 @@ body::before{
 /* key-cap style link/button — the generic action affordance */
 .key{
   display:inline-flex;align-items:center;gap:7px;
-  padding:5px 11px;border:1px solid var(--line-2);
+  padding:6px 14px;border:1px solid var(--line-2);
+  border-radius:100px;
   color:var(--ink-2);white-space:nowrap;
   transition:color .12s,background .12s,border-color .12s;
 }
@@ -418,8 +419,7 @@ main{
    COVERAGE TAPE
    ───────────────────────────────────────────────────────────────────── */
 .tape{
-  display:grid;gap:6px;padding-block:8px 4px;overflow:hidden;
-  border-block:1px solid var(--line);
+  display:grid;gap:6px;padding-block:12px 8px;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
@@ -429,8 +429,7 @@ main{
 .tape__rail:hover .tape__track{animation-play-state:paused}
 @keyframes tape{to{transform:translateX(-50%)}}
 .tape__i{
-  flex:none;padding:0 14px;font-size:11px;color:var(--ink-3);white-space:nowrap;
-  border-right:1px solid var(--line);
+  flex:none;padding:0 18px;font-size:11px;color:var(--ink-3);white-space:nowrap;
 }
 .tape__i b{color:var(--ink-5);font-weight:400}
 .tape__i em{font-style:normal;color:var(--ink-2)}
