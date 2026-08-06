@@ -20,43 +20,45 @@
    TOKENS
    ───────────────────────────────────────────────────────────────────── */
 :root{
-  --bg:#000000;
-  --bg-1:#070707;      /* panel fill */
-  --bg-2:#0e0e0e;      /* raised: bars, chips */
-  --bg-3:#161616;      /* hover */
+  --bg:#000000;           /* pure black background — unchanged */
+  --bg-1:#0a0a0a;        /* panel fill — slightly brighter for subtle depth */
+  --bg-2:#141414;        /* raised: bars, chips — more visible separation */
+  --bg-3:#1e1e1e;        /* hover — clearer hover feedback */
 
-  --ink:#e8e8e8;       /* primary */
-  --ink-2:#9c9c9c;     /* body */
-  --ink-3:#6e6e6e;     /* meta */
-  --ink-4:#4a4a4a;     /* faint */
-  --ink-5:#2e2e2e;     /* rules */
+  /* ── INK: bumped all values for high-contrast readability ── */
+  --ink:#f5f5f5;         /* primary text — near-pure white for maximum readability */
+  --ink-2:#c8c8c8;       /* body text — significantly brighter (was #9c9c9c) */
+  --ink-3:#9a9a9a;       /* meta text — now clearly readable (was #6e6e6e) */
+  --ink-4:#6e6e6e;       /* faint text — still subtle but visible (was #4a4a4a) */
+  --ink-5:#484848;       /* rules/accents — visible as structural elements (was #2e2e2e) */
 
-  --line:#242424;
-  --line-2:#3a3a3a;
-  --line-3:#585858;
+  /* ── LINES: bumped for visible borders and dividers ── */
+  --line:#303030;        /* primary dividers — clearly visible now (was #242424) */
+  --line-2:#4a4a4a;      /* secondary borders — better definition (was #3a3a3a) */
+  --line-3:#6a6a6a;      /* tertiary accents — stronger presence (was #585858) */
 
-  --inv-bg:#e8e8e8;    /* neutral inverted block */
+  --inv-bg:#f5f5f5;      /* neutral inverted block — matches new --ink */
   --inv-ink:#000000;
 
   /* ── the two hues. ANSI-bright, tuned for legibility on true black ── */
-  --red:#ff4152;       /* offense, risk, danger */
-  --red-2:#ff8f99;     /* red text on dark fills */
-  --red-3:#5c1620;     /* red rules and dim fills */
-  --red-wash:rgba(255,65,82,.10);
-  --red-bleed:rgba(255,65,82,.55);
+  --red:#ff4152;         /* offense, risk, danger — unchanged (already high-contrast) */
+  --red-2:#ff8f99;       /* red text on dark fills */
+  --red-3:#5c1620;       /* red rules and dim fills */
+  --red-wash:rgba(255,65,82,.12);    /* slightly stronger wash for visibility */
+  --red-bleed:rgba(255,65,82,.60);   /* stronger glow/bleed effect */
 
-  --blue:#4d9bff;      /* defense, links, focus */
+  --blue:#4d9bff;        /* defense, links, focus — unchanged (already high-contrast) */
   --blue-2:#9cc6ff;
-  --blue-3:#123258;
-  --blue-wash:rgba(77,155,255,.10);
-  --blue-bleed:rgba(77,155,255,.55);
+  --blue-3:#1a3d6e;      /* brighter blue border — more visible (was #123258) */
+  --blue-wash:rgba(77,155,255,.12);  /* slightly stronger wash for visibility */
+  --blue-bleed:rgba(77,155,255,.60); /* stronger glow/bleed effect */
 
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 
-  --ch:0.6em;          /* nominal character advance for JetBrains Mono */
+  --ch:0.6em;            /* nominal character advance for JetBrains Mono */
   --maxw:1240px;
   --gut:clamp(16px,4vw,56px);
-  --row:1.5;           /* the line grid everything snaps to */
+  --row:1.5;             /* the line grid everything snaps to */
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -93,10 +95,11 @@ img,svg{max-width:100%}
 ::selection{background:var(--blue);color:#000}
 :focus-visible{outline:1px solid var(--blue);outline-offset:2px}
 
+/* inline code — brighter background and text for visibility */
 code{
   font-family:inherit;font-size:1em;
-  color:var(--ink);background:var(--bg-2);
-  padding:0 .35em;border:1px solid var(--line);
+  color:#ffffff;background:var(--bg-3);
+  padding:.1em .4em;border:1px solid var(--line-2);
 }
 pre code{background:none;border:none;padding:0}
 
@@ -238,44 +241,86 @@ main{
 /* ─────────────────────────────────────────────────────────────────────
    HERO
    ───────────────────────────────────────────────────────────────────── */
-.hero{padding-block:clamp(34px,5vw,64px) clamp(30px,4vw,52px)}
+/* hero section — animated grid background for cybersecurity feel */
+.hero{
+  padding-block:clamp(34px,5vw,64px) clamp(30px,4vw,52px);
+  position:relative;
+  overflow:hidden;
+}
+/* animated subtle grid background behind the hero — gives depth and a cyber feel */
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:60px 60px;
+  opacity:.18;
+  animation:heroGrid 25s linear infinite;
+}
+/* slow diagonal drift animation for the grid — adds life to the landing page */
+@keyframes heroGrid{
+  0%{transform:translate(0,0)}
+  100%{transform:translate(60px,60px)}
+}
+/* radial fade-out so the grid doesn't dominate — focuses attention on hero content */
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 70% at 50% 40%,transparent 30%,var(--bg) 85%);
+}
+/* ensure all hero children sit above the grid background */
+.hero > *{position:relative;z-index:1}
 
+/* boot log — slower, more dramatic typing-in animation */
 .boot{margin-bottom:clamp(26px,4vw,42px);font-size:12.5px;color:var(--ink-3)}
 .boot__line{
-  opacity:0;transform:translateY(-2px);
-  animation:bootIn .01s linear forwards;
+  opacity:0;transform:translateY(-6px);
+  animation:bootIn .35s ease-out forwards;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.boot__line:nth-child(1){animation-delay:.10s}
-.boot__line:nth-child(2){animation-delay:.28s}
-.boot__line:nth-child(3){animation-delay:.46s}
-.boot__line:nth-child(4){animation-delay:.64s}
+/* staggered delays — each line types in one after another, slower for drama */
+.boot__line:nth-child(1){animation-delay:.15s}
+.boot__line:nth-child(2){animation-delay:.55s}
+.boot__line:nth-child(3){animation-delay:.95s}
+.boot__line:nth-child(4){animation-delay:1.35s}
+/* boot-in keyframe — slides up and fades in */
 @keyframes bootIn{to{opacity:1;transform:none}}
 .boot b{color:var(--blue);font-weight:700}
-.boot__line--warn b{background:var(--red);color:#000;padding:0 3px;font-weight:700}
+.boot__line--warn b{background:var(--red);color:#000;padding:0 5px;font-weight:700}
 .boot__line--warn{color:var(--red-2)}
 .boot span{color:var(--ink)}
 
 /* one continuous line of terminal output: prompt, text, and caret all inline */
 .hero__h1{
-  font-size:clamp(20px,4.2vw,46px);
-  line-height:1.24;letter-spacing:-.035em;font-weight:700;
+  font-size:clamp(22px,4.4vw,50px);
+  line-height:1.22;letter-spacing:-.035em;font-weight:700;
   margin-bottom:clamp(26px,4vw,42px);
-  max-width:24ch;               /* wrap the sentence, not the words */
+  max-width:24ch;
 }
-.hero__prompt{color:var(--red);margin-right:.5ch;text-shadow:0 0 16px var(--red-bleed)}
-/* "agent" is the offensive actor, "run" is the outcome you can act on */
-.hero__type .hl-red{color:var(--red);text-shadow:0 0 30px var(--red-bleed)}
+/* red $ prompt — larger glow for visual punch */
+.hero__prompt{color:var(--red);margin-right:.5ch;text-shadow:0 0 22px var(--red-bleed)}
+/* "agent" pulsing glow — draws attention to the key word */
+.hero__type .hl-red{
+  color:var(--red);
+  text-shadow:0 0 30px var(--red-bleed);
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+/* subtle pulsing glow animation on key hero words */
+@keyframes pulseGlow{
+  0%,100%{text-shadow:0 0 30px var(--red-bleed)}
+  50%{text-shadow:0 0 50px var(--red-bleed),0 0 80px rgba(255,65,82,.25)}
+}
+/* "run" keyword — inverted blue block with stronger glow */
 .hero__type em{
   font-style:normal;
   background:var(--blue);color:#000;
-  padding:0 .22em;
-  box-shadow:0 0 34px var(--blue-bleed);
+  padding:0 .25em;
+  box-shadow:0 0 40px var(--blue-bleed),0 0 80px rgba(77,155,255,.2);
 }
+/* blinking terminal caret — thicker and with stronger blue glow */
 .caret{
-  display:inline-block;width:.55em;height:.9em;vertical-align:baseline;
+  display:inline-block;width:.6em;height:.92em;vertical-align:baseline;
   margin-left:.22ch;background:var(--blue);
-  box-shadow:0 0 14px var(--blue-bleed);
+  box-shadow:0 0 20px var(--blue-bleed);
   animation:blink 1.05s steps(1) infinite;
 }
 @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
@@ -285,9 +330,22 @@ main{
   gap:clamp(20px,4vw,52px);align-items:start;
   padding-bottom:clamp(26px,4vw,40px);
 }
-.hero__lede{color:var(--ink-2);max-width:62ch;font-size:13.5px}
-.hero__lede b{color:var(--ink);font-weight:700}
-.hero__act{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+/* hero lead paragraph — brighter text for readability */
+.hero__lede{color:var(--ink-2);max-width:62ch;font-size:14px;line-height:1.65}
+.hero__lede b{color:#ffffff;font-weight:700}
+.hero__act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* hero CTA command button — prominent with a glowing blue border */
+.hero__act .cmd{
+  border-color:var(--blue-3);
+  box-shadow:0 0 16px rgba(77,155,255,.15);
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.hero__act .cmd:hover{
+  border-color:var(--blue);
+  box-shadow:0 0 28px rgba(77,155,255,.3);
+  background:var(--bg-2);
+}
 
 /* legend — teaches the form language before the table uses it */
 .legend{
@@ -304,8 +362,10 @@ main{
   min-width:5ch;padding:1px 5px;flex:none;
   font-size:10.5px;font-weight:700;letter-spacing:.1em;line-height:1.5;
 }
-.mark--red{background:var(--red);color:#000;box-shadow:0 0 10px var(--red-wash)}
-.mark--blue{background:var(--blue);color:#000;box-shadow:0 0 10px var(--blue-wash)}
+/* red mark with subtle glow for team identification */
+.mark--red{background:var(--red);color:#000;box-shadow:0 0 12px var(--red-wash)}
+/* blue mark with subtle glow for team identification */
+.mark--blue{background:var(--blue);color:#000;box-shadow:0 0 12px var(--blue-wash)}
 .mark--pair{
   min-width:0;padding:1px 0;letter-spacing:-.05em;
   background:linear-gradient(90deg,var(--red),var(--blue));
@@ -313,14 +373,26 @@ main{
   color:transparent;-webkit-text-fill-color:transparent;
 }
 
-/* gauges */
+/* gauges — stats cards with hover micro-animation */
 .gauges{display:grid;grid-template-columns:repeat(5,1fr)}
 .gauge{
   padding:16px 16px 14px;border-right:1px solid var(--line);
   display:grid;gap:5px;align-content:start;
+  transition:background .2s,transform .15s,box-shadow .2s;
 }
 .gauge:last-child{border-right:none}
-.gauge__n{font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1;letter-spacing:-.03em}
+/* hover effect on gauge cards — subtle lift and glow for interactivity feel */
+.gauge:hover{
+  background:var(--bg-2);
+  transform:translateY(-2px);
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+/* large counter number — slightly bigger with better letter spacing */
+.gauge__n{
+  font-size:clamp(24px,2.8vw,36px);font-weight:700;line-height:1;letter-spacing:-.03em;
+  color:#ffffff;
+}
+/* gauge label — slightly brighter for readability */
 .gauge__l{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
 .gauge__bar{
   font-size:10px;line-height:1.4;color:var(--ink-5);
@@ -328,6 +400,14 @@ main{
 }
 .gauge__bar .r{color:var(--red)}
 .gauge__bar .b{color:var(--blue)}
+
+/* glowing divider between hero and library — gradient red-to-blue line */
+.hero + .tape::before{
+  content:"";display:block;height:1px;
+  background:linear-gradient(90deg,var(--red),var(--blue));
+  box-shadow:0 0 12px var(--red-bleed),0 0 12px var(--blue-bleed);
+  margin-bottom:8px;
+}
 
 /* ─────────────────────────────────────────────────────────────────────
    COVERAGE TAPE
@@ -538,20 +618,25 @@ kbd{
 /* ─────────────────────────────────────────────────────────────────────
    COMMAND BUTTON
    ───────────────────────────────────────────────────────────────────── */
+/* command button — the copyable terminal command affordance */
 .cmd{
   display:inline-flex;align-items:center;gap:11px;max-width:100%;
   padding:10px 13px;border:1px solid var(--line-2);background:var(--bg-1);
-  transition:border-color .12s,background .12s;
+  transition:border-color .18s,background .18s,box-shadow .18s;
 }
-.cmd:hover{border-color:var(--blue-3);background:var(--bg-2)}
+/* hover: blue border glow to indicate interactivity */
+.cmd:hover{border-color:var(--blue-3);background:var(--bg-2);box-shadow:0 0 10px rgba(77,155,255,.08)}
 .cmd--sm{padding:6px 11px;font-size:12.5px}
+/* red $ prompt in commands */
 .cmd__p{color:var(--red);flex:none}
-.cmd__t{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* command text — pure white for maximum readability */
+.cmd__t{color:#ffffff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cmd__k{
   color:var(--ink-4);font-size:11px;flex:none;margin-left:auto;padding-left:6px;
-  transition:color .12s,background .12s;
+  transition:color .15s,background .15s;
 }
 .cmd:hover .cmd__k{color:var(--ink-2)}
+/* copied state — blue highlight on the [copy] tag */
 .cmd.is-done .cmd__k{background:var(--blue);color:#000}
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -690,46 +775,115 @@ kbd{
 .tenet p{font-size:12.5px;color:var(--ink-3);max-width:52ch}
 
 /* ─────────────────────────────────────────────────────────────────────
-   FOOTER
+   FOOTER — redesigned with gradient border, prominent CTA, and polish
    ───────────────────────────────────────────────────────────────────── */
 .foot{
   width:min(100%,var(--maxw));margin-inline:auto;padding-inline:var(--gut);
-  padding-block:clamp(34px,5vw,56px) 0;border-top:1px solid var(--line);
+  padding-block:0;
+  border-top:none; /* replaced by gradient border below */
 }
+/* gradient red→blue top border — the signature visual of offense+defense */
+.foot::before{
+  content:"";display:block;height:2px;margin-bottom:clamp(34px,5vw,56px);
+  background:linear-gradient(90deg,var(--red),#7d5fba 50%,var(--blue));
+  box-shadow:0 0 20px var(--red-bleed),0 0 20px var(--blue-bleed);
+}
+
+/* authorization warning panel — slightly brighter for visibility */
 .foot__warn{
   display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
-  padding:15px 16px;margin-bottom:clamp(28px,4vw,44px);
-  border-color:var(--red-3);background:var(--red-wash);
+  padding:18px 20px;margin-bottom:clamp(28px,4vw,44px);
+  border-color:var(--red-3);background:rgba(255,65,82,.08);
+  border-left:3px solid var(--red); /* left accent for emphasis */
 }
 .foot__warnk{
   background:var(--red);color:#000;
   padding:0 7px;font-size:11px;font-weight:700;letter-spacing:.1em;white-space:nowrap;
 }
-.foot__warn p{font-size:12.5px;color:var(--ink-3);max-width:92ch}
+/* warning text — brighter so users actually read it */
+.foot__warn p{font-size:13px;color:var(--ink-2);max-width:92ch;line-height:1.6}
 .foot__warn a{color:var(--red-2);text-decoration:underline;text-underline-offset:3px}
+.foot__warn a:hover{color:var(--red)}
 
-.foot__grid{
-  display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,1fr));
-  gap:clamp(20px,3vw,44px);padding-bottom:clamp(28px,4vw,44px);
-}
-.foot__brand{display:grid;gap:13px;justify-items:start;max-width:44ch}
-.foot__brand p{font-size:12.5px;color:var(--ink-3)}
-.foot__col{display:grid;gap:7px;align-content:start}
-.foot__col h4{
-  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ink-5);font-weight:400;margin-bottom:4px;
-}
-.foot__col a{font-size:12.5px;color:var(--ink-3);width:fit-content}
-.foot__col a:hover{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
-
-.foot__sigil{
-  margin:0;padding-bottom:34px;
-  font-size:clamp(9px,1.7vw,19px);line-height:1.2;
-  color:var(--ink-5);white-space:pre;overflow-x:auto;
+/* GitHub CTA section above the footer grid — prominent call to action */
+.foot__cta{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 24px;
+  padding:28px 20px;margin-bottom:clamp(28px,4vw,44px);
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,rgba(255,65,82,.04),rgba(77,155,255,.04));
   text-align:center;
 }
-.foot__sigil .r{color:var(--red);text-shadow:0 0 18px var(--red-bleed)}
-.foot__sigil .b{color:var(--blue);text-shadow:0 0 18px var(--blue-bleed)}
+/* CTA heading */
+.foot__cta-text{
+  font-size:15px;color:var(--ink);font-weight:700;
+}
+.foot__cta-text span{color:var(--ink-3);font-weight:400;font-size:13px;display:block;margin-top:4px}
+/* star on github button — prominent inverted button */
+.foot__cta .key{
+  padding:10px 22px;font-size:13px;font-weight:700;
+  background:var(--blue);color:#000;border-color:var(--blue);
+  transition:background .2s,box-shadow .2s,transform .15s;
+}
+.foot__cta .key:hover{
+  background:#6db3ff;
+  box-shadow:0 0 24px var(--blue-bleed);
+  transform:translateY(-1px);
+}
+
+/* footer link grid — wider brand column, better spacing */
+.foot__grid{
+  display:grid;grid-template-columns:minmax(0,1.7fr) repeat(3,minmax(0,1fr));
+  gap:clamp(24px,3vw,48px);padding-bottom:clamp(32px,4vw,52px);
+}
+/* brand section — the logo and description in the footer */
+.foot__brand{display:grid;gap:14px;justify-items:start;max-width:44ch}
+.foot__brand p{font-size:13px;color:var(--ink-2);line-height:1.6}
+/* footer nav columns */
+.foot__col{display:grid;gap:9px;align-content:start}
+.foot__col h4{
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;margin-bottom:6px;
+  padding-bottom:6px;border-bottom:1px solid var(--line); /* underline accent */
+}
+/* footer links — brighter with animated underline on hover */
+.foot__col a{
+  font-size:13px;color:var(--ink-2);width:fit-content;
+  padding:2px 0;position:relative;
+  transition:color .15s;
+}
+.foot__col a::after{
+  content:"";position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--blue);transition:width .25s ease;
+}
+.foot__col a:hover{color:var(--blue)}
+.foot__col a:hover::after{width:100%}
+
+/* ASCII sigil — the iconic red/blue bound-pair art with animation on hover */
+.foot__sigil{
+  margin:0;padding-block:24px 16px;
+  font-size:clamp(10px,1.8vw,20px);line-height:1.2;
+  color:var(--ink-4);white-space:pre;overflow-x:auto;
+  text-align:center;
+  transition:transform .3s;
+}
+.foot__sigil:hover{transform:scale(1.03)}
+/* red glyphs with stronger glow */
+.foot__sigil .r{color:var(--red);text-shadow:0 0 22px var(--red-bleed)}
+/* blue glyphs with stronger glow */
+.foot__sigil .b{color:var(--blue);text-shadow:0 0 22px var(--blue-bleed)}
+
+/* back-to-top button — sits at the bottom of the footer */
+.foot__top{
+  display:flex;justify-content:center;padding:16px 0 8px;
+}
+.foot__top a{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border:1px solid var(--line-2);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);transition:color .15s,border-color .15s,transform .2s;
+}
+.foot__top a:hover{color:var(--blue);border-color:var(--blue);transform:translateY(-2px)}
+.foot__top a::before{content:"↑ "}
 
 /* ─────────────────────────────────────────────────────────────────────
    TOAST
@@ -745,119 +899,195 @@ kbd{
 .toast.is-on{opacity:1;transform:translate(-50%,0)}
 
 /* ═════════════════════════════════════════════════════════════════════
-   READER PANEL — DOM built by reader.js
+   READER PANEL — slide-in/out from the right with smooth animations
+   DOM built by reader.js
    ═════════════════════════════════════════════════════════════════════ */
-.reader{position:fixed;inset:0;z-index:150;display:flex;justify-content:flex-end}
+.reader{
+  position:fixed;inset:0;z-index:150;display:flex;justify-content:flex-end;
+}
+/* hidden state — completely removed from layout */
 .reader[hidden]{display:none}
-.reader__scrim{position:absolute;inset:0;background:rgba(0,0,0,.8)}
+
+/* backdrop scrim — fades in from transparent */
+.reader__scrim{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  animation:scrimIn .3s ease-out forwards;
+}
+/* scrim fade-in animation */
+@keyframes scrimIn{to{background:rgba(0,0,0,.82)}}
+
+/* closing state — scrim fades back out */
+.reader.is-closing .reader__scrim{
+  animation:scrimOut .25s ease-in forwards;
+}
+@keyframes scrimOut{from{background:rgba(0,0,0,.82)}to{background:rgba(0,0,0,0)}}
+
+/* the slide-in panel — slides from right edge with a subtle ease */
 .reader__panel{
   position:relative;width:min(900px,100%);height:100%;overflow-y:auto;
   background:var(--bg);border-left:1px solid var(--blue-3);outline:none;
+  animation:panelSlideIn .35s cubic-bezier(.22,1,.36,1) forwards;
 }
+/* panel slides in from 100% right to 0 (its natural position) */
+@keyframes panelSlideIn{
+  from{transform:translateX(100%);opacity:.7}
+  to{transform:translateX(0);opacity:1}
+}
+/* closing state — slides back out to the right */
+.reader.is-closing .reader__panel{
+  animation:panelSlideOut .25s ease-in forwards;
+}
+@keyframes panelSlideOut{
+  from{transform:translateX(0);opacity:1}
+  to{transform:translateX(100%);opacity:.7}
+}
+
+/* reader header — sticky at top with subtle backdrop blur */
 .reader__head{
   position:sticky;top:0;z-index:2;
   display:flex;align-items:flex-start;gap:16px;
-  padding:20px clamp(16px,3vw,34px) 16px;
-  background:var(--bg);border-bottom:1px solid var(--line);
+  padding:22px clamp(16px,3vw,34px) 18px;
+  background:rgba(0,0,0,.92);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
 }
 .reader__headtext{min-width:0;flex:1}
+/* kicker label (e.g. "red · execution") */
 .reader__kicker{
-  display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);
+  display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);
 }
-/* the kicker reads "red · initial-access" — tint it to the team it names.
-   Falls back to blue where :has() is unsupported. */
+/* team-aware kicker coloring — red for red skills, blue for blue skills */
 .reader__panel:has(.rmeta--red) .reader__kicker{color:var(--red)}
 .reader__panel:has(.rmeta--blue) .reader__kicker{color:var(--blue)}
+/* skill title — larger and bolder */
 .reader__title{
-  font-size:clamp(17px,2.4vw,25px);letter-spacing:-.02em;font-weight:700;
+  font-size:clamp(18px,2.6vw,28px);letter-spacing:-.02em;font-weight:700;
   margin:.35em 0 .35em;overflow-wrap:anywhere;
+  color:#ffffff;
 }
-.reader__path{font-size:11.5px;color:var(--ink-5);background:none;border:none;padding:0}
+/* file path display */
+.reader__path{font-size:11.5px;color:var(--ink-4);background:none;border:none;padding:0}
+/* close button — clear and accessible */
 .reader__close{
-  flex:none;font-size:11px;letter-spacing:.12em;color:var(--ink-3);
-  padding:5px 11px;border:1px solid var(--line-2);
+  flex:none;font-size:11px;letter-spacing:.12em;color:var(--ink-2);
+  padding:6px 12px;border:1px solid var(--line-2);
+  transition:all .15s;
 }
 .reader__close::before{content:"[ "}
 .reader__close::after{content:" ]"}
 .reader__close:hover{background:var(--blue);color:#000;border-color:var(--blue)}
 
+/* meta chips row — technique tags, team, risk, etc */
 .reader__meta{
-  display:flex;flex-wrap:wrap;gap:6px;
-  padding:15px clamp(16px,3vw,34px);border-bottom:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:7px;
+  padding:16px clamp(16px,3vw,34px);border-bottom:1px solid var(--line);
 }
+/* individual meta chip */
 .rmeta{
   display:inline-flex;align-items:center;gap:7px;
-  font-size:11px;color:var(--ink-2);padding:3px 9px;border:1px solid var(--line);
+  font-size:11.5px;color:var(--ink);padding:4px 10px;border:1px solid var(--line);
 }
-.rmeta b{color:var(--ink-5);font-weight:400;letter-spacing:.12em;text-transform:uppercase;font-size:9.5px}
+/* chip labels — brighter for readability */
+.rmeta b{color:var(--ink-3);font-weight:400;letter-spacing:.12em;text-transform:uppercase;font-size:9.5px}
 .rmeta a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+/* red/blue team chips */
 .rmeta--red{background:var(--red);color:#000;border-color:var(--red)}
 .rmeta--red b{color:rgba(0,0,0,.55)}
 .rmeta--blue{background:var(--blue);color:#000;border-color:var(--blue)}
 .rmeta--blue b{color:rgba(0,0,0,.55)}
+/* risk level chips — color-coded for quick scanning */
 .rmeta--risk-high,.rmeta--risk-critical{border-color:var(--red-3);background:var(--red-wash);color:var(--red);font-weight:700}
 .rmeta--risk-medium{border-color:var(--red-3);color:var(--red-2)}
 .rmeta--risk-low,.rmeta--risk-info{border-color:var(--blue-3);color:var(--blue-2)}
 
-.reader__body{padding:24px clamp(16px,3vw,34px) 90px}
+/* reader body — generous padding for comfortable reading */
+.reader__body{padding:28px clamp(18px,3vw,38px) 90px}
 
-/* markdown */
-.md{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
+/* ── MARKDOWN — high-contrast, readable rendering ──────────────────── */
+/* base markdown text — brighter color and slightly larger for readability */
+.md{font-size:14px;line-height:1.76;color:var(--ink-2)}
 .md > :first-child{margin-top:0}
+/* all headings — pure white for strong visual hierarchy */
 .md h1,.md h2,.md h3,.md h4,.md h5,.md h6{
-  color:var(--ink);letter-spacing:-.015em;line-height:1.3;
-  margin:2em 0 .7em;font-weight:700;
+  color:#ffffff;letter-spacing:-.015em;line-height:1.3;
+  margin:2.2em 0 .8em;font-weight:700;
 }
-.md h1{font-size:1.5em}
-.md h1::before,.md h2::before,.md h3::before{color:var(--blue);opacity:.7}
+/* h1 — largest heading, stands out clearly */
+.md h1{font-size:1.6em}
+/* heading prefix markers (# ## ###) — brighter blue, fully opaque */
+.md h1::before,.md h2::before,.md h3::before{color:var(--blue);opacity:1}
 .md h1::before{content:"# "}
 .md h2::before{content:"## "}
 .md h3::before{content:"### "}
-.md h2{font-size:1.22em;padding-bottom:.36em;border-bottom:1px solid var(--line)}
-.md h3{font-size:1.06em}
-.md h4,.md h5,.md h6{font-size:1em;color:var(--ink-2)}
-.md p{margin:0 0 1.05em}
-.md strong{color:var(--ink);font-weight:700}
-.md a{color:var(--blue);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--blue-3)}
+/* h2 — with bottom border AND left accent for visual anchoring */
+.md h2{
+  font-size:1.28em;padding-bottom:.4em;
+  border-bottom:1px solid var(--line);
+  padding-left:12px;border-left:3px solid var(--blue);
+}
+/* h3 — slightly larger than before */
+.md h3{font-size:1.1em}
+.md h4,.md h5,.md h6{font-size:1em;color:var(--ink)}
+/* paragraphs — comfortable line spacing */
+.md p{margin:0 0 1.1em}
+/* bold text — pure white for maximum emphasis */
+.md strong{color:#ffffff;font-weight:700}
+/* links — bright blue, clearly visible with better underline */
+.md a{
+  color:var(--blue);text-decoration:underline;
+  text-underline-offset:3px;text-decoration-color:rgba(77,155,255,.5);
+  transition:text-decoration-color .15s;
+}
 .md a:hover{text-decoration-color:var(--blue)}
-.md ul,.md ol{margin:0 0 1.15em;padding-left:2.2ch}
+/* lists — brighter markers and better spacing */
+.md ul,.md ol{margin:0 0 1.2em;padding-left:2.2ch}
 .md ul:not(.doclist){list-style:none}
-.md ul:not(.doclist) > li::before{content:"– ";color:var(--blue);opacity:.55;margin-left:-2.2ch}
+/* list bullet — brighter blue dash, fully opaque */
+.md ul:not(.doclist) > li::before{content:"– ";color:var(--blue);opacity:.75;margin-left:-2.2ch}
 .md ol{list-style:decimal}
-.md li{margin:.3em 0}
-.md li::marker{color:var(--ink-5)}
+.md li{margin:.35em 0}
+.md li::marker{color:var(--ink-3)}
 .md hr{border:none;border-top:1px solid var(--line);margin:2em 0}
+/* blockquotes — brighter text so content is actually readable */
 .md blockquote{
-  margin:1.2em 0;padding:.2em 0 .2em 1.4ch;
-  border-left:2px solid var(--red);color:var(--ink-3);
+  margin:1.2em 0;padding:.4em 0 .4em 1.6ch;
+  border-left:3px solid var(--red);color:var(--ink-2);
+  background:rgba(255,65,82,.03);
 }
 .md blockquote p:last-child{margin-bottom:0}
+/* code blocks — brighter background and text for readability */
 .md-pre{
-  margin:0 0 1.3em;padding:14px 16px;overflow-x:auto;
-  border:1px solid var(--line);background:var(--bg-1);
-  font-size:12px;line-height:1.7;color:var(--ink-2);
+  margin:0 0 1.3em;padding:16px 18px;overflow-x:auto;
+  border:1px solid var(--line);background:var(--bg-2);
+  font-size:12.5px;line-height:1.72;color:var(--ink);
 }
+/* tables — brighter borders and text */
 .md-tablewrap{overflow-x:auto;margin:0 0 1.3em}
-.md-table{border-collapse:collapse;width:100%;font-size:12.5px}
-.md-table th,.md-table td{padding:8px 11px;text-align:left;border:1px solid var(--line);vertical-align:top}
-.md-table th{background:var(--bg-2);color:var(--ink);font-weight:700}
+.md-table{border-collapse:collapse;width:100%;font-size:13px}
+.md-table th,.md-table td{padding:9px 12px;text-align:left;border:1px solid var(--line);vertical-align:top}
+.md-table th{background:var(--bg-2);color:#ffffff;font-weight:700}
+.md-table td{color:var(--ink-2)}
 .md-table tbody tr:hover{background:var(--bg-1)}
 
-/* the doc index lives inside .md, so it has to opt out of markdown list/link styling */
+/* ── inline code — brighter and more visible ── */
+
+/* the doc index lives inside .md — opts out of markdown list/link styling */
 .doclist{display:grid;gap:0;border:1px solid var(--line);margin:0;padding:0;list-style:none}
 .doclist li{margin:0}
 .doclist li::before{content:none !important}
 .doclist li + li a{border-top:1px solid var(--line)}
 .doclist a{
-  display:grid;gap:1px;padding:11px 14px;transition:background .12s;
+  display:grid;gap:2px;padding:12px 16px;transition:background .15s;
   text-decoration:none;color:inherit;
 }
 .doclist a:hover{background:var(--bg-2)}
 .doclist a:hover b{color:var(--blue)}
-.doclist b{font-size:13.5px;font-weight:700;color:var(--ink)}
+/* doc list titles — pure white for clear visibility */
+.doclist b{font-size:14px;font-weight:700;color:#ffffff}
 .doclist b::before{content:"› ";color:var(--blue)}
-.doclist span{font-size:12.5px;color:var(--ink-3)}
-.doclist code{font-size:11px;color:var(--ink-5);background:none;border:none;padding:0}
+.doclist span{font-size:13px;color:var(--ink-2)}
+.doclist code{font-size:11.5px;color:var(--ink-3);background:none;border:none;padding:0}
 
 /* ═════════════════════════════════════════════════════════════════════
    RESPONSIVE
@@ -913,6 +1143,9 @@ kbd{
   .table--flat .table__head{display:none}
   .flat{grid-template-columns:4ch 6ch 1fr;gap:0 8px;padding:12px}
   .flat__stage,.flat__risk{grid-column:3;font-size:10.5px}
+
+  /* footer CTA stacks on mobile */
+  .foot__cta{flex-direction:column;text-align:center}
 }
 
 @media (max-width:600px){
@@ -927,6 +1160,8 @@ kbd{
   .foot__grid{grid-template-columns:1fr}
   .foot__warn{grid-template-columns:1fr;gap:9px}
   .row-actions--center{justify-content:flex-start}
+  /* hero grid background — still visible but subtler on small screens */
+  .hero::before{opacity:.1}
 }
 
 /* ═════════════════════════════════════════════════════════════════════

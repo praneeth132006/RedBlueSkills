@@ -627,4 +627,44 @@
     if (isNaN(then)) return true;
     return (Date.now() - then) > 1000 * 60 * 60 * 24 * 183;
   }
+
+  /* ─────────────────────────────────────────────────────────────────
+     SCROLL REVEAL — sections and panels fade-in as they enter the viewport.
+     Uses IntersectionObserver for performance. Respects prefers-reduced-motion.
+     ───────────────────────────────────────────────────────────────── */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    /* inject the CSS for the reveal animation once, via a <style> tag */
+    var revealStyle = document.createElement('style');
+    revealStyle.textContent =
+      /* initial hidden state — elements start invisible and slightly below */
+      '.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease-out,transform .55s ease-out}' +
+      /* revealed state — elements become fully visible and move to their natural position */
+      '.reveal.is-visible{opacity:1;transform:none}' +
+      /* stagger delays for child elements within a revealed container */
+      '.reveal-d1{transition-delay:.08s}' +
+      '.reveal-d2{transition-delay:.16s}' +
+      '.reveal-d3{transition-delay:.24s}';
+    document.head.appendChild(revealStyle);
+
+    /* mark all sections, panels, and major content blocks for reveal */
+    $$('.sect__head, .panel, .pipe, .tenets, .ex, .steps, .foot__warn, .foot__cta, .foot__grid, .foot__sigil').forEach(function (el) {
+      el.classList.add('reveal');
+    });
+
+    /* create an observer that triggers the reveal when elements are 15% visible */
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          /* add the visible class to trigger the CSS transition */
+          entry.target.classList.add('is-visible');
+          /* stop observing once revealed — no need to re-animate */
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    /* observe all marked elements */
+    $$('.reveal').forEach(function (el) { revealObs.observe(el); });
+  }
+
 })();
