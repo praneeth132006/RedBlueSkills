@@ -29,6 +29,7 @@
     <span>redblueskills</span>
   </a>
   <nav class="tabbar__tabs" aria-label="Sections">
+    <a href="#map">map</a>
     <a href="#library">library</a>
     <a href="#attack">attack</a>
     <a href="#start">start</a>
@@ -174,6 +175,37 @@ recommends checking all inputs.
   <span class="hl-key">"action"</span>: <span class="hl-str">"Deployed network egress filter rules."</span>
 }
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 00 · COVERAGE MAP ═══════════════ -->
+<section class="sect" id="map">
+  <div class="sect__head">
+    <span class="sect__num">00</span>
+    <h2>the coverage map</h2>
+    <p>Every surface, every stage of the kill chain. Lit paths are covered by paired
+       red&nbsp;↔&nbsp;blue skills; a ring means the whole cell is validated end-to-end.
+       Dark branches are surfaces not yet started.</p>
+  </div>
+
+  <div class="cmap" data-cmap>
+    <div class="cmap__stage">
+      <svg class="cmap__svg" data-cmap-svg viewBox="0 0 1000 720" role="img"
+           aria-label="Radial coverage map of RedBlueSkills surfaces and kill-chain stages"></svg>
+      <div class="cmap__tip" data-cmap-tip hidden></div>
+    </div>
+
+    <div class="cmap__legend" aria-hidden="true">
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--red"></i>offense (red)</span>
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--blue"></i>defense (blue)</span>
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--both"></i>paired</span>
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--val"></i>validated</span>
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--dark"></i>planned</span>
+    </div>
+
+    <div class="cmap__matrix" data-cmap-matrix>
+      <p class="empty">reading catalog.json …</p>
     </div>
   </div>
 </section>
@@ -555,5 +587,6 @@ recommends checking all inputs.
 
 <script src="./reader.js" defer></script>
 <script src="./app.js" defer></script>
+<script src="./map.js" defer></script>
 </body>
 </html>

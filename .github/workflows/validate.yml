@@ -13,6 +13,7 @@ jobs:
   skills:
     name: Validate skills
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
@@ -41,6 +42,7 @@ jobs:
   cli:
     name: Smoke-test the CLI
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 

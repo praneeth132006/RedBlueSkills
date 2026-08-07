@@ -25,9 +25,95 @@ REPO = Path(__file__).resolve().parent.parent
 SKILLS = REPO / "skills"
 CATALOG_JSON = REPO / "catalog.json"
 INDEX_MD = REPO / "INDEX.md"
+COVERAGE_MD = REPO / "COVERAGE.md"
 SITE_CATALOG = REPO / "site" / "catalog.json"  # served copy the website fetches
 
 TEAM_BADGE = {"red": "🔴 red", "blue": "🔵 blue", "purple": "🟣 purple"}
+
+# Surfaces in display order, and which are planned (no skills yet, shown dark on
+# the site's coverage map). Keep in sync with SKILL-SPEC APP_TYPES + COVERAGE.md.
+SURFACES_ORDER = ["web-app", "api", "cloud-native", "ci-cd", "mobile", "network"]
+PLANNED_SURFACES = ["mobile", "network"]
+# Kill-chain stages in canonical order: offense then defense.
+STAGE_ORDER = [
+    "recon", "initial-access", "execution", "persistence", "privilege-escalation",
+    "defense-evasion", "credential-access", "lateral-movement", "collection",
+    "exfiltration", "impact",
+    "harden", "detect", "respond", "recover", "hunt",
+]
+
+COVERAGE_BEGIN = "<!-- COVERAGE:BEGIN -->"
+COVERAGE_END = "<!-- COVERAGE:END -->"
+
+
+def build_coverage(rows: list[dict]) -> dict:
+    """Per-(surface, stage) coverage counts, for the website map and COVERAGE.md."""
+    cells: dict[str, dict[str, dict]] = {}
+    totals: dict[str, dict] = {}
+    for surface in SURFACES_ORDER:
+        cells[surface] = {}
+        totals[surface] = {"total": 0, "validated": 0, "red": 0, "blue": 0, "purple": 0}
+    for r in rows:
+        s, stage, team = r.get("app_type"), r.get("stage"), r.get("team")
+        if s not in cells or not stage:
+            continue
+        cell = cells[s].setdefault(stage, {"red": 0, "blue": 0, "purple": 0,
+                                           "validated": 0, "total": 0})
+        cell["total"] += 1
+        if team in ("red", "blue", "purple"):
+            cell[team] += 1
+            totals[s][team] += 1
+        totals[s]["total"] += 1
+        if r.get("maturity") == "validated":
+            cell["validated"] += 1
+            totals[s]["validated"] += 1
+    return {
+        "surfaces_order": SURFACES_ORDER,
+        "planned": PLANNED_SURFACES,
+        "stage_order": STAGE_ORDER,
+        "cells": cells,
+        "totals": totals,
+    }
+
+
+def render_coverage_md(coverage: dict) -> str:
+    """A surface x stage matrix table (only non-empty stage columns)."""
+    used_stages = [st for st in coverage["stage_order"]
+                   if any(st in coverage["cells"][s] for s in coverage["surfaces_order"])]
+    head = "| surface | " + " | ".join(used_stages) + " | **total** |"
+    sep = "|" + "---|" * (len(used_stages) + 2)
+    lines = [head, sep]
+    for s in coverage["surfaces_order"]:
+        planned = s in coverage["planned"]
+        label = f"`{s}`" + (" _(planned)_" if planned else "")
+        cellvals = []
+        for st in used_stages:
+            c = coverage["cells"][s].get(st)
+            if not c:
+                cellvals.append("·" if not planned else "")
+            else:
+                mark = "✓" if c["validated"] == c["total"] else ""
+                cellvals.append(f"{c['total']}{mark}")
+        tot = coverage["totals"][s]["total"]
+        lines.append(f"| {label} | " + " | ".join(cellvals)
+                     + f" | **{tot or '—'}** |")
+    grand = sum(coverage["totals"][s]["total"] for s in coverage["surfaces_order"])
+    val = sum(coverage["totals"][s]["validated"] for s in coverage["surfaces_order"])
+    legend = (f"\n_{grand} skills across {len([s for s in coverage['surfaces_order'] if coverage['totals'][s]['total']])} "
+              f"live surfaces; {val} validated end-to-end. `·` = empty slot, "
+              f"`✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._")
+    return "\n".join(lines) + "\n" + legend
+
+
+def render_coverage_doc(coverage: dict) -> str:
+    """COVERAGE.md with the matrix spliced between the COVERAGE markers."""
+    src = COVERAGE_MD.read_text(encoding="utf-8")
+    if COVERAGE_BEGIN not in src or COVERAGE_END not in src:
+        return src
+    pre = src.split(COVERAGE_BEGIN)[0]
+    post = src.split(COVERAGE_END)[1]
+    table = render_coverage_md(coverage)
+    return f"{pre}{COVERAGE_BEGIN}\n\n{table}\n\n{COVERAGE_END}{post}"
 
 
 def collect() -> list[dict]:
@@ -55,10 +141,11 @@ def collect() -> list[dict]:
     return rows
 
 
-def render_catalog_json(rows: list[dict]) -> str:
+def render_catalog_json(rows: list[dict], coverage: dict) -> str:
     doc = {
         "schema": "redblueskills/catalog/v1",
         "count": len(rows),
+        "coverage": coverage,
         "skills": rows,
     }
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
@@ -106,8 +193,10 @@ def main() -> int:
     args = ap.parse_args()
 
     rows = collect()
-    catalog = render_catalog_json(rows)
+    coverage = build_coverage(rows)
+    catalog = render_catalog_json(rows, coverage)
     index = render_index_md(rows)
+    coverage_doc = render_coverage_doc(coverage) if COVERAGE_MD.exists() else None
 
     if args.check:
         stale = []
@@ -115,6 +204,8 @@ def main() -> int:
             stale.append("catalog.json")
         if not INDEX_MD.exists() or INDEX_MD.read_text(encoding="utf-8") != index:
             stale.append("INDEX.md")
+        if coverage_doc is not None and COVERAGE_MD.read_text(encoding="utf-8") != coverage_doc:
+            stale.append("COVERAGE.md")
         if SITE_CATALOG.parent.is_dir() and (
             not SITE_CATALOG.exists() or SITE_CATALOG.read_text(encoding="utf-8") != catalog
         ):
@@ -128,6 +219,9 @@ def main() -> int:
     CATALOG_JSON.write_text(catalog, encoding="utf-8")
     INDEX_MD.write_text(index, encoding="utf-8")
     wrote = ["catalog.json", "INDEX.md"]
+    if coverage_doc is not None:
+        COVERAGE_MD.write_text(coverage_doc, encoding="utf-8")
+        wrote.append("COVERAGE.md")
     if SITE_CATALOG.parent.is_dir():
         SITE_CATALOG.write_text(catalog, encoding="utf-8")
         wrote.append("site/catalog.json")

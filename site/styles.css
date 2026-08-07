@@ -1463,3 +1463,79 @@ kbd{
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
+
+/* ═══════════════ COVERAGE MAP (#map / map.js) ═══════════════ */
+:root{ --green:#2ee6a6; --green-bleed:rgba(46,230,166,.55); }
+
+.cmap{ margin-top:clamp(20px,3vw,40px); }
+.cmap__stage{ position:relative; width:100%; }
+.cmap__svg{ display:block; width:100%; height:auto; max-height:min(78vh,760px);
+  background:radial-gradient(120% 90% at 50% 45%, rgba(77,155,255,.05), transparent 60%); }
+
+/* branches */
+.cmap-branch{ stroke-width:2.4; }
+.cmap-branch.is-live{ stroke:var(--line-3); opacity:.75; }
+.cmap-branch.is-planned{ stroke:var(--line); opacity:.5; stroke-dasharray:2 8; stroke-linecap:round; }
+
+/* stage beads */
+.cmap-bead{ stroke:#000; stroke-width:1.5; cursor:pointer; transition:transform .12s ease, filter .12s ease; transform-box:fill-box; transform-origin:center; }
+.cmap-bead:hover, .cmap-bead:focus{ transform:scale(1.28); outline:none; }
+.cmap-bead--red{ fill:var(--red); }
+.cmap-bead--blue{ fill:var(--blue); }
+.cmap-bead--both{ fill:#a56bff; }             /* paired = violet blend of red+blue */
+.cmap-bead--dark{ fill:#2a2a2a; }
+.cmap-ring{ fill:none; stroke:var(--green); stroke-width:1.6; opacity:.9; }
+
+/* surface label nodes */
+.cmap-node__box{ fill:var(--bg-2); stroke:var(--line-2); stroke-width:1; }
+.cmap-node.is-live .cmap-node__box{ stroke:var(--line-3); }
+.cmap-node.is-planned .cmap-node__box{ fill:#0b0b0b; stroke:var(--line); stroke-dasharray:3 5; }
+.cmap-node__name{ fill:var(--ink); font:600 13px/1 var(--mono); letter-spacing:.02em; }
+.cmap-node.is-planned .cmap-node__name{ fill:var(--ink-4); }
+.cmap-node__sub{ fill:var(--ink-3); font:400 10px/1 var(--mono); }
+.cmap-node.is-planned .cmap-node__sub{ fill:var(--ink-5); }
+
+/* centre core */
+.cmap-core{ fill:var(--bg-1); stroke:var(--blue); stroke-width:1.5; }
+.cmap-core__t{ fill:var(--ink); font:700 15px/1 var(--mono); letter-spacing:.04em; }
+
+/* tooltip */
+.cmap__tip{ position:absolute; z-index:5; pointer-events:none; max-width:200px;
+  padding:7px 10px; background:rgba(10,10,10,.96); border:1px solid var(--line-2);
+  border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,.6);
+  font:400 12px/1.45 var(--mono); color:var(--ink-2); }
+.cmap__tip b{ color:var(--ink); }
+.cmap__tip-r{ color:var(--red-2); } .cmap__tip-b{ color:var(--blue-2); }
+
+/* legend */
+.cmap__legend{ display:flex; flex-wrap:wrap; gap:14px 22px; justify-content:center;
+  margin:18px 0 6px; font:400 12px/1 var(--mono); color:var(--ink-3); }
+.cmap__lg{ display:inline-flex; align-items:center; gap:7px; }
+.cmap__sw{ width:12px; height:12px; border-radius:50%; display:inline-block; }
+.cmap__sw--red{ background:var(--red); } .cmap__sw--blue{ background:var(--blue); }
+.cmap__sw--both{ background:#a56bff; }
+.cmap__sw--val{ background:transparent; border:2px solid var(--green); }
+.cmap__sw--dark{ background:#2a2a2a; }
+
+/* matrix */
+.cmap__matrix{ margin-top:26px; overflow-x:auto; }
+.cmap-tbl{ border-collapse:collapse; width:100%; min-width:640px; font:400 12px/1 var(--mono); }
+.cmap-tbl th{ color:var(--ink-3); font-weight:500; text-align:center; padding:8px 6px; white-space:nowrap; }
+.cmap-tbl thead th{ border-bottom:1px solid var(--line); font-size:11px; }
+.cmap-tbl tbody th{ text-align:left; color:var(--ink); padding-left:2px; }
+.cmap-tbl tr.is-planned tbody th, .cmap-tbl tr.is-planned th{ color:var(--ink-4); }
+.cmap-tag{ font-size:9px; color:var(--ink-5); border:1px solid var(--line); border-radius:4px; padding:1px 4px; }
+.cmap-tbl td{ text-align:center; padding:7px 6px; position:relative;
+  border:1px solid rgba(255,255,255,.03); color:var(--ink); font-weight:600; }
+.cmap-tbl td i{ font-style:normal; color:var(--green); font-size:9px; vertical-align:super; margin-left:1px; }
+.cmap-tbl td.c-dark{ color:var(--ink-5); background:repeating-linear-gradient(-45deg,transparent,transparent 5px,rgba(255,255,255,.015) 5px,rgba(255,255,255,.015) 10px); }
+.cmap-tbl td.c-red{ background:var(--red-wash); color:var(--red-2); box-shadow:inset 0 0 0 1px rgba(255,65,82,.25); }
+.cmap-tbl td.c-blue{ background:var(--blue-wash); color:var(--blue-2); box-shadow:inset 0 0 0 1px rgba(77,155,255,.25); }
+.cmap-tbl td.c-both{ background:rgba(165,107,255,.12); color:#c6a6ff; box-shadow:inset 0 0 0 1px rgba(165,107,255,.28); }
+.cmap-tbl td.is-val{ box-shadow:inset 0 0 0 1px var(--green-bleed); }
+.cmap-tbl td.c-total{ color:var(--ink-2); background:var(--bg-2); }
+
+@media (max-width:640px){
+  .cmap__svg{ max-height:none; }
+  .cmap-node__name{ font-size:12px; }
+}
