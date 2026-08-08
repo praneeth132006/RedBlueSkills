@@ -31,8 +31,8 @@ The kind of system the skill targets. One directory per surface under `skills/`.
 | `api` | **shipping** | OWASP API Security Top 10 (2023) |
 | `cloud-native` | **shipping** (opened) | Cloud/container attack surface; MITRE ATT&CK Cloud & Containers |
 | `ci-cd` | **shipping** (opened) | OWASP Top 10 CI/CD Security Risks |
-| `mobile` | **planned** | OWASP MASVS / Mobile Top 10 |
-| `network` | **planned** | Network services & lateral movement |
+| `mobile` | **shipping** (opened) | OWASP MASVS / Mobile Top 10 |
+| `network` | **shipping** (opened) | Network services & lateral movement; MITRE ATT&CK + NIST SP 800-53 / CSF + CIS Controls v8 |
 
 ### `team` — offense, defense, or joint
 
@@ -119,16 +119,21 @@ rather than ad-hoc.
   BFLA, unrestricted access to sensitive business flows, SSRF, security
   misconfiguration, improper inventory management, unsafe consumption of APIs.
 - **`cloud-native`** → **cloud & container attack surface.** IMDS credential theft,
-  public object-storage exposure, privileged-container escape (mapped to MITRE
-  ATT&CK Cloud/Containers and CIS-style hardening).
+  public object-storage exposure, privileged-container escape, cloud IAM persistence
+  (T1098), and Kubernetes RBAC abuse — mapped across MITRE ATT&CK Cloud/Containers,
+  MITRE D3FEND, NIST SP 800-53 / SP 800-190, the NSA/CISA Kubernetes Hardening Guide,
+  and CIS Benchmarks.
 - **`ci-cd`** → **OWASP Top 10 CI/CD Security Risks.** Poisoned pipeline execution,
   insufficient credential hygiene, dependency-chain abuse, artifact
   integrity/provenance, insecure system configuration (runner abuse).
-- **`mobile`** *(planned)* → **OWASP MASVS / Mobile Top 10.** Insecure data storage,
-  hardcoded secrets, weak transport / cert-pinning, insecure deep links,
-  mobile-to-backend API abuse.
-- **`network`** *(planned)* → **network services & lateral movement.** Service/port
-  exposure, TLS/certificate weakness, credential sniffing, lateral movement.
+- **`mobile`** → **OWASP MASVS / Mobile Top 10.** Insecure data storage (M9),
+  hardcoded secrets (M1/M7), weak transport / missing cert-pinning (M5), insecure
+  deep links (M4/M8), and mobile-to-backend API abuse (M3).
+- **`network`** → **network services & lateral movement.** Service/port exposure
+  (T1046), exposed-service exploitation (T1190/T1210), TLS/certificate weakness
+  (SP 800-52r2), credential sniffing & layer-2 AiTM (T1040/T1557), and lateral
+  movement (T1021/T1550) — mapped across MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53
+  Rev 5 / CSF 2.0, and CIS Controls v8.
 
 ---
 
@@ -141,15 +146,15 @@ data as a radial coverage map and matrix.
 
 <!-- COVERAGE:BEGIN -->
 
-| surface | recon | initial-access | execution | privilege-escalation | credential-access | collection | impact | harden | detect | **total** |
-|---|---|---|---|---|---|---|---|---|---|---|
-| `web-app` | 1✓ | 6✓ | 1✓ | 1✓ | 1✓ | · | · | 5✓ | 5✓ | **20** |
-| `api` | 2✓ | 2✓ | · | 3✓ | 1✓ | 1✓ | 2✓ | 6 | 5 | **22** |
-| `cloud-native` | · | · | · | 1✓ | 1✓ | 1✓ | · | 2✓ | 1✓ | **6** |
-| `ci-cd` | · | 1 | 1 | 1 | 1 | · | 1 | 3 | 2 | **10** |
-| `mobile` _(planned)_ |  |  |  |  |  |  |  |  |  | **—** |
-| `network` _(planned)_ |  |  |  |  |  |  |  |  |  | **—** |
+| surface | recon | initial-access | execution | persistence | privilege-escalation | credential-access | lateral-movement | collection | impact | harden | detect | hunt | **total** |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `web-app` | 1✓ | 6✓ | 1✓ | · | 1✓ | 1✓ | · | · | · | 5✓ | 5✓ | · | **20** |
+| `api` | 2✓ | 2✓ | · | · | 3✓ | 1✓ | · | 1✓ | 2✓ | 6 | 5 | · | **22** |
+| `cloud-native` | · | · | · | 1 | 2 | 1✓ | · | 1✓ | · | 3 | 1✓ | 1 | **10** |
+| `ci-cd` | · | 1 | 1 | · | 1 | 1 | · | · | 1 | 3 | 2 | · | **10** |
+| `mobile` | 1 | 1 | · | · | 1 | 1 | · | 1 | · | 4 | 1 | · | **10** |
+| `network` | 2 | 1 | · | · | · | 1 | 1 | · | · | 2 | 3 | · | **10** |
 
-_58 skills across 4 live surfaces; 41 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
+_82 skills across 6 live surfaces; 41 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
 
 <!-- COVERAGE:END -->
