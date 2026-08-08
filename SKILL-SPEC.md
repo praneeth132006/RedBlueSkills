@@ -22,8 +22,8 @@ skills/<app-type>/<team>/<killchain-stage>/<skill-name>/
 └── references/         # optional — payload lists, signatures, deep-dive docs
 ```
 
-- `<app-type>` — the target surface. v1 ships `web-app`. Future: `api`,
-  `cloud-native`, `mobile`, `network`, `ci-cd`.
+- `<app-type>` — the target surface. Shipping: `web-app`, `api`, `cloud-native`,
+  `ci-cd`, `mobile`, `network`.
 - `<team>` — `red` (offense), `blue` (defense), or `purple` (joint / detection
   engineering that spans both).
 - `<killchain-stage>` — see the enum below.

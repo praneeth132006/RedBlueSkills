@@ -73,24 +73,31 @@ skills/web-app/
                    web-authentication-hardening · web-csrf-hardening
 ```
 
-**58 skills across four live surfaces**, every one paired red↔blue. **`web-app`**
+**82 skills across six live surfaces**, every one paired red↔blue. **`web-app`**
 is the reference implementation — 10 pairs covering the OWASP Top 10 core. The
 **`api`** vertical is complete across the **OWASP API Security Top 10 (2023),
 API1–API10**: BOLA, broken authentication, BFLA, mass assignment, excessive data
 exposure, unrestricted resource consumption, plus SSRF, security misconfiguration,
 improper inventory management, unsafe consumption, and sensitive-business-flow
 abuse. **`cloud-native`** covers IMDS credential theft, public object-storage
-exposure, and privileged-container escape; **`ci-cd`** maps the **OWASP Top 10
+exposure, privileged-container escape, cloud IAM persistence, and Kubernetes RBAC
+abuse; **`ci-cd`** maps the **OWASP Top 10
 CI/CD Security Risks** (poisoned pipeline execution, credential hygiene,
-dependency-chain abuse, artifact provenance, runner abuse). **41 of the 58 are
-`validated` end-to-end** against live labs — OWASP crAPI, Docker/Colima, a mock EC2
-IMDS, and MinIO — with the exact evidence recorded in each skill's `## Validation`
-section; the rest stay `reviewed` with the blocker documented in-skill.
+dependency-chain abuse, artifact provenance, runner abuse). **`mobile`** maps the
+**OWASP Mobile Top 10 / MASVS** (insecure data storage, hardcoded secrets, weak
+transport / missing cert-pinning, insecure deep links, mobile-to-backend API abuse).
+**`network`** covers service discovery, exposed-service exploitation, TLS/certificate
+weakness, credential sniffing & layer-2 AiTM, and lateral movement — mapped across
+**MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53 Rev 5 / CSF 2.0, and CIS Controls v8**.
+**41 of the 82 are `validated` end-to-end** against live labs — OWASP crAPI,
+Docker/Colima, a mock EC2 IMDS, and MinIO — with the exact evidence recorded in each
+skill's `## Validation` section; the rest stay `reviewed` with the blocker documented
+in-skill.
 
 See the [**coverage map**](site/) (a radial *surface × kill-chain* map plus matrix,
 lit where covered and dark where planned) and [`COVERAGE.md`](COVERAGE.md) for the
-full taxonomy and every field a skill is classified on. The remaining surfaces
-(`mobile`, `network`) will follow the same schema, tooling, and pairing discipline.
+full taxonomy and every field a skill is classified on. All six surfaces share the
+same schema, tooling, and pairing discipline.
 
 ---
 

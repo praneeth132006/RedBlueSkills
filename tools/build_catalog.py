@@ -33,7 +33,7 @@ TEAM_BADGE = {"red": "🔴 red", "blue": "🔵 blue", "purple": "🟣 purple"}
 # Surfaces in display order, and which are planned (no skills yet, shown dark on
 # the site's coverage map). Keep in sync with SKILL-SPEC APP_TYPES + COVERAGE.md.
 SURFACES_ORDER = ["web-app", "api", "cloud-native", "ci-cd", "mobile", "network"]
-PLANNED_SURFACES = ["mobile", "network"]
+PLANNED_SURFACES = []
 # Kill-chain stages in canonical order: offense then defense.
 STAGE_ORDER = [
     "recon", "initial-access", "execution", "persistence", "privilege-escalation",

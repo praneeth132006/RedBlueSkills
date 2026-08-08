@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 58,
+  "count": 82,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -10,10 +10,7 @@
       "mobile",
       "network"
     ],
-    "planned": [
-      "mobile",
-      "network"
-    ],
+    "planned": [],
     "stage_order": [
       "recon",
       "initial-access",
@@ -152,10 +149,17 @@
         },
         "harden": {
           "red": 0,
-          "blue": 2,
+          "blue": 3,
           "purple": 0,
           "validated": 2,
-          "total": 2
+          "total": 3
+        },
+        "hunt": {
+          "red": 0,
+          "blue": 1,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
         },
         "collection": {
           "red": 1,
@@ -171,12 +175,19 @@
           "validated": 1,
           "total": 1
         },
-        "privilege-escalation": {
+        "persistence": {
           "red": 1,
           "blue": 0,
           "purple": 0,
-          "validated": 1,
+          "validated": 0,
           "total": 1
+        },
+        "privilege-escalation": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 2
         }
       },
       "ci-cd": {
@@ -230,8 +241,101 @@
           "total": 1
         }
       },
-      "mobile": {},
-      "network": {}
+      "mobile": {
+        "detect": {
+          "red": 0,
+          "blue": 1,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "harden": {
+          "red": 0,
+          "blue": 4,
+          "purple": 0,
+          "validated": 0,
+          "total": 4
+        },
+        "collection": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "initial-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "privilege-escalation": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "recon": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        }
+      },
+      "network": {
+        "detect": {
+          "red": 0,
+          "blue": 3,
+          "purple": 0,
+          "validated": 0,
+          "total": 3
+        },
+        "harden": {
+          "red": 0,
+          "blue": 2,
+          "purple": 0,
+          "validated": 0,
+          "total": 2
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "initial-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "lateral-movement": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
+        "recon": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 2
+        }
+      }
     },
     "totals": {
       "web-app": {
@@ -249,10 +353,10 @@
         "purple": 0
       },
       "cloud-native": {
-        "total": 6,
+        "total": 10,
         "validated": 6,
-        "red": 3,
-        "blue": 3,
+        "red": 5,
+        "blue": 5,
         "purple": 0
       },
       "ci-cd": {
@@ -263,17 +367,17 @@
         "purple": 0
       },
       "mobile": {
-        "total": 0,
+        "total": 10,
         "validated": 0,
-        "red": 0,
-        "blue": 0,
+        "red": 5,
+        "blue": 5,
         "purple": 0
       },
       "network": {
-        "total": 0,
+        "total": 10,
         "validated": 0,
-        "red": 0,
-        "blue": 0,
+        "red": 5,
+        "blue": 5,
         "purple": 0
       }
     }
@@ -1473,6 +1577,84 @@
       "path": "skills/cloud-native/blue/harden/cloud-imds-hardening/SKILL.md"
     },
     {
+      "name": "cloud-k8s-rbac-hardening",
+      "description": "Harden Kubernetes RBAC to least privilege and detect abuse. Use when protecting a cluster: removing wildcard and escalation-prone grants (pod-create, secret-wide, exec, impersonate, role-edit), scoping RoleBindings to namespaces, separating workload service accounts, and audit-logging and alerting on the API verbs that signal privilege escalation. Pairs with the Kubernetes RBAC-abuse offense; anchored on the NSA/CISA Kubernetes Hardening Guide, CIS Kubernetes Benchmark, and NIST SP 800-190.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1078.004",
+          "T1613",
+          "T1610"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-284",
+          "CWE-668"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-PH",
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "cloud-k8s-rbac-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/blue/harden/cloud-k8s-rbac-hardening/SKILL.md"
+    },
+    {
+      "name": "cloud-iam-persistence-hunt",
+      "description": "Proactively hunt for and detect attacker persistence in cloud IAM. Use when defending a cloud account: baselining legitimate identities and credentials, then hunting the audit trail for the durable-access artifacts attackers plant — second access keys, new IAM users/federated identities, added roles/trust policies, and resource-policy backdoors — and alerting on the IAM write events that create them. Pairs with the cloud IAM-persistence offense; anchored on NIST AC-2/AU-6/SI-4 and the MITRE ATT&CK cloud persistence techniques.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "hunt",
+      "techniques": {
+        "attack": [
+          "T1098",
+          "T1098.001",
+          "T1098.003",
+          "T1136.003"
+        ],
+        "capec": [
+          "CAPEC-560"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-284"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-UBA",
+          "D3-CA",
+          "D3-ANCI"
+        ]
+      },
+      "pairs_with": [
+        "cloud-iam-persistence"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/blue/hunt/cloud-iam-persistence-hunt/SKILL.md"
+    },
+    {
       "name": "cloud-public-storage-exposure",
       "description": "Discover and prove publicly exposed cloud object storage during an authorized assessment — world-readable/writable S3 buckets, GCS buckets, and Azure Blob containers, and objects made public by ACLs or bucket policy. Use when an organization's data may be reachable without authentication and you need to confirm exposure and characterize its sensitivity with minimal, non-exfiltrating proof.",
       "team": "red",
@@ -1539,6 +1721,76 @@
       "path": "skills/cloud-native/red/credential-access/cloud-imds-credential-theft/SKILL.md"
     },
     {
+      "name": "cloud-iam-persistence",
+      "description": "Demonstrate cloud identity persistence during an authorized cloud assessment. Use after you have gained privileged access to a cloud account (via a stolen role, a compromised admin, or a misconfiguration) and need to prove that an attacker can establish durable, credential-independent access — a second access key on an identity, an added trust/role, a new IAM user or federated identity, or a resource-policy backdoor — that survives rotating the originally-compromised credential. Maps to MITRE ATT&CK T1098 / T1136.003 and the persistence phase; the defensive mirror is IAM-persistence threat hunting.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "persistence",
+      "techniques": {
+        "attack": [
+          "T1098",
+          "T1098.001",
+          "T1098.003",
+          "T1136.003"
+        ],
+        "capec": [
+          "CAPEC-560"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-284"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-iam-persistence-hunt"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/red/persistence/cloud-iam-persistence/SKILL.md"
+    },
+    {
+      "name": "cloud-k8s-rbac-abuse",
+      "description": "Escalate privileges in a Kubernetes cluster by abusing over-permissive RBAC during an authorized assessment. Use when you have access to a service account or user with more Kubernetes API rights than it needs, and you need to prove that those rights — creating pods, reading secrets, using `exec`, impersonation, or editing RBAC — can be chained to reach cluster-admin or another namespace's data. Maps to MITRE ATT&CK (Containers) T1078.004 / T1613 and the privilege-escalation phase; the defensive mirror is Kubernetes RBAC hardening.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1078.004",
+          "T1613",
+          "T1610"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-284",
+          "CWE-668"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-k8s-rbac-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/red/privilege-escalation/cloud-k8s-rbac-abuse/SKILL.md"
+    },
+    {
       "name": "cloud-privileged-container-escape",
       "description": "Demonstrate container-to-host escape from an over-privileged container during an authorized assessment — privileged mode, host namespace sharing, dangerous capabilities (CAP_SYS_ADMIN), sensitive host mounts (docker.sock, host root), or writable cgroup/procfs paths. Use when you have execution inside a container and need to prove it can break isolation to reach the node, other tenants' workloads, or node credentials.",
       "team": "red",
@@ -1570,6 +1822,686 @@
       "version": "1.0.0",
       "last_validated": "2026-08-06",
       "path": "skills/cloud-native/red/privilege-escalation/cloud-privileged-container-escape/SKILL.md"
+    },
+    {
+      "name": "mobile-backend-abuse-detection",
+      "description": "Enforce and detect server-side the authorization and workflow rules a mobile client cannot be trusted to keep. Use when protecting the backend behind a mobile app: enforcing object- and function-level authorization on every request, never trusting client-supplied roles/prices/flags, validating workflow state and idempotency, and alerting on direct-API-replay patterns (id enumeration, privileged calls from low-privileged tokens, out-of-order or off-device flows). Pairs with the M3 mobile backend API-abuse offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-115"
+        ],
+        "cwe": [
+          "CWE-602",
+          "CWE-639"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-IAA",
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "mobile-backend-api-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/detect/mobile-backend-abuse-detection/SKILL.md"
+    },
+    {
+      "name": "mobile-data-storage-hardening",
+      "description": "Harden how a mobile app stores data at rest so a lost, stolen, backed-up, or rooted/jailbroken device does not leak credentials, tokens, or PII. Use when protecting an Android or iOS app: moving secrets into hardware-backed Keychain/Keystore with the strictest workable accessibility, encrypting local databases and files, excluding sensitive data from backups, and stopping secrets from reaching logs and caches. Pairs with the M9 Insecure Data Storage offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1409",
+          "T1533"
+        ],
+        "capec": [
+          "CAPEC-37"
+        ],
+        "cwe": [
+          "CWE-312",
+          "CWE-922",
+          "CWE-311"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-PH"
+        ]
+      },
+      "pairs_with": [
+        "mobile-insecure-data-storage"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-data-storage-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-deep-link-hardening",
+      "description": "Harden a mobile app's deep links and inter-app entry points so a crafted link cannot trigger sensitive actions, redirect callbacks, or inject untrusted input. Use when protecting an Android or iOS app: gating sensitive actions behind fresh authorization, validating all link parameters, using verified App/Universal Links with state/PKCE for callbacks, and minimizing exported components and claimable schemes. Pairs with the M4/M8 deep-link abuse offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1625",
+          "T1516"
+        ],
+        "capec": [
+          "CAPEC-194"
+        ],
+        "cwe": [
+          "CWE-939",
+          "CWE-927"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-IAA"
+        ]
+      },
+      "pairs_with": [
+        "mobile-deep-link-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-deep-link-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-secrets-hardening",
+      "description": "Keep secrets out of shipped mobile binaries and limit the damage of any client key. Use when protecting an Android or iOS app: removing server-side credentials from the client, replacing them with a backend broker, scoping and restricting the client keys that must ship, rotating exposed keys, and gating releases on a binary secret scan. Pairs with the M1/M7 hardcoded-secrets offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1406"
+        ],
+        "capec": [
+          "CAPEC-191"
+        ],
+        "cwe": [
+          "CWE-798",
+          "CWE-321"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-PH"
+        ]
+      },
+      "pairs_with": [
+        "mobile-hardcoded-secrets"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-secrets-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-transport-hardening",
+      "description": "Harden a mobile app's network transport so an adversary-in-the-middle on a hostile network cannot read or tamper with its traffic. Use when protecting an Android or iOS app: enforcing TLS for all connections, refusing cleartext and user-added CAs, pinning the backend certificate/public key, and validating certificates strictly. Pairs with the M5 Insecure Communication offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1638",
+          "T1557"
+        ],
+        "capec": [
+          "CAPEC-94"
+        ],
+        "cwe": [
+          "CWE-319",
+          "CWE-295"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-OTF",
+          "D3-PH"
+        ]
+      },
+      "pairs_with": [
+        "mobile-insecure-transport"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-transport-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-insecure-data-storage",
+      "description": "Recover sensitive data a mobile app leaves on the device during an authorized mobile assessment. Use when you have a debuggable build (or a rooted/jailbroken test device) and need to prove that credentials, session tokens, PII, or crypto keys are written to app-private storage, shared preferences/UserDefaults, SQLite/Core Data, caches, logs, or backups in cleartext or with recoverable protection — the classic \"lost/stolen device\" and malicious-app exposure. Maps to OWASP Mobile Top 10 M9 Insecure Data Storage / MASVS-STORAGE.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1409",
+          "T1533"
+        ],
+        "capec": [
+          "CAPEC-37"
+        ],
+        "cwe": [
+          "CWE-312",
+          "CWE-922",
+          "CWE-311"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-data-storage-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/collection/mobile-insecure-data-storage/SKILL.md"
+    },
+    {
+      "name": "mobile-insecure-transport",
+      "description": "Intercept and read a mobile app's network traffic during an authorized mobile assessment. Use when you have a test device you control and need to prove that the app talks to its backend over cleartext, accepts a proxy/user-added CA, or fails to pin/validate the server certificate — letting an adversary-in-the-middle read or tamper with credentials, tokens, and API traffic on hostile networks. Maps to OWASP Mobile Top 10 M5 Insecure Communication / MASVS-NETWORK.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1638",
+          "T1557"
+        ],
+        "capec": [
+          "CAPEC-94",
+          "CAPEC-609"
+        ],
+        "cwe": [
+          "CWE-319",
+          "CWE-295"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-transport-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/credential-access/mobile-insecure-transport/SKILL.md"
+    },
+    {
+      "name": "mobile-deep-link-abuse",
+      "description": "Abuse insecure deep links and inter-app entry points during an authorized mobile assessment. Use when an app registers custom URL schemes, Android App Links / iOS Universal Links, or exported components that accept externally-supplied input, and you need to prove that a crafted link from a webpage, another app, or a QR code can trigger sensitive actions, redirect OAuth/tokens, or inject untrusted data into a privileged screen. Maps to OWASP Mobile Top 10 M4 Insufficient Input/Output Validation and M8 Security Misconfiguration.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1625",
+          "T1516"
+        ],
+        "capec": [
+          "CAPEC-194"
+        ],
+        "cwe": [
+          "CWE-939",
+          "CWE-927"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-deep-link-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/initial-access/mobile-deep-link-abuse/SKILL.md"
+    },
+    {
+      "name": "mobile-backend-api-abuse",
+      "description": "Abuse the trust a backend places in its mobile client during an authorized assessment. Use when an app enforces limits, roles, pricing, or workflow steps on the client and you need to prove that the backend accepts requests that bypass them — replaying the app's API directly to escalate privileges, access other users' objects, skip payment/verification steps, or forge client-supplied trust signals. Maps to OWASP Mobile Top 10 M3 Insecure Authentication/Authorization and the OWASP API Top 10 (BOLA/BFLA) reached through the mobile channel.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-115"
+        ],
+        "cwe": [
+          "CWE-602",
+          "CWE-639"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-backend-abuse-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/privilege-escalation/mobile-backend-api-abuse/SKILL.md"
+    },
+    {
+      "name": "mobile-hardcoded-secrets",
+      "description": "Extract hardcoded secrets from a mobile app binary during an authorized mobile assessment. Use when you have an APK/AAB/IPA and need to prove that API keys, cloud credentials, signing/crypto keys, backend URLs, or third-party tokens are embedded in the shipped binary or its resources — recoverable by static analysis because a mobile app is client-side code the attacker fully controls. Maps to OWASP Mobile Top 10 M1 Improper Credential Usage / M7 Insufficient Binary Protections (MASVS-CODE / MASVS-RESILIENCE).",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1406"
+        ],
+        "capec": [
+          "CAPEC-37",
+          "CAPEC-191"
+        ],
+        "cwe": [
+          "CWE-798",
+          "CWE-321"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-secrets-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/recon/mobile-hardcoded-secrets/SKILL.md"
+    },
+    {
+      "name": "network-intrusion-detection",
+      "description": "Detect and contain exploitation of exposed network services. Use when defending a network estate: closing the vulnerabilities that make services exploitable (patch, configuration, authentication), and instrumenting IDS/IPS, protocol-anomaly, and server-behavior monitoring to catch and block exploitation attempts and the foothold that follows. Pairs with the network service-exploitation offense; anchored on NIST SI-2/SI-4 and CIS Controls v8 (7, 13).",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1210"
+        ],
+        "capec": [
+          "CAPEC-100"
+        ],
+        "cwe": [
+          "CWE-1035",
+          "CWE-284",
+          "CWE-306"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-NTA",
+          "D3-ISVA",
+          "D3-PH"
+        ]
+      },
+      "pairs_with": [
+        "network-service-exploitation"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/detect/network-intrusion-detection/SKILL.md"
+    },
+    {
+      "name": "network-lateral-movement-detection",
+      "description": "Contain and detect lateral movement across an internal network. Use when defending an estate: segmenting east-west traffic so a foothold can't reach everything, eliminating shared/reused credentials and enforcing tiered admin and MFA, and alerting on anomalous remote authentication (SMB/RDP/WinRM/SSH) and pass-the-hash/ticket. Pairs with the network lateral-movement offense; anchored on NIST AC-4/SC-7/IA-5 and CIS Controls v8 (4, 5/6, 12/13).",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1021",
+          "T1550",
+          "T1570"
+        ],
+        "capec": [
+          "CAPEC-555",
+          "CAPEC-645"
+        ],
+        "cwe": [
+          "CWE-522",
+          "CWE-284",
+          "CWE-306"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-NTA",
+          "D3-UBA",
+          "D3-NI"
+        ]
+      },
+      "pairs_with": [
+        "network-lateral-movement"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/detect/network-lateral-movement-detection/SKILL.md"
+    },
+    {
+      "name": "network-mitm-detection",
+      "description": "Stop and detect layer-2 adversary-in-the-middle and credential sniffing on internal networks. Use when defending an internal estate: encrypting all authentication and sensitive traffic, disabling legacy name-resolution (LLMNR/NBT-NS/mDNS), enabling switch protections (Dynamic ARP Inspection, DHCP snooping, port security), and alerting on ARP anomalies and rogue name-resolution responders. Pairs with the network credential-sniffing offense; anchored on NIST SC-8/SI-4 and CIS Controls v8 (3, 13).",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1040",
+          "T1557",
+          "T1557.001",
+          "T1557.002"
+        ],
+        "capec": [
+          "CAPEC-158",
+          "CAPEC-94"
+        ],
+        "cwe": [
+          "CWE-319",
+          "CWE-522",
+          "CWE-294"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-NTA",
+          "D3-ET",
+          "D3-NTF"
+        ]
+      },
+      "pairs_with": [
+        "network-credential-sniffing"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/detect/network-mitm-detection/SKILL.md"
+    },
+    {
+      "name": "network-attack-surface-hardening",
+      "description": "Reduce and fence off a network's exposed attack surface so discovery and exploitation have little to reach. Use when hardening a network estate: inventory every listening service, close or restrict what isn't needed, segment management and sensitive services behind boundary controls, enforce default-deny ingress and egress, and detect scanning/enumeration. Pairs with the network service-discovery offense; anchored on NIST SP 800-53 SC-7/CM-7 and CIS Controls v8.",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1046",
+          "T1595"
+        ],
+        "capec": [
+          "CAPEC-300"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-668"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-NTF",
+          "D3-PH",
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "network-service-discovery"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/harden/network-attack-surface-hardening/SKILL.md"
+    },
+    {
+      "name": "network-tls-hardening",
+      "description": "Bring a network service's TLS to a modern, hardened baseline and keep it there. Use when protecting TLS-exposing services (HTTPS, SMTPS, LDAPS, database TLS, VPN): disabling deprecated protocols and weak ciphers, enforcing TLS 1.2+/1.3 with forward secrecy, maintaining valid short-lived certificates with strong keys, and monitoring for configuration and certificate drift. Pairs with the network TLS-assessment offense; anchored on NIST SP 800-52r2, SC-8/SC-13, CIS Control 3.",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1040"
+        ],
+        "capec": [
+          "CAPEC-217"
+        ],
+        "cwe": [
+          "CWE-326",
+          "CWE-327",
+          "CWE-295"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ET",
+          "D3-CH",
+          "D3-PH"
+        ]
+      },
+      "pairs_with": [
+        "network-tls-assessment"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/harden/network-tls-hardening/SKILL.md"
+    },
+    {
+      "name": "network-credential-sniffing",
+      "description": "Capture credentials and sensitive data from network traffic during an authorized assessment, including via layer-2 adversary-in-the-middle. Use on an internal engagement when you need to prove that cleartext protocols leak credentials, or that LLMNR/NBT-NS/mDNS name-resolution poisoning or ARP spoofing lets you coerce and relay authentication on the local segment. Maps to MITRE ATT&CK T1040/T1557; the defensive mirror is traffic encryption, protocol disablement, and AiTM detection (NIST SC-8/SI-4, CIS Control 3/13).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1040",
+          "T1557",
+          "T1557.001",
+          "T1557.002"
+        ],
+        "capec": [
+          "CAPEC-158",
+          "CAPEC-94"
+        ],
+        "cwe": [
+          "CWE-319",
+          "CWE-522",
+          "CWE-294"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-mitm-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/credential-access/network-credential-sniffing/SKILL.md"
+    },
+    {
+      "name": "network-service-exploitation",
+      "description": "Gain a foothold by exploiting an exposed, vulnerable network service during an authorized assessment. Use when discovery has found a reachable service running a version with a known flaw, a default/weak configuration, or an authentication weakness, and you need to prove that it yields code execution or unauthorized access — the classic external/internal initial-access step. Maps to MITRE ATT&CK T1190/T1210; the defensive mirror is patch/config management plus network intrusion detection (NIST SI-2/SI-4, CIS Control 7/13).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1190",
+          "T1210",
+          "T1203"
+        ],
+        "capec": [
+          "CAPEC-100"
+        ],
+        "cwe": [
+          "CWE-1035",
+          "CWE-284",
+          "CWE-306"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-intrusion-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/initial-access/network-service-exploitation/SKILL.md"
+    },
+    {
+      "name": "network-lateral-movement",
+      "description": "Move laterally from an initial foothold to additional hosts during an authorized assessment. Use when you hold access to one system plus valid or reusable credential material and need to prove that flat networks and reused credentials let you reach further hosts via remote services (SMB/RDP/SSH/WinRM) or alternate authentication material (pass-the-hash/ticket). Maps to MITRE ATT&CK T1021/T1550/T1570; the defensive mirror is segmentation, credential hygiene, and lateral-movement detection (NIST AC-4/SC-7/IA-5, CIS Control 4/6/13).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "lateral-movement",
+      "techniques": {
+        "attack": [
+          "T1021",
+          "T1021.001",
+          "T1021.002",
+          "T1550",
+          "T1570"
+        ],
+        "capec": [
+          "CAPEC-555",
+          "CAPEC-645"
+        ],
+        "cwe": [
+          "CWE-522",
+          "CWE-284",
+          "CWE-306"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-lateral-movement-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/lateral-movement/network-lateral-movement/SKILL.md"
+    },
+    {
+      "name": "network-service-discovery",
+      "description": "Enumerate reachable hosts, open ports, and running services during an authorized network assessment. Use at the start of an engagement when you need to map the live attack surface of an in-scope network range — which hosts respond, which TCP/UDP services listen, and their product/version banners — to prioritize targets and feed later access, credential, and lateral-movement steps. Maps to MITRE ATT&CK T1046/T1595 and the recon phase; the defensive mirror is attack-surface reduction (NIST SC-7/CM-7, CIS Control 12/4).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1046",
+          "T1595",
+          "T1595.001"
+        ],
+        "capec": [
+          "CAPEC-300"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-668"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-attack-surface-hardening"
+      ],
+      "risk": "low",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/recon/network-service-discovery/SKILL.md"
+    },
+    {
+      "name": "network-tls-assessment",
+      "description": "Assess a network service's TLS/SSL configuration for weaknesses during an authorized assessment. Use when a service exposes TLS (HTTPS, SMTPS, LDAPS, database TLS, VPN) and you need to prove it permits deprecated protocols, weak ciphers/key exchange, or presents an invalid, expired, self-signed, or mismatched certificate — the conditions that enable downgrade and adversary-in-the-middle. Maps to MITRE ATT&CK T1595.002; the defensive mirror is TLS hardening (NIST SP 800-52r2 / SC-8 / SC-13, CIS Control 3).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1595.002",
+          "T1040"
+        ],
+        "capec": [
+          "CAPEC-217",
+          "CAPEC-620"
+        ],
+        "cwe": [
+          "CWE-326",
+          "CWE-327",
+          "CWE-295"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-tls-hardening"
+      ],
+      "risk": "low",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/recon/network-tls-assessment/SKILL.md"
     },
     {
       "name": "web-access-control-monitoring",
