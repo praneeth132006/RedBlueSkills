@@ -7,6 +7,40 @@ follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`ci-cd` completed to the full OWASP CI/CD Top 10 — 5 new red↔blue pairs
+  (10 skills)** covering the previously-missing risks: CICD-SEC-1
+  `ci-flow-control-abuse` ↔ `ci-flow-control-hardening`, CICD-SEC-2
+  `ci-identity-privilege-abuse` ↔ `ci-identity-access-hardening`, CICD-SEC-5
+  `ci-pbac-abuse` ↔ `ci-pbac-hardening`, CICD-SEC-8
+  `ci-third-party-integration-abuse` ↔ `ci-third-party-governance-hardening`, and
+  CICD-SEC-10 `ci-logging-evasion` ↔ `ci-audit-logging-detection`. The `ci-cd`
+  surface now spans CICD-SEC-1…10 (20 skills).
+- **`mobile` completed to the full OWASP Mobile Top 10 (2024) — 5 new red↔blue
+  pairs (10 skills)** covering the previously-missing categories: M2
+  `mobile-supply-chain-tampering` ↔ `mobile-supply-chain-hardening`, M6
+  `mobile-privacy-exposure` ↔ `mobile-privacy-hardening`, M7
+  `mobile-binary-tampering` ↔ `mobile-binary-protection-hardening`, M8
+  `mobile-security-misconfiguration` ↔ `mobile-misconfiguration-hardening`, and M10
+  `mobile-weak-cryptography` ↔ `mobile-cryptography-hardening`. The `mobile` surface
+  now spans M1–M10 (20 skills).
+- **`cloud-native` + `network` deepened — 4 new red↔blue pairs (8 skills):**
+  `cloud-serverless-privilege-abuse` ↔ `cloud-serverless-hardening` (execution-role
+  privilege escalation), `cloud-logging-tamper` ↔ `cloud-audit-logging-detection`
+  (T1562.008 audit-trail tampering), `network-remote-access-abuse` ↔
+  `network-remote-access-hardening` (T1133 external remote services), and
+  `network-egress-exfiltration` ↔ `network-egress-filtering-hardening` (T1048/T1071
+  exfil & C2 over permitted channels). Both surfaces now sit at 14 skills.
+  - Repo total: **110 skills, all reciprocally paired**; `make check` green.
+- **`_lab/ci-local/`** — a dependency-free (git + bash, no Docker/cloud) CI/CD
+  validation lab. `bash _lab/ci-local/validate.sh` runs each control in a vulnerable
+  and a hardened configuration and asserts the attack succeeds then is blocked
+  (6/6). It is the `validation.target` (`ci-local`) that promotes **3 ci-cd pairs to
+  `maturity: validated`**: `ci-flow-control-*` (CICD-SEC-1, `pre-receive`
+  protected-branch hook), `ci-pbac-*` (CICD-SEC-5, per-job secret scoping), and
+  `ci-logging-evasion` / `ci-audit-logging-detection` (CICD-SEC-10, out-of-band
+  append-only audit sink). The other 22 new skills remain `maturity: reviewed`
+  (they require a hosted SCM/cloud/mobile plane no in-repo lab provides), each with a
+  reproducible `## Validation` section. Validated skills repo-wide: **47**.
 - **`api` vertical — 6 red↔blue pairs (12 skills)** across OWASP API Security
   Top 10 #1–5: `api-bola` ↔ `api-bola-detection`, `api-broken-authentication` ↔
   `api-authentication-monitoring`, `api-bfla` ↔ `api-function-authorization-monitoring`,

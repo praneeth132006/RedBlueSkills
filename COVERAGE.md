@@ -102,7 +102,7 @@ draft ──review──▶ reviewed ──validate──▶ validated ──(6m
 
 A `validated` skill names its lab in the `validation.target` field. Current targets
 in use: `owasp-crapi`, `owasp-juice-shop`, `docker-colima`, `ec2-metadata-mock`,
-`minio-s3`.
+`minio-s3`, `ci-local` (a dependency-free git+bash CI lab, `_lab/ci-local/`).
 
 ---
 
@@ -146,15 +146,15 @@ data as a radial coverage map and matrix.
 
 <!-- COVERAGE:BEGIN -->
 
-| surface | recon | initial-access | execution | persistence | privilege-escalation | credential-access | lateral-movement | collection | impact | harden | detect | hunt | **total** |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `web-app` | 1✓ | 6✓ | 1✓ | · | 1✓ | 1✓ | · | · | · | 5✓ | 5✓ | · | **20** |
-| `api` | 2✓ | 2✓ | · | · | 3✓ | 1✓ | · | 1✓ | 2✓ | 6 | 5 | · | **22** |
-| `cloud-native` | · | · | · | 1 | 2 | 1✓ | · | 1✓ | · | 3 | 1✓ | 1 | **10** |
-| `ci-cd` | · | 1 | 1 | · | 1 | 1 | · | · | 1 | 3 | 2 | · | **10** |
-| `mobile` | 1 | 1 | · | · | 1 | 1 | · | 1 | · | 4 | 1 | · | **10** |
-| `network` | 2 | 1 | · | · | · | 1 | 1 | · | · | 2 | 3 | · | **10** |
+| surface | recon | initial-access | execution | persistence | privilege-escalation | defense-evasion | credential-access | lateral-movement | collection | exfiltration | impact | harden | detect | hunt | **total** |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `web-app` | 1✓ | 6✓ | 1✓ | · | 1✓ | · | 1✓ | · | · | · | · | 5✓ | 5✓ | · | **20** |
+| `api` | 2✓ | 2✓ | · | · | 3✓ | · | 1✓ | · | 1✓ | · | 2✓ | 6 | 5 | · | **22** |
+| `cloud-native` | · | · | · | 1 | 3 | 1 | 1✓ | · | 1✓ | · | · | 4 | 2 | 1 | **14** |
+| `ci-cd` | · | 2 | 2 | · | 2 | 1✓ | 1 | 1✓ | · | · | 1 | 7 | 3 | · | **20** |
+| `mobile` | 2 | 2 | · | · | 1 | 1 | 2 | · | 2 | · | · | 9 | 1 | · | **20** |
+| `network` | 2 | 2 | · | · | · | · | 1 | 1 | · | 1 | · | 4 | 3 | · | **14** |
 
-_82 skills across 6 live surfaces; 41 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
+_110 skills across 6 live surfaces; 47 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
 
 <!-- COVERAGE:END -->

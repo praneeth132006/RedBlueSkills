@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 82,
+  "count": 110,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -142,17 +142,17 @@
       "cloud-native": {
         "detect": {
           "red": 0,
-          "blue": 1,
+          "blue": 2,
           "purple": 0,
           "validated": 1,
-          "total": 1
+          "total": 2
         },
         "harden": {
           "red": 0,
-          "blue": 3,
+          "blue": 4,
           "purple": 0,
           "validated": 2,
-          "total": 3
+          "total": 4
         },
         "hunt": {
           "red": 0,
@@ -175,6 +175,13 @@
           "validated": 1,
           "total": 1
         },
+        "defense-evasion": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 1
+        },
         "persistence": {
           "red": 1,
           "blue": 0,
@@ -183,27 +190,27 @@
           "total": 1
         },
         "privilege-escalation": {
-          "red": 2,
+          "red": 3,
           "blue": 0,
           "purple": 0,
           "validated": 1,
-          "total": 2
+          "total": 3
         }
       },
       "ci-cd": {
         "detect": {
           "red": 0,
-          "blue": 2,
+          "blue": 3,
           "purple": 0,
-          "validated": 0,
-          "total": 2
+          "validated": 1,
+          "total": 3
         },
         "harden": {
           "red": 0,
-          "blue": 3,
+          "blue": 7,
           "purple": 0,
-          "validated": 0,
-          "total": 3
+          "validated": 2,
+          "total": 7
         },
         "credential-access": {
           "red": 1,
@@ -212,12 +219,19 @@
           "validated": 0,
           "total": 1
         },
-        "execution": {
+        "defense-evasion": {
           "red": 1,
           "blue": 0,
           "purple": 0,
-          "validated": 0,
+          "validated": 1,
           "total": 1
+        },
+        "execution": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 2
         },
         "impact": {
           "red": 1,
@@ -227,18 +241,25 @@
           "total": 1
         },
         "initial-access": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 0,
+          "total": 2
+        },
+        "lateral-movement": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
           "total": 1
         },
         "privilege-escalation": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 0,
-          "total": 1
+          "total": 2
         }
       },
       "mobile": {
@@ -251,19 +272,26 @@
         },
         "harden": {
           "red": 0,
-          "blue": 4,
+          "blue": 9,
           "purple": 0,
           "validated": 0,
-          "total": 4
+          "total": 9
         },
         "collection": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 0,
-          "total": 1
+          "total": 2
         },
         "credential-access": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 2
+        },
+        "defense-evasion": {
           "red": 1,
           "blue": 0,
           "purple": 0,
@@ -271,11 +299,11 @@
           "total": 1
         },
         "initial-access": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 0,
-          "total": 1
+          "total": 2
         },
         "privilege-escalation": {
           "red": 1,
@@ -285,11 +313,11 @@
           "total": 1
         },
         "recon": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 0,
-          "total": 1
+          "total": 2
         }
       },
       "network": {
@@ -302,10 +330,10 @@
         },
         "harden": {
           "red": 0,
-          "blue": 2,
+          "blue": 4,
           "purple": 0,
           "validated": 0,
-          "total": 2
+          "total": 4
         },
         "credential-access": {
           "red": 1,
@@ -314,12 +342,19 @@
           "validated": 0,
           "total": 1
         },
-        "initial-access": {
+        "exfiltration": {
           "red": 1,
           "blue": 0,
           "purple": 0,
           "validated": 0,
           "total": 1
+        },
+        "initial-access": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 0,
+          "total": 2
         },
         "lateral-movement": {
           "red": 1,
@@ -353,31 +388,31 @@
         "purple": 0
       },
       "cloud-native": {
-        "total": 10,
+        "total": 14,
         "validated": 6,
-        "red": 5,
-        "blue": 5,
+        "red": 7,
+        "blue": 7,
         "purple": 0
       },
       "ci-cd": {
-        "total": 10,
-        "validated": 0,
-        "red": 5,
-        "blue": 5,
+        "total": 20,
+        "validated": 6,
+        "red": 10,
+        "blue": 10,
         "purple": 0
       },
       "mobile": {
-        "total": 10,
+        "total": 20,
         "validated": 0,
-        "red": 5,
-        "blue": 5,
+        "red": 10,
+        "blue": 10,
         "purple": 0
       },
       "network": {
-        "total": 10,
+        "total": 14,
         "validated": 0,
-        "red": 5,
-        "blue": 5,
+        "red": 7,
+        "blue": 7,
         "purple": 0
       }
     }
@@ -1124,6 +1159,42 @@
       "path": "skills/api/red/recon/api-security-misconfiguration/SKILL.md"
     },
     {
+      "name": "ci-audit-logging-detection",
+      "description": "Close Insufficient Logging & Visibility (CICD-SEC-10) with comprehensive, tamper-resistant CI/CD audit logging and alerting. Use when instrumenting the pipeline ecosystem so security-relevant events (secret access, config/integration changes, deploys, identity use) are recorded with full context, shipped off the runner to tamper-resistant storage with retention, and alerted on — so a compromise is detectable and reconstructable.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1562.008",
+          "T1070"
+        ],
+        "capec": [
+          "CAPEC-268"
+        ],
+        "cwe": [
+          "CWE-778",
+          "CWE-223"
+        ],
+        "owasp": [
+          "A09:2021"
+        ],
+        "d3fend": [
+          "D3-PM",
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "ci-logging-evasion"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/blue/detect/ci-audit-logging-detection/SKILL.md"
+    },
+    {
       "name": "ci-runner-abuse-detection",
       "description": "Detect and prevent self-hosted CI runner abuse (CICD-SEC-7). Use when hardening and monitoring build runners: enforcing ephemeral one-job runners, least-privilege and network isolation, keeping untrusted builds off self-hosted runners, and alerting on reused-workspace access, persistence-hook writes, and build jobs reaching internal networks.",
       "team": "blue",
@@ -1267,6 +1338,114 @@
       "path": "skills/ci-cd/blue/harden/ci-dependency-integrity-hardening/SKILL.md"
     },
     {
+      "name": "ci-flow-control-hardening",
+      "description": "Harden a CI/CD delivery pipeline against Insufficient Flow Control (CICD-SEC-1). Use when ensuring no single actor can move a change to a protected environment without the mandated review and checks: uniform branch/tag protection on every ref that can deploy, required independent review, no self-approval or admin override, a single audited path to each environment, and alerting on gate bypass.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-807"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "ci-flow-control-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/blue/harden/ci-flow-control-hardening/SKILL.md"
+    },
+    {
+      "name": "ci-identity-access-hardening",
+      "description": "Harden CI/CD identity & access management against CICD-SEC-2. Use when right-sizing the non-human identities across the pipeline ecosystem — pipeline tokens, service accounts, bots, PATs, registry creds, OIDC roles — to least-privilege and per-job scope, replacing long-lived stored secrets with short-lived federated identity, eliminating shared admin accounts, and rotating and de-provisioning stale credentials.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1078",
+          "T1098.001"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-732"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-DAM"
+        ]
+      },
+      "pairs_with": [
+        "ci-identity-privilege-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/harden/ci-identity-access-hardening/SKILL.md"
+    },
+    {
+      "name": "ci-pbac-hardening",
+      "description": "Harden Pipeline-Based Access Controls against CICD-SEC-5. Use when constraining what a running pipeline node can reach: scoping secrets per job instead of injecting all of them everywhere, using ephemeral isolated runners so no job inherits another's residue, blocking the cloud metadata endpoint, restricting runner network egress, and keeping the Docker socket and host away from untrusted jobs.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552.007",
+          "T1021"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-668",
+          "CWE-653"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-NTA"
+        ]
+      },
+      "pairs_with": [
+        "ci-pbac-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/blue/harden/ci-pbac-hardening/SKILL.md"
+    },
+    {
       "name": "ci-pipeline-execution-hardening",
       "description": "Harden a CI/CD pipeline against Poisoned Pipeline Execution (PPE / CICD-SEC-4). Use when protecting pipelines from attacker-controlled build steps: gating PR/untrusted triggers behind approval, denying secrets to fork/untrusted builds, pinning and quoting untrusted inputs, least-privileging the pipeline token, and auditing pipeline-definition changes.",
       "team": "blue",
@@ -1303,6 +1482,42 @@
       "path": "skills/ci-cd/blue/harden/ci-pipeline-execution-hardening/SKILL.md"
     },
     {
+      "name": "ci-third-party-governance-hardening",
+      "description": "Govern third-party services in the CI/CD ecosystem against CICD-SEC-8. Use when bringing OAuth/GitHub Apps, marketplace actions/plugins, and SaaS connectors under control — maintaining an approved inventory, least-privileging each integration's scopes, pinning actions to full commit SHAs, removing unused/unmaintained integrations, and monitoring third-party access to repos, secrets, and pipelines.",
+      "team": "blue",
+      "app_type": "ci-cd",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.001",
+          "T1199"
+        ],
+        "capec": [
+          "CAPEC-679"
+        ],
+        "cwe": [
+          "CWE-829",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "ci-third-party-integration-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/blue/harden/ci-third-party-governance-hardening/SKILL.md"
+    },
+    {
       "name": "ci-secret-exfiltration",
       "description": "Demonstrate CI/CD secret exfiltration (CICD-SEC-6, Insufficient Credential Hygiene) during an authorized assessment — recovering pipeline secrets, registry tokens, cloud/OIDC credentials, and deploy keys from build logs, environment dumps, caches/artifacts, and over-scoped tokens. Use when you have a foothold in a pipeline (via PPE or a malicious dependency) and need to prove which credentials a job can reach and how they leak.",
       "team": "red",
@@ -1334,6 +1549,72 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/ci-cd/red/credential-access/ci-secret-exfiltration/SKILL.md"
+    },
+    {
+      "name": "ci-logging-evasion",
+      "description": "Demonstrate Insufficient Logging & Visibility (CICD-SEC-10) during an authorized assessment — showing that malicious activity in the CI/CD ecosystem leaves no usable trail: actions with no audit record, logs that omit the who/what/where, build output an attacker can suppress or overwrite, and no alerting on security-relevant events. Use to prove that a defender could not detect or reconstruct a pipeline compromise from the available logs.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "defense-evasion",
+      "techniques": {
+        "attack": [
+          "T1562.008",
+          "T1070"
+        ],
+        "capec": [
+          "CAPEC-268"
+        ],
+        "cwe": [
+          "CWE-778",
+          "CWE-223"
+        ],
+        "owasp": [
+          "A09:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-audit-logging-detection"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/red/defense-evasion/ci-logging-evasion/SKILL.md"
+    },
+    {
+      "name": "ci-flow-control-abuse",
+      "description": "Demonstrate Insufficient Flow Control (CICD-SEC-1) during an authorized assessment — pushing code, config, or artifacts through the delivery pipeline to a protected environment without passing the intended review, approval, or quality gates. Use when branch protections, required reviews, environment approvals, or merge gates can be bypassed (direct push, self-approval, admin override, force push, an unprotected release branch, or a deploy path that skips the gate) so a single actor can move a change to production unilaterally.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "execution",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1078"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-284",
+          "CWE-807"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-flow-control-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/red/execution/ci-flow-control-abuse/SKILL.md"
     },
     {
       "name": "ci-poisoned-pipeline-execution",
@@ -1434,6 +1715,105 @@
       "path": "skills/ci-cd/red/initial-access/ci-dependency-confusion/SKILL.md"
     },
     {
+      "name": "ci-third-party-integration-abuse",
+      "description": "Demonstrate Ungoverned Usage of Third-Party Services (CICD-SEC-8) during an authorized assessment — abusing the broad, unaudited access granted to third-party apps, OAuth integrations, marketplace actions/plugins, and SaaS connectors wired into the CI/CD ecosystem. Use when an external integration holds standing repo/org/pipeline permissions (an OAuth/GitHub App, a CI marketplace action, a code-quality or deploy SaaS) so compromising or impersonating that integration grants an attacker access without ever touching a first-party credential.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1195.001",
+          "T1199"
+        ],
+        "capec": [
+          "CAPEC-679"
+        ],
+        "cwe": [
+          "CWE-829",
+          "CWE-1104"
+        ],
+        "owasp": [
+          "A08:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-third-party-governance-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/initial-access/ci-third-party-integration-abuse/SKILL.md"
+    },
+    {
+      "name": "ci-pbac-abuse",
+      "description": "Demonstrate Insufficient Pipeline-Based Access Controls (CICD-SEC-5) during an authorized assessment — abusing the fact that a running pipeline node has access far wider than the single job requires, so code executing in one step can reach other jobs' secrets, the underlying runner host, the internal network, or adjacent environments. Use when a job runs with ambient credentials, a shared/persistent runner, or unrestricted network egress, letting execution in one pipeline step move laterally to resources the step should never touch.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "lateral-movement",
+      "techniques": {
+        "attack": [
+          "T1552.007",
+          "T1021"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-668",
+          "CWE-653"
+        ],
+        "owasp": [
+          "A04:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-pbac-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/ci-cd/red/lateral-movement/ci-pbac-abuse/SKILL.md"
+    },
+    {
+      "name": "ci-identity-privilege-abuse",
+      "description": "Demonstrate Inadequate Identity & Access Management (CICD-SEC-2) during an authorized assessment — abusing over-permissioned, stale, or poorly-governed identities across the CI/CD ecosystem (SCM, CI platform, registry, cloud) to reach resources far beyond a job's legitimate need. Use when a pipeline token, service account, bot/machine identity, personal access token, or OIDC role grants broad or cross-project access, so a foothold in one pipeline escalates to others, to the registry, or into the cloud.",
+      "team": "red",
+      "app_type": "ci-cd",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1078",
+          "T1098.001"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-732"
+        ],
+        "owasp": [
+          "A01:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "ci-identity-access-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/ci-cd/red/privilege-escalation/ci-identity-privilege-abuse/SKILL.md"
+    },
+    {
       "name": "ci-self-hosted-runner-abuse",
       "description": "Demonstrate self-hosted CI runner abuse (CICD-SEC-7, insecure system configuration) during an authorized assessment — abusing a persistent, non-ephemeral, or over-privileged build runner to escalate from a build job into the runner host, its network, cached credentials, or other tenants' jobs. Use when a project uses self-hosted runners that survive between jobs, run untrusted PR builds, or sit inside a trusted network.",
       "team": "red",
@@ -1465,6 +1845,40 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/ci-cd/red/privilege-escalation/ci-self-hosted-runner-abuse/SKILL.md"
+    },
+    {
+      "name": "cloud-audit-logging-detection",
+      "description": "Make the cloud audit trail tamper-resistant and detect attempts to blind it. Use when hardening AWS CloudTrail / GCP Cloud Audit Logs / Azure Monitor against defense evasion: org-managed immutable trails delivering to object-locked storage, log-file integrity validation, least-privilege on logging control APIs, full event coverage, and high-priority alerting on any attempt to stop, delete, or reconfigure logging.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1562.008",
+          "T1070"
+        ],
+        "capec": [
+          "CAPEC-268"
+        ],
+        "cwe": [
+          "CWE-778",
+          "CWE-223"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-PM",
+          "D3-DAM"
+        ]
+      },
+      "pairs_with": [
+        "cloud-logging-tamper"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/blue/detect/cloud-audit-logging-detection/SKILL.md"
     },
     {
       "name": "cloud-storage-exposure-monitoring",
@@ -1616,6 +2030,40 @@
       "path": "skills/cloud-native/blue/harden/cloud-k8s-rbac-hardening/SKILL.md"
     },
     {
+      "name": "cloud-serverless-hardening",
+      "description": "Harden serverless functions against execution-role privilege escalation. Use when least-privileging AWS Lambda / GCP Cloud Functions / Azure Functions: scoping each function's execution role to only the resources and actions it needs, removing iam:PassRole and wildcard grants, separating who can deploy from what the function can do at runtime, scoping triggers, and monitoring role use.",
+      "team": "blue",
+      "app_type": "cloud-native",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1078.004",
+          "T1651"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-732"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-DAM"
+        ]
+      },
+      "pairs_with": [
+        "cloud-serverless-privilege-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/blue/harden/cloud-serverless-hardening/SKILL.md"
+    },
+    {
       "name": "cloud-iam-persistence-hunt",
       "description": "Proactively hunt for and detect attacker persistence in cloud IAM. Use when defending a cloud account: baselining legitimate identities and credentials, then hunting the audit trail for the durable-access artifacts attackers plant — second access keys, new IAM users/federated identities, added roles/trust policies, and resource-policy backdoors — and alerting on the IAM write events that create them. Pairs with the cloud IAM-persistence offense; anchored on NIST AC-2/AU-6/SI-4 and the MITRE ATT&CK cloud persistence techniques.",
       "team": "blue",
@@ -1721,6 +2169,37 @@
       "path": "skills/cloud-native/red/credential-access/cloud-imds-credential-theft/SKILL.md"
     },
     {
+      "name": "cloud-logging-tamper",
+      "description": "Demonstrate cloud audit-logging tampering during an authorized assessment — showing that an attacker with sufficient IAM can blind the account by stopping, deleting, or reconfiguring the audit trail (AWS CloudTrail, GCP Cloud Audit Logs, Azure Monitor): halting a trail, deleting the log bucket/sink, disabling log-file validation, or narrowing what is captured. Use to prove whether defenders would still see and be able to reconstruct activity after the logging control is attacked.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "defense-evasion",
+      "techniques": {
+        "attack": [
+          "T1562.008",
+          "T1070"
+        ],
+        "capec": [
+          "CAPEC-268"
+        ],
+        "cwe": [
+          "CWE-778",
+          "CWE-223"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-audit-logging-detection"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/red/defense-evasion/cloud-logging-tamper/SKILL.md"
+    },
+    {
       "name": "cloud-iam-persistence",
       "description": "Demonstrate cloud identity persistence during an authorized cloud assessment. Use after you have gained privileged access to a cloud account (via a stolen role, a compromised admin, or a misconfiguration) and need to prove that an attacker can establish durable, credential-independent access — a second access key on an identity, an added trust/role, a new IAM user or federated identity, or a resource-policy backdoor — that survives rotating the originally-compromised credential. Maps to MITRE ATT&CK T1098 / T1136.003 and the persistence phase; the defensive mirror is IAM-persistence threat hunting.",
       "team": "red",
@@ -1824,6 +2303,37 @@
       "path": "skills/cloud-native/red/privilege-escalation/cloud-privileged-container-escape/SKILL.md"
     },
     {
+      "name": "cloud-serverless-privilege-abuse",
+      "description": "Demonstrate serverless-function privilege escalation during an authorized cloud assessment — abusing an over-permissioned execution role (AWS Lambda, GCP Cloud Functions, Azure Functions) to reach resources far beyond the function's purpose, or turning the ability to modify a function's code/config into execution under that role. Use when a function's identity grants broad IAM (`iam:PassRole`, wildcard actions, admin) so code running in the function pivots into the wider cloud account.",
+      "team": "red",
+      "app_type": "cloud-native",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1078.004",
+          "T1651"
+        ],
+        "capec": [
+          "CAPEC-122"
+        ],
+        "cwe": [
+          "CWE-269",
+          "CWE-732"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "cloud-serverless-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/cloud-native/red/privilege-escalation/cloud-serverless-privilege-abuse/SKILL.md"
+    },
+    {
       "name": "mobile-backend-abuse-detection",
       "description": "Enforce and detect server-side the authorization and workflow rules a mobile client cannot be trusted to keep. Use when protecting the backend behind a mobile app: enforcing object- and function-level authorization on every request, never trusting client-supplied roles/prices/flags, validating workflow state and idempotency, and alerting on direct-API-replay patterns (id enumeration, privileged calls from low-privileged tokens, out-of-order or off-device flows). Pairs with the M3 mobile backend API-abuse offense.",
       "team": "blue",
@@ -1855,6 +2365,74 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/mobile/blue/detect/mobile-backend-abuse-detection/SKILL.md"
+    },
+    {
+      "name": "mobile-binary-protection-hardening",
+      "description": "Add binary protections and, above all, remove client-side trust against OWASP Mobile Top 10 M7. Use when hardening an Android or iOS app so tampering and runtime instrumentation are costly and — critically — pointless: enforcing security decisions server-side, adding integrity/tamper detection and platform attestation, and layering obfuscation, anti-debugging, and anti-hooking as defense-in-depth.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1407",
+          "T1633.001"
+        ],
+        "capec": [
+          "CAPEC-208"
+        ],
+        "cwe": [
+          "CWE-693",
+          "CWE-919"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-PSMD",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "mobile-binary-tampering"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-binary-protection-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-cryptography-hardening",
+      "description": "Use cryptography correctly in a mobile app against OWASP Mobile Top 10 M10. Use when replacing weak or broken crypto in an Android or iOS app with modern, authenticated, hardware-backed schemes: AES-GCM/ChaCha20-Poly1305, Keystore/Keychain-managed keys, per-message random IVs/nonces, standard KDFs and strong hashes, and no home-grown algorithms — so protected data stays protected.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1475"
+        ],
+        "capec": [
+          "CAPEC-97"
+        ],
+        "cwe": [
+          "CWE-327",
+          "CWE-326"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-DENCR",
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "mobile-weak-cryptography"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-cryptography-hardening/SKILL.md"
     },
     {
       "name": "mobile-data-storage-hardening",
@@ -1926,6 +2504,74 @@
       "path": "skills/mobile/blue/harden/mobile-deep-link-hardening/SKILL.md"
     },
     {
+      "name": "mobile-misconfiguration-hardening",
+      "description": "Eliminate mobile security misconfiguration against OWASP Mobile Top 10 M8. Use when setting an Android or iOS app's platform and app configuration to secure values: disabling debug/backup in release, exporting only necessary components behind proper permissions, enforcing a strict network security config (no cleartext, no user CAs), locking down WebView settings, using private file modes, and gating these in CI so a regression cannot ship.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1626",
+          "T1420"
+        ],
+        "capec": [
+          "CAPEC-1"
+        ],
+        "cwe": [
+          "CWE-16",
+          "CWE-926"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "mobile-security-misconfiguration"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-misconfiguration-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-privacy-hardening",
+      "description": "Build adequate privacy controls into a mobile app against OWASP Mobile Top 10 M6. Use when minimizing what an Android or iOS app collects, retains, and shares: dropping unneeded permissions and data-hungry SDKs, gating collection on meaningful consent, using resettable identifiers, keeping sensitive data out of logs/clipboard/ backups/screenshots, and disclosing data practices accurately. Pairs with the M6 privacy-exposure offense.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1426",
+          "T1636.003"
+        ],
+        "capec": [
+          "CAPEC-118"
+        ],
+        "cwe": [
+          "CWE-359",
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-DENCR"
+        ]
+      },
+      "pairs_with": [
+        "mobile-privacy-exposure"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-privacy-hardening/SKILL.md"
+    },
+    {
       "name": "mobile-secrets-hardening",
       "description": "Keep secrets out of shipped mobile binaries and limit the damage of any client key. Use when protecting an Android or iOS app: removing server-side credentials from the client, replacing them with a backend broker, scoping and restricting the client keys that must ship, rotating exposed keys, and gating releases on a binary secret scan. Pairs with the M1/M7 hardcoded-secrets offense.",
       "team": "blue",
@@ -1958,6 +2604,40 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/mobile/blue/harden/mobile-secrets-hardening/SKILL.md"
+    },
+    {
+      "name": "mobile-supply-chain-hardening",
+      "description": "Secure a mobile app's supply chain against OWASP Mobile Top 10 M2. Use when hardening what goes into and ships as an Android or iOS build: pinning and verifying third-party SDKs/dependencies, producing and checking an SBOM/provenance, enforcing code signing and runtime integrity/tamper checks, gating the build pipeline, and distributing only through trusted channels so a repackaged or dependency-compromised app cannot reach users.",
+      "team": "blue",
+      "app_type": "mobile",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1444"
+        ],
+        "capec": [
+          "CAPEC-186"
+        ],
+        "cwe": [
+          "CWE-1357",
+          "CWE-494"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "mobile-supply-chain-tampering"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/blue/harden/mobile-supply-chain-hardening/SKILL.md"
     },
     {
       "name": "mobile-transport-hardening",
@@ -2026,6 +2706,37 @@
       "path": "skills/mobile/red/collection/mobile-insecure-data-storage/SKILL.md"
     },
     {
+      "name": "mobile-privacy-exposure",
+      "description": "Demonstrate Inadequate Privacy Controls (OWASP Mobile Top 10 M6) during an authorized mobile assessment — showing that an app collects, retains, exposes, or shares personal and device data beyond what it discloses or needs: over-broad permissions, PII/identifiers sent to third-party SDKs and analytics/ad networks, sensitive data in logs/clipboard/screenshots, and trackable persistent identifiers. Use to inventory what personal data an app actually handles and where it goes, versus its stated purpose and consent.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1426",
+          "T1636.003"
+        ],
+        "capec": [
+          "CAPEC-118"
+        ],
+        "cwe": [
+          "CWE-359",
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-privacy-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/collection/mobile-privacy-exposure/SKILL.md"
+    },
+    {
       "name": "mobile-insecure-transport",
       "description": "Intercept and read a mobile app's network traffic during an authorized mobile assessment. Use when you have a test device you control and need to prove that the app talks to its backend over cleartext, accepts a proxy/user-added CA, or fails to pin/validate the server certificate — letting an adversary-in-the-middle read or tamper with credentials, tokens, and API traffic on hostile networks. Maps to OWASP Mobile Top 10 M5 Insecure Communication / MASVS-NETWORK.",
       "team": "red",
@@ -2058,6 +2769,70 @@
       "path": "skills/mobile/red/credential-access/mobile-insecure-transport/SKILL.md"
     },
     {
+      "name": "mobile-weak-cryptography",
+      "description": "Demonstrate Insufficient Cryptography (OWASP Mobile Top 10 M10) during an authorized mobile assessment — showing that an app's use of cryptography fails to protect data: weak or broken algorithms (DES, RC4, MD5/SHA-1, ECB mode), hardcoded/derivable keys, static IVs and predictable nonces, home-grown \"encryption,\" and keys stored outside the hardware keystore. Use to prove that data the app treats as protected can be recovered because the cryptography — not just the key storage — is inadequate.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1552.001",
+          "T1475"
+        ],
+        "capec": [
+          "CAPEC-97",
+          "CAPEC-475"
+        ],
+        "cwe": [
+          "CWE-327",
+          "CWE-326"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-cryptography-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/credential-access/mobile-weak-cryptography/SKILL.md"
+    },
+    {
+      "name": "mobile-binary-tampering",
+      "description": "Demonstrate Insufficient Binary Protections (OWASP Mobile Top 10 M7) during an authorized mobile assessment — bypassing an app's client-side defenses by patching the binary or hooking it at runtime: defeating root/jailbreak detection, disabling certificate pinning, patching license/feature or auth checks, and instrumenting the app with Frida. Use to prove that logic and checks enforced only on the client can be removed, so security decisions must not rely on the integrity of client-side code.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "defense-evasion",
+      "techniques": {
+        "attack": [
+          "T1407",
+          "T1633.001"
+        ],
+        "capec": [
+          "CAPEC-208",
+          "CAPEC-660"
+        ],
+        "cwe": [
+          "CWE-693",
+          "CWE-919"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-binary-protection-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/defense-evasion/mobile-binary-tampering/SKILL.md"
+    },
+    {
       "name": "mobile-deep-link-abuse",
       "description": "Abuse insecure deep links and inter-app entry points during an authorized mobile assessment. Use when an app registers custom URL schemes, Android App Links / iOS Universal Links, or exported components that accept externally-supplied input, and you need to prove that a crafted link from a webpage, another app, or a QR code can trigger sensitive actions, redirect OAuth/tokens, or inject untrusted data into a privileged screen. Maps to OWASP Mobile Top 10 M4 Insufficient Input/Output Validation and M8 Security Misconfiguration.",
       "team": "red",
@@ -2087,6 +2862,38 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/mobile/red/initial-access/mobile-deep-link-abuse/SKILL.md"
+    },
+    {
+      "name": "mobile-supply-chain-tampering",
+      "description": "Demonstrate Inadequate Supply Chain Security (OWASP Mobile Top 10 M2) during an authorized mobile assessment — showing that a mobile app can be repackaged, trojanized, or built with a compromised dependency/SDK/build step and still run, because the app and its distribution do not verify integrity or provenance. Use when assessing whether an APK/AAB/IPA can be modified and re-signed, whether third-party SDKs and build tooling are unpinned/unverified, and whether the shipped artifact's authenticity is checked before it reaches users.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1195.002",
+          "T1444"
+        ],
+        "capec": [
+          "CAPEC-186",
+          "CAPEC-442"
+        ],
+        "cwe": [
+          "CWE-1357",
+          "CWE-494"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-supply-chain-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/initial-access/mobile-supply-chain-tampering/SKILL.md"
     },
     {
       "name": "mobile-backend-api-abuse",
@@ -2149,6 +2956,38 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/mobile/red/recon/mobile-hardcoded-secrets/SKILL.md"
+    },
+    {
+      "name": "mobile-security-misconfiguration",
+      "description": "Demonstrate Security Misconfiguration (OWASP Mobile Top 10 M8) during an authorized mobile assessment — finding insecure platform and app configuration that weakens an otherwise-sound app: debuggable/backup-enabled builds, exported components with weak or missing permissions, cleartext-traffic and permissive network security config, weak WebView settings (JS bridges, file access), and world-readable file modes. Use to inventory the misconfigurations that expand a mobile app's attack surface.",
+      "team": "red",
+      "app_type": "mobile",
+      "stage": "recon",
+      "techniques": {
+        "attack": [
+          "T1626",
+          "T1420"
+        ],
+        "capec": [
+          "CAPEC-1",
+          "CAPEC-121"
+        ],
+        "cwe": [
+          "CWE-16",
+          "CWE-926"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "mobile-misconfiguration-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/mobile/red/recon/mobile-security-misconfiguration/SKILL.md"
     },
     {
       "name": "network-intrusion-detection",
@@ -2299,6 +3138,75 @@
       "path": "skills/network/blue/harden/network-attack-surface-hardening/SKILL.md"
     },
     {
+      "name": "network-egress-filtering-hardening",
+      "description": "Harden the outbound network boundary against exfiltration and C2 over permitted channels. Use when constraining egress: default-deny outbound with an allowlist, forcing web traffic through a logging proxy and DNS through controlled resolvers, inspecting TLS where lawful, and detecting DNS tunneling, ICMP payloads, and anomalous outbound volume — so a foothold host cannot move data past the boundary unseen.",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1048.003",
+          "T1071.004"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-923"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-NTA",
+          "D3-OTF"
+        ]
+      },
+      "pairs_with": [
+        "network-egress-exfiltration"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/harden/network-egress-filtering-hardening/SKILL.md"
+    },
+    {
+      "name": "network-remote-access-hardening",
+      "description": "Harden remote-access services against external-foothold abuse. Use when securing internet-facing VPN, RDP, SSH, and management endpoints: minimizing direct exposure behind VPN/ZTNA, enforcing phishing-resistant MFA, patching remote-access appliances, disabling default accounts, restricting source networks, and monitoring authentication so the external access boundary can't be crossed with valid-account or known-CVE techniques.",
+      "team": "blue",
+      "app_type": "network",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1133",
+          "T1078",
+          "T1021.001"
+        ],
+        "capec": [
+          "CAPEC-560"
+        ],
+        "cwe": [
+          "CWE-287",
+          "CWE-1392"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-MFA",
+          "D3-NTA"
+        ]
+      },
+      "pairs_with": [
+        "network-remote-access-abuse"
+      ],
+      "risk": "low",
+      "authorization": "not-required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/blue/harden/network-remote-access-hardening/SKILL.md"
+    },
+    {
       "name": "network-tls-hardening",
       "description": "Bring a network service's TLS to a modern, hardened baseline and keep it there. Use when protecting TLS-exposing services (HTTPS, SMTPS, LDAPS, database TLS, VPN): disabling deprecated protocols and weak ciphers, enforcing TLS 1.2+/1.3 with forward secrecy, maintaining valid short-lived certificates with strong keys, and monitoring for configuration and certificate drift. Pairs with the network TLS-assessment offense; anchored on NIST SP 800-52r2, SC-8/SC-13, CIS Control 3.",
       "team": "blue",
@@ -2368,6 +3276,70 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/network/red/credential-access/network-credential-sniffing/SKILL.md"
+    },
+    {
+      "name": "network-egress-exfiltration",
+      "description": "Demonstrate data exfiltration and C2 over permitted egress channels during an authorized network assessment — showing that with unrestricted or loosely-filtered outbound traffic, data can leave (and commands can arrive) by tunneling over allowed protocols: DNS, HTTPS/web, ICMP, or an alternative port. Use to prove that an internal host with a foothold can move data past the egress boundary because outbound filtering and inspection are insufficient.",
+      "team": "red",
+      "app_type": "network",
+      "stage": "exfiltration",
+      "techniques": {
+        "attack": [
+          "T1048.003",
+          "T1071.004"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200",
+          "CWE-923"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-egress-filtering-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/exfiltration/network-egress-exfiltration/SKILL.md"
+    },
+    {
+      "name": "network-remote-access-abuse",
+      "description": "Demonstrate abuse of exposed remote-access services during an authorized network assessment — gaining a foothold through internet-facing VPN, RDP, SSH, or remote- management endpoints via weak/default/reused credentials, missing MFA, or an unpatched appliance. Use when remote-access services are reachable from untrusted networks and you need to prove that the external access boundary can be crossed with valid-account or known-vulnerability techniques (not brute-force flooding).",
+      "team": "red",
+      "app_type": "network",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1133",
+          "T1078",
+          "T1021.001"
+        ],
+        "capec": [
+          "CAPEC-560",
+          "CAPEC-70"
+        ],
+        "cwe": [
+          "CWE-287",
+          "CWE-1392"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "network-remote-access-hardening"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "path": "skills/network/red/initial-access/network-remote-access-abuse/SKILL.md"
     },
     {
       "name": "network-service-exploitation",
