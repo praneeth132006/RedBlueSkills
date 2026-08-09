@@ -1539,3 +1539,39 @@ kbd{
   .cmap__svg{ max-height:none; }
   .cmap-node__name{ font-size:12px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Coverage heatmap + provenance section (generated-artifact showcase)
+   ───────────────────────────────────────────────────────────────── */
+.cmap__heat{ margin-top:clamp(28px,4vw,52px); }
+.cmap__heat h3{ font:700 15px/1.2 var(--mono); color:var(--ink); letter-spacing:.02em; margin:0 0 6px; }
+.cmap__heat p{ color:var(--ink-3); max-width:60ch; margin:0 0 16px; }
+.cmap__heat-img{
+  display:block; width:100%; max-width:920px; height:auto;
+  border:1px solid var(--line); border-radius:8px; background:var(--bg-1);
+  padding:14px;
+}
+.cmap__heat a{ display:inline-block; }
+
+.prov{ margin-top:clamp(16px,2vw,28px); }
+.prov__grid{
+  display:grid; gap:14px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  margin-bottom:22px;
+}
+.prov__card{
+  border:1px solid var(--line); border-radius:8px;
+  background:var(--bg-1); padding:18px 18px 16px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.prov__card h3{ font:700 14px/1.2 var(--mono); color:var(--ink); letter-spacing:.02em; margin:0; }
+.prov__card p{ color:var(--ink-3); font-size:13.5px; margin:0; flex:1; }
+.prov__card .cmd{ margin-top:6px; }
+.prov__code{
+  border:1px solid var(--line); border-left:2px solid var(--green);
+  border-radius:8px; background:var(--bg-1);
+  padding:16px 18px; overflow-x:auto; font:400 12.5px/1.7 var(--mono);
+  color:var(--ink-2);
+}
+.prov__code .p{ color:var(--green); }
+.prov__code .d{ color:var(--ink-4); }

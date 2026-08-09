@@ -1,13 +1,15 @@
 ---
 name: attack-my-application
 description: >-
-  Orchestrate a full, authorized security assessment of a web application. Use
-  when the operator says "attack my application" (or points you at a target URL
-  and asks for a security review). This skill fingerprints the target, confirms
-  authorization and scope, then drives the RedBlueSkills library end to end —
-  running each relevant offensive skill, verifying its paired detection, and
-  producing a prioritized findings report. Authorized testing only.
-version: 1.1.0
+  Orchestrate a full, authorized security assessment of an application — web,
+  API, cloud-native, CI/CD, mobile, network service, or LLM/AI-backed. Use when
+  the operator says "attack my application" (or points you at a target and asks
+  for a security review). This skill fingerprints the target, detects its
+  surface type, confirms authorization and scope, then drives the RedBlueSkills
+  library end to end — running each relevant offensive skill, verifying its
+  paired detection, and producing a prioritized findings report. Authorized
+  testing only.
+version: 1.2.0
 kind: orchestrator
 app_type: web-app
 license: Apache-2.0
@@ -46,7 +48,22 @@ initial-access/exploitation step requires the full gate above.
 
 ## Step 1 — Fingerprint & map the surface
 
-Load **`web-http-fingerprinting`** and run it first. Identify:
+**First, classify the target's surface type** — it determines which part of the
+library applies. One assessment may span several. Read `catalog.json` for the
+authoritative per-surface skill list.
+
+| Surface (`app_type`) | You're looking at… |
+|---|---|
+| `web-app` | A browser-facing web application (forms, HTML, cookies/JWT). |
+| `api` | A REST/GraphQL API (JSON, object-id endpoints, tokens, no UI). |
+| `cloud-native` | Cloud/container infra (IMDS, object storage, k8s, containers). |
+| `ci-cd` | A build/deploy pipeline (runners, workflow files, artifacts, secrets). |
+| `mobile` | A mobile app + its backend (APK/IPA, local storage, deep links). |
+| `network` | Exposed network services (ports, TLS, lateral movement). |
+| `llm-ai` | An LLM/GenAI-backed app or agent (chat box, RAG, tools, prompts). |
+
+For a classic web target, load **`web-http-fingerprinting`** and run it first.
+Identify:
 
 - Server, framework, language, and any WAF/CDN.
 - Entry points: forms, search, file up/download, URL-fetch features, XML/SOAP/SAML
@@ -89,6 +106,22 @@ its paired defensive skill for Step 4). Use this routing table — read
 | Object ids selecting records | `web-idor` | `web-access-control-monitoring` |
 | Login / session / reset flows | `web-broken-authentication` | `web-authentication-hardening` |
 | State-changing requests | `web-csrf` | `web-csrf-hardening` |
+
+If the target is an **LLM/AI-backed app or agent** (`llm-ai` surface), use this
+routing table instead of (or alongside) the web one:
+
+| If the LLM app has… | Run (red) | Verify (blue) |
+|---|---|---|
+| Untrusted text reaching the model (user input, RAG, tool output) | `llm-prompt-injection` | `llm-prompt-injection-detection` |
+| Secrets/PII reachable through responses | `llm-sensitive-info-disclosure` | `llm-output-dlp` |
+| A hidden system prompt (esp. with embedded secrets/rules) | `llm-system-prompt-leakage` | `llm-system-prompt-hardening` |
+| An agent that can call tools/functions | `llm-excessive-agency` | `llm-agency-confinement` |
+| No apparent input/output/rate/cost limits | `llm-unbounded-consumption` | `llm-consumption-limits` |
+
+For the other surfaces (`api`, `cloud-native`, `ci-cd`, `mobile`, `network`),
+select from their skills in `catalog.json` by the same precondition logic: match
+each observed feature to the offensive skill whose preconditions it satisfies,
+and note the paired blue skill for Step 4.
 
 Skip skills whose preconditions the surface map does not satisfy, and say why in
 the report (coverage transparency matters).
@@ -162,7 +195,7 @@ per finding over exhaustive exploitation.
 
 ## References
 
-- The per-technique procedures live in `skills/web-app/**` — this orchestrator
-  only sequences them.
+- The per-technique procedures live in `skills/<surface>/**` (e.g.
+  `skills/web-app/**`, `skills/llm-ai/**`) — this orchestrator only sequences them.
 - `catalog.json` — the authoritative, machine-readable list of available skills,
   their risk levels, and their pairings.

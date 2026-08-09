@@ -32,6 +32,7 @@
     <a href="#map">map</a>
     <a href="#library">library</a>
     <a href="#attack">attack</a>
+    <a href="#provenance">provenance</a>
     <a href="#start">start</a>
     <a href="#doctrine">doctrine</a>
     <a href="#/docs">docs</a>
@@ -207,6 +208,66 @@ recommends checking all inputs.
     <div class="cmap__matrix" data-cmap-matrix>
       <p class="empty">reading catalog.json …</p>
     </div>
+  </div>
+
+  <div class="cmap__heat">
+    <h3>surface × kill-chain heatmap</h3>
+    <p>Generated from <code>catalog.json</code> on every build — never hand-drawn.
+       Each cell is the number of skills; green means every skill in the cell is
+       validated end-to-end.</p>
+    <a href="./coverage.svg" target="_blank" rel="noopener">
+      <img class="cmap__heat-img" src="./coverage.svg"
+           alt="Coverage heatmap: surfaces by kill-chain stage" loading="lazy">
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ PROVENANCE ═══════════════ -->
+<section class="sect" id="provenance">
+  <div class="sect__head">
+    <span class="sect__num">✓</span>
+    <h2>provenance you can verify</h2>
+    <p>A security library should meet the bar it sets. Every artifact here is
+       reproducible from the source, content-hashed, and signed at release —
+       there are no hardcoded numbers and no long-lived keys.</p>
+  </div>
+
+  <div class="prov">
+    <div class="prov__grid">
+      <article class="prov__card">
+        <h3>SBOM</h3>
+        <p>CycloneDX 1.5. Every skill is a component with a SHA-256 and its
+           risk/team/stage metadata.</p>
+        <a class="cmd cmd--glow" href="./sbom.cdx.json" target="_blank" rel="noopener">
+          <span class="cmd__t">sbom.cdx.json</span><span class="cmd__k">↗</span>
+        </a>
+      </article>
+      <article class="prov__card">
+        <h3>Provenance manifest</h3>
+        <p>For each skill: the content hash, and who validated it against which
+           lab, and when.</p>
+        <a class="cmd cmd--glow" href="./provenance.json" target="_blank" rel="noopener">
+          <span class="cmd__t">provenance.json</span><span class="cmd__k">↗</span>
+        </a>
+      </article>
+      <article class="prov__card">
+        <h3>Signed &amp; reproducible</h3>
+        <p>Deterministic bytes (no timestamps/random UUIDs), signed with
+           <b>cosign keyless</b> via GitHub OIDC + a SLSA attestation.</p>
+        <a class="cmd" href="#/docs/provenance">
+          <span class="cmd__t">how to verify</span><span class="cmd__k">→</span>
+        </a>
+      </article>
+    </div>
+    <pre class="prov__code"><code><span class="d"># re-prove the validated skills, any time</span>
+<span class="p">$</span> make validate-labs
+
+<span class="d"># verify a signed release artifact</span>
+<span class="p">$</span> cosign verify-blob --signature provenance.json.sig \
+    --certificate provenance.json.pem \
+    --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+    --certificate-identity-regexp 'Security-Environment/RedBlueSkills' \
+    provenance.json</code></pre>
   </div>
 </section>
 

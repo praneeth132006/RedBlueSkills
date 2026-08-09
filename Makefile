@@ -1,8 +1,8 @@
-.PHONY: help install validate catalog check test clean site site-build
+.PHONY: help install validate catalog provenance check test clean site site-build validate-labs
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
+		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install dev dependencies
 	python -m pip install -r tools/requirements-dev.txt
@@ -10,19 +10,26 @@ install: ## Install dev dependencies
 validate: ## Validate every SKILL.md against the spec
 	python tools/validate.py
 
-catalog: ## Regenerate catalog.json and INDEX.md
+catalog: ## Regenerate catalog.json, INDEX.md, badges, coverage heatmap, README stats
 	python tools/build_catalog.py
+
+provenance: ## Regenerate the SBOM (sbom.cdx.json) and provenance manifest
+	python tools/build_provenance.py
+
+validate-labs: ## Re-prove validated skills by replaying the self-contained labs
+	python tools/replay_labs.py
 
 test: ## Run the tooling test suite
 	python -m pytest tools/tests -q
 
-check: ## Full CI gate: validate + catalog/site freshness + tests
+check: ## Full CI gate: validate + catalog/provenance/site freshness + tests
 	python tools/validate.py
 	python tools/build_catalog.py --check
+	python tools/build_provenance.py --check
 	python tools/build_site_content.py --check
 	python -m pytest tools/tests -q
 
-site-build: catalog ## Regenerate the site's served catalog + embedded content bundle
+site-build: catalog provenance ## Regenerate the site's served catalog, provenance + content bundle
 	cp catalog.json site/catalog.json
 	python tools/build_site_content.py
 

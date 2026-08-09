@@ -1,0 +1,66 @@
+name: Sign provenance
+
+# On every published release, regenerate the SBOM + provenance manifest, prove
+# they match the tagged tree, then sign them with cosign KEYLESS signing — there
+# is no private key anywhere. The signing identity is this workflow's GitHub OIDC
+# token, recorded in the certificate and the public Rekor transparency log. Also
+# emits a SLSA build-provenance attestation for the artifacts.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write # upload signed artifacts to the release
+  id-token: write # OIDC token for cosign keyless + attestations
+  attestations: write # SLSA build provenance
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r tools/requirements-dev.txt
+
+      - name: Regenerate and verify artifacts match the tree
+        run: |
+          python tools/build_catalog.py --check
+          python tools/build_provenance.py --check
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign SBOM + provenance (keyless)
+        run: |
+          for f in sbom.cdx.json provenance.json; do
+            cosign sign-blob --yes \
+              --output-signature "$f.sig" \
+              --output-certificate "$f.pem" \
+              "$f"
+          done
+
+      - name: SLSA build provenance attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            sbom.cdx.json
+            provenance.json
+
+      - name: Attach signed artifacts to the release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          gh release upload "$TAG" \
+            sbom.cdx.json sbom.cdx.json.sig sbom.cdx.json.pem \
+            provenance.json provenance.json.sig provenance.json.pem \
+            --clobber

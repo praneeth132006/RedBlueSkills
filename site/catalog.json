@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 110,
+  "count": 120,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -8,7 +8,8 @@
       "cloud-native",
       "ci-cd",
       "mobile",
-      "network"
+      "network",
+      "llm-ai"
     ],
     "planned": [],
     "stage_order": [
@@ -370,6 +371,57 @@
           "validated": 0,
           "total": 2
         }
+      },
+      "llm-ai": {
+        "detect": {
+          "red": 0,
+          "blue": 1,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "harden": {
+          "red": 0,
+          "blue": 4,
+          "purple": 0,
+          "validated": 4,
+          "total": 4
+        },
+        "collection": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "credential-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "impact": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "initial-access": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        },
+        "privilege-escalation": {
+          "red": 1,
+          "blue": 0,
+          "purple": 0,
+          "validated": 1,
+          "total": 1
+        }
       }
     },
     "totals": {
@@ -413,6 +465,13 @@
         "validated": 0,
         "red": 7,
         "blue": 7,
+        "purple": 0
+      },
+      "llm-ai": {
+        "total": 10,
+        "validated": 10,
+        "red": 5,
+        "blue": 5,
         "purple": 0
       }
     }
@@ -2332,6 +2391,306 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/cloud-native/red/privilege-escalation/cloud-serverless-privilege-abuse/SKILL.md"
+    },
+    {
+      "name": "llm-prompt-injection-detection",
+      "description": "Detect direct and indirect prompt-injection attempts and successful policy breaks against an LLM application from prompt/response telemetry. Use when building detections for injection, triaging a suspected jailbreak, or hunting for override activity in model logs and RAG pipelines.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "detect",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-242"
+        ],
+        "cwe": [
+          "CWE-1427"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-UBA"
+        ]
+      },
+      "pairs_with": [
+        "llm-prompt-injection"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/blue/detect/llm-prompt-injection-detection/SKILL.md"
+    },
+    {
+      "name": "llm-agency-confinement",
+      "description": "Confine an LLM agent's actions with tool allowlists, least-privilege credentials, parameter validation, and human-in-the-loop gates. Use when hardening an agent so injected or crafted input cannot trigger unintended, high-impact tool calls.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1059"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-excessive-agency"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/blue/harden/llm-agency-confinement/SKILL.md"
+    },
+    {
+      "name": "llm-consumption-limits",
+      "description": "Harden an LLM application against unbounded consumption with input/output caps, token budgets, rate limiting, and cost controls. Use when protecting a model-backed service from resource exhaustion and denial-of-wallet abuse.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1499"
+        ],
+        "capec": [
+          "CAPEC-125"
+        ],
+        "cwe": [
+          "CWE-770"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-unbounded-consumption"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/blue/harden/llm-consumption-limits/SKILL.md"
+    },
+    {
+      "name": "llm-output-dlp",
+      "description": "Harden an LLM application against sensitive-data leakage by filtering and redacting model output and constraining what reaches the context. Use when securing a chatbot or RAG app so secrets, PII, and system configuration cannot leave in a response.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-sensitive-info-disclosure"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/blue/harden/llm-output-dlp/SKILL.md"
+    },
+    {
+      "name": "llm-system-prompt-hardening",
+      "description": "Harden an LLM application's system prompt so it carries no secrets or authorization logic and cannot be trivially extracted. Use when securing a chatbot/agent so that leaking the system prompt is low-impact by design.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1552"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-system-prompt-leakage"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/blue/harden/llm-system-prompt-hardening/SKILL.md"
+    },
+    {
+      "name": "llm-sensitive-info-disclosure",
+      "description": "Elicit sensitive information an LLM application should not reveal — training data, other users' data, secrets pulled into context, or backend configuration — during an authorized assessment. Use when you need to prove the app leaks confidential data through its responses.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1552"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-output-dlp"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/red/collection/llm-sensitive-info-disclosure/SKILL.md"
+    },
+    {
+      "name": "llm-system-prompt-leakage",
+      "description": "Extract an LLM application's hidden system prompt and any secrets embedded in it during an authorized assessment. Use when you need to prove the app's instructions, guardrails, or credentials can be recovered by a user.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "credential-access",
+      "techniques": {
+        "attack": [
+          "T1552"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-200"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-system-prompt-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/red/credential-access/llm-system-prompt-leakage/SKILL.md"
+    },
+    {
+      "name": "llm-unbounded-consumption",
+      "description": "Demonstrate unbounded resource consumption against an LLM application — token floods, unbounded output, and cost/denial-of-wallet amplification — during an authorized assessment. Use when you need to prove the app lacks input, output, rate, or cost limits.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "impact",
+      "techniques": {
+        "attack": [
+          "T1499"
+        ],
+        "capec": [
+          "CAPEC-125"
+        ],
+        "cwe": [
+          "CWE-770"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-consumption-limits"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/red/impact/llm-unbounded-consumption/SKILL.md"
+    },
+    {
+      "name": "llm-prompt-injection",
+      "description": "Confirm and demonstrate direct and indirect prompt injection against an LLM-backed application during an authorized assessment. Use when untrusted text (user input, retrieved documents, tool output, web content) reaches the model's context and you need to prove it can override the system prompt or hijack the app's behaviour.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1190"
+        ],
+        "capec": [
+          "CAPEC-242"
+        ],
+        "cwe": [
+          "CWE-1427"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-prompt-injection-detection"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/red/initial-access/llm-prompt-injection/SKILL.md"
+    },
+    {
+      "name": "llm-excessive-agency",
+      "description": "Abuse an over-privileged LLM agent — excessive tools, permissions, or autonomy — to make it perform actions beyond its intended scope during an authorized assessment. Use when an agent can call tools/APIs and you need to prove that injected or crafted input can trigger unintended, high-impact actions.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "privilege-escalation",
+      "techniques": {
+        "attack": [
+          "T1059"
+        ],
+        "capec": [
+          "CAPEC-233"
+        ],
+        "cwe": [
+          "CWE-269"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-agency-confinement"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-09",
+      "path": "skills/llm-ai/red/privilege-escalation/llm-excessive-agency/SKILL.md"
     },
     {
       "name": "mobile-backend-abuse-detection",

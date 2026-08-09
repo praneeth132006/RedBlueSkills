@@ -4,9 +4,73 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project aims to
 follow [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.0.0] — 2026-08-10
+
+First stable release. Every claim the library makes about itself is now generated
+and verifiable: counts are derived from the catalog, the SBOM and provenance
+manifest are content-hashed and signed at release, and validated skills are
+re-provable on demand.
 
 ### Added
+- **Supply-chain provenance.** New `tools/build_provenance.py` emits a CycloneDX
+  1.5 SBOM (`sbom.cdx.json`) and a provenance manifest (`provenance.json`) that
+  records, per skill, the SHA-256 of its `SKILL.md` and who validated it against
+  which lab, when. Both are **deterministic** (no timestamps or clock-based UUIDs)
+  and gated by `--check` in CI, and **signed at release with cosign keyless
+  signing** plus a SLSA build-provenance attestation (`.github/workflows/provenance.yml`).
+  Verification is documented in [`docs/provenance.md`](docs/provenance.md).
+- **Dynamic badges, counts, and coverage heatmap — nothing hand-typed.**
+  `tools/build_catalog.py` now generates shields.io endpoint badges
+  (`site/badges/*.json`), a theme-aware surface × kill-chain heatmap
+  (`site/coverage.svg`), and splices live totals into the README's managed
+  `STATS` block. CI fails if any drift. Fixes the previously stale `skills-20`
+  badge.
+- **Lab-replay harness.** `tools/replay_labs.py` (+ `make validate-labs`)
+  discovers every `_lab/*/validate.{sh,py}` and re-proves the self-contained labs
+  (ci-local, llm-local) on each CI run — a `validated` stamp is now a claim you
+  can re-run, not just trust.
+- **MCP server (`bin/mcp.js`, `redblueskills-mcp`).** A dependency-free
+  Model Context Protocol server over the library so agents can `list_skills`,
+  `get_skill`, `search_skills`, `get_catalog`, and read `coverage` directly —
+  no `init` copy step. Smoke-tested in CI.
+- **Website**: a new **provenance** section (SBOM + manifest downloads, the
+  coverage heatmap, and copy-paste `cosign verify-blob` / `make validate-labs`),
+  plus a docs page for verification.
+
+### Changed
+- **`package.json` → 1.0.0**; ships `sbom.cdx.json`, `provenance.json`, and
+  `COVERAGE.md`, and exposes the `redblueskills-mcp` binary. The npm-publish
+  workflow now asserts the release tag matches the version and that the provenance
+  artifacts are in the package.
+- **README** de-hardcodes every count; totals come from generated badges and the
+  managed stats table.
+
+### Security
+- **CLI path-traversal hardening.** `bin/cli.js` now refuses to copy any skill
+  whose catalog path escapes the bundled `skills/` tree and never writes outside
+  the chosen `--dest` — defense in depth against a tampered `catalog.json`.
+- Confirmed no secrets are committed; `_lab/loot/`, lab keys, and `.env` remain
+  git-ignored.
+
+### Added (7th surface & OWASP completions, earlier in this cycle)
+- **New `llm-ai` surface — the 7th — mapping the OWASP Top 10 for LLM
+  Applications 2025 (5 new red↔blue pairs, 10 skills), all `validated`:** LLM01
+  `llm-prompt-injection` ↔ `llm-prompt-injection-detection`, LLM02
+  `llm-sensitive-info-disclosure` ↔ `llm-output-dlp`, LLM06 `llm-excessive-agency`
+  ↔ `llm-agency-confinement`, LLM07 `llm-system-prompt-leakage` ↔
+  `llm-system-prompt-hardening`, and LLM10 `llm-unbounded-consumption` ↔
+  `llm-consumption-limits`. Mapped to MITRE ATLAS / ATT&CK / D3FEND and NIST
+  SP 800-53 Rev 5.
+- **`_lab/llm-local/` — a dependency-free stdlib-Python mock-LLM lab** (validation
+  target `llm-local`). `mock_llm.py` runs a storefront-assistant app in `vuln` and
+  `hardened` modes; `validate.py` asserts each of the 5 controls is exploitable on
+  the vulnerable build and blocked on the hardened one (run
+  `python3 _lab/llm-local/validate.py`). The library is now **120 skills across 7
+  live surfaces, 57 validated**.
+- **`attack-my-application` orchestrator is now surface-aware (v1.2.0):** Step 1
+  classifies the target's `app_type` (web / api / cloud-native / ci-cd / mobile /
+  network / llm-ai) and Step 2 gained an `llm-ai` routing table, so the
+  orchestrator can drive an LLM-app assessment, not only a web one.
 - **`ci-cd` completed to the full OWASP CI/CD Top 10 — 5 new red↔blue pairs
   (10 skills)** covering the previously-missing risks: CICD-SEC-1
   `ci-flow-control-abuse` ↔ `ci-flow-control-hardening`, CICD-SEC-2

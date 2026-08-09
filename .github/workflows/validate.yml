@@ -33,8 +33,14 @@ jobs:
       - name: Check catalog is up to date
         run: python tools/build_catalog.py --check
 
+      - name: Check SBOM + provenance are up to date
+        run: python tools/build_provenance.py --check
+
       - name: Check the site's embedded content bundle is up to date
         run: python tools/build_site_content.py --check
+
+      - name: Re-prove validated skills (self-contained labs)
+        run: python tools/replay_labs.py
 
       - name: Run tooling tests
         run: python -m pytest tools/tests -q
@@ -52,7 +58,18 @@ jobs:
           node-version: "20"
 
       - name: Syntax check
-        run: node -c bin/cli.js
+        run: |
+          node -c bin/cli.js
+          node -c bin/mcp.js
+
+      - name: MCP server responds to initialize + tools/list
+        run: |
+          out=$(printf '%s\n%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | node bin/mcp.js)
+          echo "$out" | grep -q '"serverInfo"'
+          echo "$out" | grep -q '"list_skills"'
+          echo "$out" | grep -q '"get_skill"'
 
       - name: list / attack / path
         run: |
@@ -80,5 +97,5 @@ jobs:
             echo "expected a non-zero exit for an unknown skill"; exit 1
           fi
 
-      - name: package.json is valid and exposes the CLI
-        run: jq -e '.bin.redblueskills and .bin.rbsk' package.json > /dev/null
+      - name: package.json is valid and exposes the CLI + MCP server
+        run: jq -e '.bin.redblueskills and .bin.rbsk and (.bin["redblueskills-mcp"])' package.json > /dev/null
