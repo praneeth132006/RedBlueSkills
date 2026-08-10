@@ -72,6 +72,17 @@
       the raw power of paired offense and defense. True security isn't just a checklist—it's absolute control over your environment.
     </p>
 
+    <!-- runner switcher — rewrites every command on the page in place -->
+    <div class="pm" role="tablist" aria-label="package runner">
+      <span class="pm__l">run with</span>
+      <button class="pm__t is-on" type="button" role="tab" aria-selected="true" data-runner="npx">npx</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="pnpm">pnpm</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="yarn">yarn</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="bun">bun</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="deno">deno</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="global">global</button>
+    </div>
+
     <div class="hero__act">
       <button class="cmd" data-copy="npx redblueskills init" type="button">
         <span class="cmd__p">$</span>
@@ -80,6 +91,8 @@
       </button>
       <a class="key key--wide" href="#start">read the 5-min quickstart →</a>
     </div>
+
+    <p class="pm__note" data-pm-note hidden></p>
   </div>
 
   <!-- the legend: how offense and defense are told apart without colour -->

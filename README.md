@@ -153,6 +153,16 @@ npx redblueskills add web-ssrf  # just one (its paired defense comes along)
 npx redblueskills list red      # browse offense (or: blue, a stage, or free text)
 ```
 
+Not an npm user? Every runner works — the package has no install step of its own:
+
+```bash
+pnpm dlx redblueskills init             # pnpm
+yarn dlx redblueskills init             # yarn 2+ (yarn 1: use npx)
+bunx redblueskills init                 # bun
+deno run -A npm:redblueskills init      # deno — -A because it writes ./.claude
+npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
+```
+
 Then simply tell your agent **"attack my application"** (see below), or point it
 at any `skills/**/SKILL.md`. A generated `README` in the install directory tells
 the agent when to load each skill.
