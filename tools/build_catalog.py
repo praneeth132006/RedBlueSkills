@@ -26,13 +26,21 @@ SKILLS = REPO / "skills"
 CATALOG_JSON = REPO / "catalog.json"
 INDEX_MD = REPO / "INDEX.md"
 COVERAGE_MD = REPO / "COVERAGE.md"
-SITE_CATALOG = REPO / "site" / "catalog.json"  # served copy the website fetches
+README_MD = REPO / "README.md"
+SITE = REPO / "site"
+SITE_CATALOG = SITE / "catalog.json"  # served copy the website fetches
+SITE_BADGES = SITE / "badges"
+SITE_COVERAGE_SVG = SITE / "coverage.svg"
+
+# Managed region in README.md — live counts are spliced in, never hand-typed.
+STATS_BEGIN = "<!-- STATS:BEGIN -->"
+STATS_END = "<!-- STATS:END -->"
 
 TEAM_BADGE = {"red": "🔴 red", "blue": "🔵 blue", "purple": "🟣 purple"}
 
 # Surfaces in display order, and which are planned (no skills yet, shown dark on
 # the site's coverage map). Keep in sync with SKILL-SPEC APP_TYPES + COVERAGE.md.
-SURFACES_ORDER = ["web-app", "api", "cloud-native", "ci-cd", "mobile", "network"]
+SURFACES_ORDER = ["web-app", "api", "cloud-native", "ci-cd", "mobile", "network", "llm-ai"]
 PLANNED_SURFACES = []
 # Kill-chain stages in canonical order: offense then defense.
 STAGE_ORDER = [
@@ -186,6 +194,149 @@ def render_index_md(rows: list[dict]) -> str:
     return "\n".join(out)
 
 
+# --- derived stats, badges, heatmap, README injection -----------------------
+
+def compute_stats(rows: list[dict], coverage: dict) -> dict:
+    total = len(rows)
+    validated = sum(1 for r in rows if r.get("maturity") == "validated")
+    reviewed = sum(1 for r in rows if r.get("maturity") == "reviewed")
+    surfaces = sum(1 for s in coverage["surfaces_order"]
+                   if coverage["totals"][s]["total"])
+    # Unordered red<->blue pairs, counted once each.
+    seen = set()
+    for r in rows:
+        for p in r.get("pairs_with") or []:
+            seen.add(frozenset((r["name"], p)))
+    return {
+        "total": total,
+        "validated": validated,
+        "reviewed": reviewed,
+        "pairs": len(seen),
+        "surfaces": surfaces,
+        "validated_pct": round(100 * validated / total) if total else 0,
+    }
+
+
+def _badge(label: str, message: str, color: str) -> str:
+    return json.dumps(
+        {"schemaVersion": 1, "label": label, "message": message, "color": color},
+        indent=2, ensure_ascii=False,
+    ) + "\n"
+
+
+def render_badges(stats: dict) -> dict[str, str]:
+    """Shields.io endpoint files — the README badges read these, so a count is
+    never written by hand."""
+    return {
+        "skills.json": _badge("skills", str(stats["total"]), "informational"),
+        "validated.json": _badge(
+            "validated", f"{stats['validated']}/{stats['total']}", "brightgreen"),
+        "pairs.json": _badge("red↔blue pairs", str(stats["pairs"]), "blueviolet"),
+        "surfaces.json": _badge("surfaces", str(stats["surfaces"]), "blue"),
+    }
+
+
+def render_coverage_svg(coverage: dict, stats: dict) -> str:
+    """A surface x kill-chain-stage heatmap. Theme-aware (adapts to the reader's
+    light/dark GitHub/site theme via prefers-color-scheme). Fully generated."""
+    used = [st for st in coverage["stage_order"]
+            if any(st in coverage["cells"][s] for s in coverage["surfaces_order"])]
+    surfaces = coverage["surfaces_order"]
+    pad_l, pad_t = 132, 96
+    cw, ch = 74, 30
+    w = pad_l + cw * len(used) + 70
+    h = pad_t + ch * len(surfaces) + 30
+
+    def cell_fill(c: dict | None) -> str:
+        if not c or not c["total"]:
+            return "var(--empty)"
+        if c["validated"] == c["total"]:
+            return "var(--full)"
+        if c["validated"]:
+            return "var(--part)"
+        return "var(--some)"
+
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
+        f'viewBox="0 0 {w} {h}" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
+        f'role="img" aria-label="RedBlueSkills coverage heatmap">',
+        "<style>",
+        ":root{--bg:#ffffff;--fg:#1f2328;--muted:#656d76;--grid:#d0d7de;"
+        "--empty:#eef1f4;--some:#ffd8a8;--part:#a5d8ff;--full:#69db7c;}",
+        "@media (prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;"
+        "--muted:#8b949e;--grid:#30363d;--empty:#161b22;--some:#7a4b12;"
+        "--part:#1f4d7a;--full:#1a7f37;}}",
+        ".t{fill:var(--fg);} .m{fill:var(--muted);} .n{fill:var(--fg);font-weight:700;}",
+        "</style>",
+        f'<rect width="{w}" height="{h}" fill="var(--bg)"/>',
+        f'<text x="16" y="30" class="n" font-size="15">RedBlueSkills coverage</text>',
+        f'<text x="16" y="50" class="m" font-size="11">{stats["total"]} skills · '
+        f'{stats["validated"]} validated · {stats["pairs"]} red↔blue pairs · '
+        f'{stats["surfaces"]} surfaces</text>',
+    ]
+    # column headers (rotated)
+    for j, st in enumerate(used):
+        x = pad_l + j * cw + cw / 2
+        parts.append(
+            f'<text x="{x:.0f}" y="{pad_t - 8}" class="m" font-size="10" '
+            f'text-anchor="start" transform="rotate(-45 {x:.0f} {pad_t - 8})">{st}</text>')
+    # rows
+    for i, s in enumerate(surfaces):
+        y = pad_t + i * ch
+        parts.append(
+            f'<text x="{pad_l - 10}" y="{y + ch/2 + 4:.0f}" class="t" font-size="11" '
+            f'text-anchor="end">{s}</text>')
+        for j, st in enumerate(used):
+            x = pad_l + j * cw
+            c = coverage["cells"][s].get(st)
+            parts.append(
+                f'<rect x="{x}" y="{y}" width="{cw-3}" height="{ch-3}" rx="3" '
+                f'fill="{cell_fill(c)}" stroke="var(--grid)" stroke-width="0.5"/>')
+            if c and c["total"]:
+                parts.append(
+                    f'<text x="{x + (cw-3)/2:.0f}" y="{y + ch/2 + 4:.0f}" class="t" '
+                    f'font-size="11" text-anchor="middle">{c["total"]}</text>')
+        tot = coverage["totals"][s]["total"]
+        parts.append(
+            f'<text x="{pad_l + len(used)*cw + 6}" y="{y + ch/2 + 4:.0f}" class="n" '
+            f'font-size="11">{tot}</text>')
+    # legend
+    ly = pad_t + len(surfaces) * ch + 18
+    legend = [("empty", "var(--empty)"), ("some", "var(--some)"),
+              ("partial", "var(--part)"), ("all validated", "var(--full)")]
+    lx = pad_l
+    for label, fill in legend:
+        parts.append(f'<rect x="{lx}" y="{ly-10}" width="12" height="12" rx="2" '
+                     f'fill="{fill}" stroke="var(--grid)" stroke-width="0.5"/>')
+        parts.append(f'<text x="{lx+17}" y="{ly}" class="m" font-size="10">{label}</text>')
+        lx += 34 + len(label) * 6
+    parts.append("</svg>")
+    return "\n".join(parts) + "\n"
+
+
+def render_readme(stats: dict) -> str | None:
+    """Splice the live counts into README's managed STATS region."""
+    if not README_MD.exists():
+        return None
+    src = README_MD.read_text(encoding="utf-8")
+    if STATS_BEGIN not in src or STATS_END not in src:
+        return None
+    block = (
+        f"{STATS_BEGIN}\n"
+        f"| skills | red↔blue pairs | validated end-to-end | live surfaces |\n"
+        f"|:--:|:--:|:--:|:--:|\n"
+        f"| **{stats['total']}** | **{stats['pairs']}** | "
+        f"**{stats['validated']}** ({stats['validated_pct']}%) | "
+        f"**{stats['surfaces']}** |\n\n"
+        f"<sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — "
+        f"never hand-edited. CI fails if this table drifts.</sub>\n"
+        f"{STATS_END}"
+    )
+    pre = src.split(STATS_BEGIN)[0]
+    post = src.split(STATS_END)[1]
+    return f"{pre}{block}{post}"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true",
@@ -194,38 +345,44 @@ def main() -> int:
 
     rows = collect()
     coverage = build_coverage(rows)
+    stats = compute_stats(rows, coverage)
     catalog = render_catalog_json(rows, coverage)
     index = render_index_md(rows)
     coverage_doc = render_coverage_doc(coverage) if COVERAGE_MD.exists() else None
+    badges = render_badges(stats)
+    coverage_svg = render_coverage_svg(coverage, stats)
+    readme = render_readme(stats)
+
+    # (path, freshly-rendered content) for every generated artifact.
+    targets: list[tuple[Path, str]] = [
+        (CATALOG_JSON, catalog),
+        (INDEX_MD, index),
+    ]
+    if coverage_doc is not None:
+        targets.append((COVERAGE_MD, coverage_doc))
+    if readme is not None:
+        targets.append((README_MD, readme))
+    if SITE.is_dir():
+        targets.append((SITE_CATALOG, catalog))
+        targets.append((SITE_COVERAGE_SVG, coverage_svg))
+        for fname, content in badges.items():
+            targets.append((SITE_BADGES / fname, content))
 
     if args.check:
-        stale = []
-        if not CATALOG_JSON.exists() or CATALOG_JSON.read_text(encoding="utf-8") != catalog:
-            stale.append("catalog.json")
-        if not INDEX_MD.exists() or INDEX_MD.read_text(encoding="utf-8") != index:
-            stale.append("INDEX.md")
-        if coverage_doc is not None and COVERAGE_MD.read_text(encoding="utf-8") != coverage_doc:
-            stale.append("COVERAGE.md")
-        if SITE_CATALOG.parent.is_dir() and (
-            not SITE_CATALOG.exists() or SITE_CATALOG.read_text(encoding="utf-8") != catalog
-        ):
-            stale.append("site/catalog.json")
+        stale = [str(p.relative_to(REPO)) for p, content in targets
+                 if not p.exists() or p.read_text(encoding="utf-8") != content]
         if stale:
-            print(f"STALE: {', '.join(stale)} out of date — run `make catalog`", file=sys.stderr)
+            print(f"STALE: {', '.join(stale)} out of date — run `make catalog`",
+                  file=sys.stderr)
             return 1
         print("catalog artifacts are up to date")
         return 0
 
-    CATALOG_JSON.write_text(catalog, encoding="utf-8")
-    INDEX_MD.write_text(index, encoding="utf-8")
-    wrote = ["catalog.json", "INDEX.md"]
-    if coverage_doc is not None:
-        COVERAGE_MD.write_text(coverage_doc, encoding="utf-8")
-        wrote.append("COVERAGE.md")
-    if SITE_CATALOG.parent.is_dir():
-        SITE_CATALOG.write_text(catalog, encoding="utf-8")
-        wrote.append("site/catalog.json")
-    print(f"wrote {', '.join(wrote)} ({len(rows)} skills)")
+    SITE_BADGES.mkdir(parents=True, exist_ok=True) if SITE.is_dir() else None
+    for p, content in targets:
+        p.write_text(content, encoding="utf-8")
+    print(f"wrote {len(targets)} artifact(s) ({len(rows)} skills, "
+          f"{stats['validated']} validated)")
     return 0
 
 

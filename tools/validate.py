@@ -26,7 +26,7 @@ except ImportError:  # pragma: no cover - dependency guard
 # --- controlled vocabularies -------------------------------------------------
 
 TEAMS = {"red", "blue", "purple"}
-APP_TYPES = {"web-app", "api", "cloud-native", "mobile", "network", "ci-cd"}
+APP_TYPES = {"web-app", "api", "cloud-native", "mobile", "network", "ci-cd", "llm-ai"}
 FRAMEWORKS = {"mitre-attack", "unified-kill-chain"}
 STAGES = {
     # offense

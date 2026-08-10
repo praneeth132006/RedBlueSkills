@@ -33,6 +33,7 @@ The kind of system the skill targets. One directory per surface under `skills/`.
 | `ci-cd` | **shipping** (opened) | OWASP Top 10 CI/CD Security Risks |
 | `mobile` | **shipping** (opened) | OWASP MASVS / Mobile Top 10 |
 | `network` | **shipping** (opened) | Network services & lateral movement; MITRE ATT&CK + NIST SP 800-53 / CSF + CIS Controls v8 |
+| `llm-ai` | **shipping** (opened) | LLM/GenAI applications & agents; OWASP Top 10 for LLM Apps 2025 + MITRE ATLAS |
 
 ### `team` — offense, defense, or joint
 
@@ -102,7 +103,8 @@ draft ──review──▶ reviewed ──validate──▶ validated ──(6m
 
 A `validated` skill names its lab in the `validation.target` field. Current targets
 in use: `owasp-crapi`, `owasp-juice-shop`, `docker-colima`, `ec2-metadata-mock`,
-`minio-s3`, `ci-local` (a dependency-free git+bash CI lab, `_lab/ci-local/`).
+`minio-s3`, `ci-local` (a dependency-free git+bash CI lab, `_lab/ci-local/`),
+`llm-local` (a dependency-free stdlib-Python mock-LLM lab, `_lab/llm-local/`).
 
 ---
 
@@ -134,6 +136,12 @@ rather than ad-hoc.
   (SP 800-52r2), credential sniffing & layer-2 AiTM (T1040/T1557), and lateral
   movement (T1021/T1550) — mapped across MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53
   Rev 5 / CSF 2.0, and CIS Controls v8.
+- **`llm-ai`** → **OWASP Top 10 for LLM Applications 2025.** Prompt injection
+  (LLM01), sensitive information disclosure (LLM02), excessive agency (LLM06),
+  system prompt leakage (LLM07), and unbounded consumption (LLM10) — 5 red↔blue
+  pairs mapped to MITRE ATLAS, MITRE ATT&CK, MITRE D3FEND, and NIST SP 800-53
+  Rev 5, and validated end-to-end against the dependency-free `llm-local` mock-LLM
+  lab (`_lab/llm-local/`).
 
 ---
 
@@ -154,7 +162,8 @@ data as a radial coverage map and matrix.
 | `ci-cd` | · | 2 | 2 | · | 2 | 1✓ | 1 | 1✓ | · | · | 1 | 7 | 3 | · | **20** |
 | `mobile` | 2 | 2 | · | · | 1 | 1 | 2 | · | 2 | · | · | 9 | 1 | · | **20** |
 | `network` | 2 | 2 | · | · | · | · | 1 | 1 | · | 1 | · | 4 | 3 | · | **14** |
+| `llm-ai` | · | 1✓ | · | · | 1✓ | · | 1✓ | · | 1✓ | · | 1✓ | 4✓ | 1✓ | · | **10** |
 
-_110 skills across 6 live surfaces; 47 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
+_120 skills across 7 live surfaces; 57 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
 
 <!-- COVERAGE:END -->

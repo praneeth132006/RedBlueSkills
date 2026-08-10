@@ -48,21 +48,39 @@ function fail(msg) {
   process.exit(1);
 }
 
-function copyDir(src, dest) {
+// true iff `child` is `root` itself or lives inside it (after resolving symlinks
+// via normalized absolute paths). Used to keep copies inside their trees.
+function isInside(root, child) {
+  const r = path.resolve(root);
+  const c = path.resolve(child);
+  return c === r || c.startsWith(r + path.sep);
+}
+
+function copyDir(src, dest, destRoot) {
+  // Never write outside the intended destination root, even if a name is hostile.
+  if (destRoot && !isInside(destRoot, dest)) {
+    fail(`refusing to write outside the install directory: ${dest}`);
+  }
   fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
     const s = path.join(src, entry.name);
     const d = path.join(dest, entry.name);
-    if (entry.isDirectory()) copyDir(s, d);
+    if (entry.isDirectory()) copyDir(s, d, destRoot);
     else fs.copyFileSync(s, d);
   }
 }
 
-// resolve a skill name -> absolute source directory (containing SKILL.md)
+// resolve a skill name -> absolute source directory (containing SKILL.md).
+// Rejects any catalog path that escapes the bundled skills tree — the catalog is
+// trusted, but a tampered catalog.json must not turn `add` into an arbitrary copy.
 function skillDir(name, catalog) {
   const row = catalog.skills.find((s) => s.name === name);
   if (!row) return null;
-  return path.join(PKG_ROOT, path.dirname(row.path));
+  const dir = path.resolve(PKG_ROOT, path.dirname(row.path));
+  if (!isInside(SKILLS_DIR, dir)) {
+    fail(`catalog entry '${name}' points outside the skills tree (${row.path})`);
+  }
+  return dir;
 }
 
 // --- commands ---------------------------------------------------------------
@@ -102,9 +120,9 @@ function cmdInit(args) {
   console.log(bold('  Installing RedBlueSkills → ') + dim(dest));
 
   // all skills
-  copyDir(SKILLS_DIR, path.join(dest, 'skills'));
+  copyDir(SKILLS_DIR, path.join(dest, 'skills'), dest);
   // orchestrator(s)
-  if (fs.existsSync(ORCH_DIR)) copyDir(ORCH_DIR, path.join(dest, 'orchestrators'));
+  if (fs.existsSync(ORCH_DIR)) copyDir(ORCH_DIR, path.join(dest, 'orchestrators'), dest);
   // catalog for the agent to reason over
   fs.copyFileSync(CATALOG, path.join(dest, 'catalog.json'));
   writeAgentReadme(dest, catalog);
@@ -152,14 +170,14 @@ function cmdAdd(args) {
     }
     const row = catalog.skills.find((s) => s.name === name);
     const rel = path.relative(SKILLS_DIR, src);
-    copyDir(src, path.join(dest, 'skills', rel));
+    copyDir(src, path.join(dest, 'skills', rel), dest);
     console.log(`  ${teamColor(row.team)('●')} added ${bold(name)}`);
     n++;
     // pull in paired skills too, so offense always ships with its defense
     for (const p of row.pairs_with || []) {
       const psrc = skillDir(p, catalog);
       if (psrc) {
-        copyDir(psrc, path.join(dest, 'skills', path.relative(SKILLS_DIR, psrc)));
+        copyDir(psrc, path.join(dest, 'skills', path.relative(SKILLS_DIR, psrc)), dest);
         console.log(`    ${dim('↳ paired ' + p)}`);
       }
     }

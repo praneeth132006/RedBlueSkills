@@ -1,0 +1,18 @@
+{
+  "ci-local": {
+    "offline": true,
+    "description": "git+bash CI/CD pipeline security lab (OWASP CI/CD Top 10)"
+  },
+  "llm-local": {
+    "offline": true,
+    "description": "stdlib mock-LLM lab (OWASP Top 10 for LLM Applications 2025)"
+  },
+  "crapi": {
+    "offline": false,
+    "description": "OWASP crAPI — needs Docker/Colima"
+  },
+  "hardening": {
+    "offline": false,
+    "description": "nginx hardening reference — config only, no runner"
+  }
+}

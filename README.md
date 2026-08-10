@@ -4,8 +4,18 @@
 
 [![Validate](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-20-informational)](INDEX.md)
+[![Skills](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/skills.json)](INDEX.md)
+[![Validated](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/validated.json)](COVERAGE.md)
+[![Pairs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/pairs.json)](INDEX.md)
 [![npm](https://img.shields.io/badge/npm-redblueskills-c4362a)](https://www.npmjs.com/package/redblueskills)
+
+<!-- STATS:BEGIN -->
+| skills | red↔blue pairs | validated end-to-end | live surfaces |
+|:--:|:--:|:--:|:--:|
+| **120** | **60** | **57** (48%) | **7** |
+
+<sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — never hand-edited. CI fails if this table drifts.</sub>
+<!-- STATS:END -->
 
 RedBlueSkills is a library of [Claude Agent Skills](https://docs.claude.com/en/docs/agents/skills) —
 `SKILL.md` packages an AI agent (or a human) can load to actually *perform*
@@ -73,7 +83,9 @@ skills/web-app/
                    web-authentication-hardening · web-csrf-hardening
 ```
 
-**82 skills across six live surfaces**, every one paired red↔blue. **`web-app`**
+**Every skill is paired red↔blue across seven live surfaces** (live counts in the
+badges above and the table at the top of this file — both generated from
+`catalog.json`, never hand-typed). **`web-app`**
 is the reference implementation — 10 pairs covering the OWASP Top 10 core. The
 **`api`** vertical is complete across the **OWASP API Security Top 10 (2023),
 API1–API10**: BOLA, broken authentication, BFLA, mass assignment, excessive data
@@ -89,15 +101,42 @@ transport / missing cert-pinning, insecure deep links, mobile-to-backend API abu
 **`network`** covers service discovery, exposed-service exploitation, TLS/certificate
 weakness, credential sniffing & layer-2 AiTM, and lateral movement — mapped across
 **MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53 Rev 5 / CSF 2.0, and CIS Controls v8**.
-**41 of the 82 are `validated` end-to-end** against live labs — OWASP crAPI,
-Docker/Colima, a mock EC2 IMDS, and MinIO — with the exact evidence recorded in each
-skill's `## Validation` section; the rest stay `reviewed` with the blocker documented
-in-skill.
+**`llm-ai`** maps the **OWASP Top 10 for LLM Applications 2025** — prompt injection
+(LLM01), sensitive information disclosure (LLM02), excessive agency (LLM06), system
+prompt leakage (LLM07), and unbounded consumption (LLM10) — validated end-to-end
+against a dependency-free stdlib-Python mock-LLM lab.
+A large share are **`validated` end-to-end** (see the *validated* badge) against
+live labs — OWASP crAPI, Docker/Colima, a mock EC2 IMDS, MinIO, a git+bash CI lab,
+and the mock-LLM lab — with the exact evidence recorded in each skill's
+`## Validation` section; the rest stay `reviewed` with the blocker documented
+in-skill. The validated labs are **re-provable on demand** with `make validate-labs`,
+so a stamp is a claim you can re-run, not just trust.
 
-See the [**coverage map**](site/) (a radial *surface × kill-chain* map plus matrix,
-lit where covered and dark where planned) and [`COVERAGE.md`](COVERAGE.md) for the
-full taxonomy and every field a skill is classified on. All six surfaces share the
-same schema, tooling, and pairing discipline.
+![Coverage heatmap — surface × kill-chain stage](site/coverage.svg)
+
+See the [**coverage map**](site/) (a radial *surface × kill-chain* map plus the
+heatmap above) and [`COVERAGE.md`](COVERAGE.md) for the full taxonomy and every
+field a skill is classified on. All seven surfaces share the same schema, tooling,
+and pairing discipline.
+
+### Supply-chain provenance
+
+Every release ships a **CycloneDX SBOM** ([`sbom.cdx.json`](sbom.cdx.json)) and a
+**provenance manifest** ([`provenance.json`](provenance.json)) that records, for
+each skill, the SHA-256 of its `SKILL.md` and who validated it against which lab.
+Both are regenerated from the tree by `make provenance` (CI fails if they drift)
+and **signed at release with cosign keyless signing** — no long-lived keys, the
+signing identity is the GitHub Actions OIDC token. Verify a release:
+
+```bash
+cosign verify-blob \
+  --certificate-identity-regexp 'https://github.com/Security-Environment/RedBlueSkills' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --signature provenance.json.sig --certificate provenance.json.pem \
+  provenance.json
+```
+
+See [`docs/provenance.md`](docs/provenance.md) for the full verification walkthrough.
 
 ---
 
