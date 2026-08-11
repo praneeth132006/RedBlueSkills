@@ -4,6 +4,29 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project aims to
 follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **Four new red↔blue LLM pairs (8 skills), each validated end-to-end.** The
+  `llm-ai` surface now covers nine OWASP LLM Top-10 2025 categories: added data &
+  model poisoning (LLM04) ↔ training-data provenance, improper output handling
+  (LLM05) ↔ output encoding, vector & embedding weaknesses (LLM08) ↔ vector-store
+  isolation, and misinformation (LLM09) ↔ grounding verification.
+- **Extended the `llm-local` lab from 10 to 20 assertions** — real runnable
+  cross-tenant retrieval, HTML-sink injection, corpus poisoning, and ungrounded
+  fabrication cases in `mock_llm.py`, so every new skill's `validated` stamp is
+  re-provable with `make validate-labs`, not just asserted.
+
+### Changed
+- **Site visual system unified around the coverage-map language.** Removed the
+  bolted-on glassmorphism, macOS terminal chrome, imported Dracula syntax palette,
+  pill buttons, and hover-lift transforms that had drifted from the design system.
+  Every surface now uses one panel primitive (opaque fill + a single `--line`
+  hairline, two radii), and syntax/verdict colours come from the page's own
+  red/blue/green/ink tokens. The impact panels read as `guess` (red edge) vs
+  `proof` (green edge). Package-runner switcher install commands are documented in
+  the README/Quickstart.
+
 ## [1.0.0] — 2026-08-10
 
 First stable release. Every claim the library makes about itself is now generated

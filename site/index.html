@@ -148,15 +148,12 @@
 
   <div class="split split--even">
     <!-- Panel 1: Showing a vague, hallucinated AI output with red/error styling -->
-    <div class="term-window">
+    <div class="term-window term-window--guess">
       <div class="term-window__bar">
-        <div class="term-window__dots">
-          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
-        </div>
         <div class="term-window__title">ai_agent.log</div>
+        <span class="term-window__verdict">guess</span>
       </div>
-      <div class="term-window__body">
-<span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
+      <div class="term-window__body"><span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
 <span class="hl-prompt">user@agent:~$</span> run_scan target.app
 
 I scanned the application. 
@@ -166,20 +163,15 @@ I am <span class="hl-err">not sure if it actually works</span>, but standard pra
 recommends checking all inputs.
 
 <span class="hl-key">STATUS:</span> <span class="hl-err">UNCERTAIN</span>
-<span class="hl-key">PROOF:</span>  NONE
-      </div>
-    </div>
+<span class="hl-key">PROOF:</span>  NONE</div>    </div>
 
     <!-- Panel 2: Showing a definitive, exact JSON output for a confirmed vulnerability and mitigation, using blue/success styling -->
-    <div class="term-window">
+    <div class="term-window term-window--proof">
       <div class="term-window__bar">
-        <div class="term-window__dots">
-          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
-        </div>
         <div class="term-window__title">redblueskills_execution.json</div>
+        <span class="term-window__verdict">proof</span>
       </div>
-      <div class="term-window__body">
-<span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
+      <div class="term-window__body"><span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
 {
   <span class="hl-key">"finding"</span>: <span class="hl-str">"SSRF in /api/webhook"</span>,
   <span class="hl-key">"status"</span>: <span class="hl-prompt">"CONFIRMED"</span>,
@@ -189,8 +181,7 @@ recommends checking all inputs.
   },
   <span class="hl-key">"mitigation_enforced"</span>: <span class="hl-str">"skill: blue-ssrf-guard"</span>,
   <span class="hl-key">"action"</span>: <span class="hl-str">"Deployed network egress filter rules."</span>
-}
-      </div>
+}</div>
     </div>
   </div>
 </section>

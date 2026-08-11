@@ -59,6 +59,21 @@
   --maxw:1240px;
   --gut:clamp(16px,4vw,56px);
   --row:1.5;             /* the line grid everything snaps to */
+
+  /* surface geometry — two radii only, taken from the coverage map.
+     Anything rounder reads as a marketing page, not an instrument. */
+  --r:8px;
+  --r-sm:4px;
+
+  /* green is the validated signal, everywhere: map rings, gauges, proof */
+  --green:#2ee6a6;
+  --green-bleed:rgba(46,230,166,.55);
+  --green-wash:rgba(46,230,166,.10);
+
+  /* the red↔blue blend — only ever means "a bound pair" */
+  --pair:#a56bff;
+  --pair-2:#c6a6ff;
+  --pair-wash:rgba(165,107,255,.12);
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -98,7 +113,7 @@ img,svg{max-width:100%}
 /* inline code — brighter background and text for visibility */
 code{
   font-family:inherit;font-size:1em;
-  color:#ffffff;background:var(--bg-3);
+  color:var(--ink);background:var(--bg-3);
   padding:.1em .4em;border:1px solid var(--line-2);
 }
 pre code{background:none;border:none;padding:0}
@@ -153,9 +168,9 @@ body::before{
   width:calc(100% - var(--gut) * 2);
   max-width:var(--maxw);
   margin:0 auto;
-  background:rgba(10, 10, 10, 0.7);
+  background:var(--bg-1);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,0.06);
+  border:1px solid var(--line);
   border-radius:100px;
   padding:0 clamp(16px, 3vw, 24px);
   box-shadow:0 12px 40px rgba(0,0,0,0.5);
@@ -178,7 +193,7 @@ body::before{
   transition:color .12s,background .12s,border-color .12s;
 }
 .tabbar__tabs a:hover{color:var(--ink);background:var(--bg-2)}
-.tabbar__tabs a.is-here{color:#fff;background:rgba(255,255,255,0.06)}
+.tabbar__tabs a.is-here{color:var(--ink);background:var(--bg-3)}
 
 .tabbar__end{display:flex;align-items:center;gap:8px;margin-left:auto;padding-left:12px}
 .tabbar__burger{
@@ -206,9 +221,7 @@ main{
 .sect{padding-block:clamp(44px,6vw,78px)}
 .sect + .sect{border-top:1px solid var(--line)}
 
-/* Update: Adds spacing for section header */
 .sect__head{margin-bottom:clamp(26px,4vw,44px);max-width:82ch}
-/* Update: Applies a red-to-blue linear gradient to section numbers. Gives them a distinct visual punch. */
 .sect__num{
   display:block;font-size:11px;letter-spacing:.24em;margin-bottom:14px;
   background: linear-gradient(90deg, var(--red), var(--blue));
@@ -225,22 +238,16 @@ main{
 .sect__head p b{color:var(--ink);font-weight:700}
 
 /* ─────────────────────────────────────────────────────────────────────
-   PANEL — Premium Glassmorphic Wrappers
+   PANEL — the one surface primitive
+   Opaque fill + a single hairline, same as the coverage map's nodes.
+   Translucency and blur were removed: on a pure-black page they only
+   muddied the 1px rules that carry the whole structure.
    ───────────────────────────────────────────────────────────────────── */
-/* [RULE] Updated .panel, .table, and .matrix to a premium glassmorphic aesthetic */
-/* This brings a modern, sleek look to all wrapper components. Changes can be seen in UI wrappers globally. */
 .panel, .table, .matrix {
-  /* relative positioning for internal elements */
   position: relative;
-  /* Removed harsh borders, replaced with subtle translucent white border for glass edge effect */
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  /* Semi-transparent dark background for depth */
-  background: rgba(10, 10, 10, 0.7);
-  /* Blurs elements behind the wrapper for true glassmorphism */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support for blur */
-  /* Removed border-radius */
-  /* Hides child elements that overflow the rounded corners, like headers */
+  border:1px solid var(--line);
+  background:var(--bg-1);
+  border-radius:var(--r);
   overflow: hidden;
 }
 
@@ -348,18 +355,19 @@ main{
 }
 /* hero lead paragraph — brighter text for readability */
 .hero__lede{color:var(--ink-2);max-width:62ch;font-size:14px;line-height:1.65}
-.hero__lede b{color:#ffffff;font-weight:700}
+.hero__lede b{color:var(--ink);font-weight:700}
 .hero__act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
-/* hero CTA command button — prominent with a subtle glowing border, harsh borders removed */
+/* hero CTA command button — the primary action: a blue-edged command that
+   glows at rest, the one element on the page allowed to. Same treatment as
+   .cmd--glow so "the primary command" reads consistently wherever it appears. */
 .hero__act .cmd{
-  border-color:transparent; /* Update: Removes harsh borders */
-  box-shadow:0 0 16px rgba(77,155,255,.15);
+  border-color:var(--blue-3);background:var(--blue-wash);
+  box-shadow:0 0 16px rgba(77,155,255,.12);
   transition:border-color .2s,box-shadow .2s,background .2s;
 }
-/* Update: Adds subtle glowing hover state instead of harsh borders */
 .hero__act .cmd:hover{
-  border-color:transparent;
+  border-color:var(--blue);
   box-shadow:0 0 28px rgba(77,155,255,.3), 0 0 12px var(--blue-bleed);
   background:var(--bg-2);
 }
@@ -401,13 +409,12 @@ main{
 /* hover effect on gauge cards — subtle lift and glow for interactivity feel */
 .gauge:hover{
   background:var(--bg-2);
-  transform:translateY(-2px);
   box-shadow:0 4px 20px rgba(0,0,0,.4);
 }
 /* large counter number — slightly bigger with better letter spacing */
 .gauge__n{
   font-size:clamp(24px,2.8vw,36px);font-weight:700;line-height:1;letter-spacing:-.03em;
-  color:#ffffff;
+  color:var(--ink);
 }
 /* gauge label — slightly brighter for readability */
 .gauge__l{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
@@ -579,7 +586,7 @@ kbd{
 .pair__bond{
   position:relative;text-align:center;font-size:11px;letter-spacing:-.05em;
   white-space:nowrap;
-  background:linear-gradient(90deg,var(--red),#7d7d8f 50%,var(--blue));
+  background:linear-gradient(90deg,var(--red),var(--pair) 50%,var(--blue));
   -webkit-background-clip:text;background-clip:text;
   color:transparent;-webkit-text-fill-color:transparent;
   opacity:.5;transition:opacity .18s;
@@ -633,21 +640,22 @@ kbd{
 /* ─────────────────────────────────────────────────────────────────────
    COMMAND BUTTON
    ───────────────────────────────────────────────────────────────────── */
-/* command button — the copyable terminal command affordance */
-/* Update: Applies pill-shape (border-radius: 100px) and removes harsh borders */
+/* command button — the copyable terminal command affordance.
+   Square-ish by design: a pill reads as a marketing CTA, and this is a
+   thing you paste into a shell. The hairline stays visible at rest so it
+   sits on the same grid as every panel. */
 .cmd{
   display:inline-flex;align-items:center;gap:11px;max-width:100%;
-  padding:10px 13px;border:1px solid transparent;background:var(--bg-1);
+  padding:10px 13px;border:1px solid var(--line);border-radius:var(--r-sm);
+  background:var(--bg-1);
   transition:border-color .18s,background .18s,box-shadow .18s;
 }
-/* hover: blue border glow to indicate interactivity */
-/* Update: Subtle glowing hover state without border color change */
-.cmd:hover{background:var(--bg-2);box-shadow:0 0 15px rgba(77,155,255,.15)}
+.cmd:hover{background:var(--bg-2);border-color:var(--line-3);box-shadow:0 0 15px rgba(77,155,255,.12)}
 .cmd--sm{padding:6px 11px;font-size:12.5px}
 /* red $ prompt in commands */
 .cmd__p{color:var(--red);flex:none}
 /* command text — pure white for maximum readability */
-.cmd__t{color:#ffffff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmd__t{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cmd__k{
   color:var(--ink-4);font-size:11px;flex:none;margin-left:auto;padding-left:6px;
   transition:color .15s,background .15s;
@@ -676,46 +684,27 @@ kbd{
    ───────────────────────────────────────────────────────────────────── */
 .pipe{
   display:grid;grid-template-columns:repeat(3,1fr);
-  /* REPLACED: border with gap for spaced out components */
   gap:24px;
   margin-bottom:clamp(18px,3vw,30px);
 }
 .pipe__s{
   position:relative;
-  /* REPLACED: padding adjusted for rounded corners */
   padding:24px;
-  /* ADDED: soft subtle border for glassmorphic effect */
-  /* ADDED: soft subtle border for glassmorphic effect */
-  border:1px solid rgba(255,255,255,0.06);
-  /* Removed border-radius */
-  /* ADDED: subtle glassmorphic background */
-  background:rgba(255,255,255,0.03);
-  /* ADDED: backdrop filter for blur effect */
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  /* REPLACED: transitions added for hover micro-animations */
-  transition:background .2s, transform .2s, box-shadow .2s;
+  border:1px solid var(--line);
+  background:var(--bg-1);
+  transition:background .18s,border-color .18s,box-shadow .18s;
 }
 .pipe__s::before{
   content:"";position:absolute;
-  /* REPLACED: left offset and vertical padding to match border radius */
   left:-1px;top:24px;bottom:24px;width:3px;background:transparent;
-  /* Removed border-radius */
   transform:scaleY(0);transform-origin:center;
-  /* REPLACED: added background and box-shadow transitions */
   transition:transform .3s, background .3s, box-shadow .3s;
 }
-/* ADDED: box-shadow using var(--red-bleed) for cyberpunk glow */
 .pipe__s--red::before{background:var(--red);box-shadow:0 0 10px var(--red-bleed)}
-/* ADDED: box-shadow using var(--blue-bleed) for cyberpunk glow */
 .pipe__s--blue::before{background:var(--blue);box-shadow:0 0 10px var(--blue-bleed)}
 .pipe__s:hover::before{transform:scaleY(1)}
 .pipe__s:hover{
-  /* REPLACED: enhanced glassmorphic background on hover */
-  background:rgba(255,255,255,0.06);
-  /* ADDED: floating effect on hover */
-  transform:translateY(-2px);
-  /* ADDED: glowing box-shadow for depth */
+  background:var(--bg-2);
   box-shadow:0 8px 30px rgba(0,0,0,0.5);
 }
 .pipe__n{
@@ -779,41 +768,26 @@ kbd{
    ───────────────────────────────────────────────────────────────────── */
 .steps{
   counter-reset:s;
-  /* REPLACED: border removed, switched to flex with gap for spaced out items */
   display:flex;flex-direction:column;gap:16px;
 }
 .steps li{
   counter-increment:s;position:relative;
   padding:20px 24px 20px 58px;
-  /* ADDED: soft subtle border */
-  /* ADDED: soft subtle border */
-  border:1px solid rgba(255,255,255,0.06);
-  /* Removed border-radius */
-  /* ADDED: glassmorphic background */
-  background:rgba(255,255,255,0.03);
-  /* ADDED: backdrop filter for blur effect */
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  /* ADDED: transitions for hover animations */
-  transition:background .2s, transform .2s, box-shadow .2s;
+  border:1px solid var(--line);
+  background:var(--bg-1);
+  transition:background .18s,border-color .18s,box-shadow .18s;
 }
 .steps li:hover{
-  /* REPLACED: background highlight on hover */
-  background:rgba(255,255,255,0.06);
-  /* ADDED: floating transform on hover */
-  transform:translateY(-2px);
-  /* ADDED: subtle shadow for elevation */
+  background:var(--bg-2);
   box-shadow:0 8px 30px rgba(0,0,0,0.5);
 }
 .steps li::before{
   content:"[" counter(s,decimal-leading-zero) "]";
   position:absolute;left:20px;top:20px;color:var(--ink-5);font-size:11.5px;
-  /* ADDED: transition for text-shadow */
   transition:color .2s, text-shadow .2s;
 }
 .steps li:hover::before{
   color:var(--blue);
-  /* ADDED: text glow effect on hover */
   text-shadow:0 0 8px var(--blue-bleed);
 }
 .steps h3{font-size:13.5px;margin-bottom:4px;text-transform:lowercase}
@@ -832,31 +806,20 @@ kbd{
 /* [RULE] Updated .ex__c (example cards) to have similar glass borders and glowing drop-shadows */
 /* This brings an interactive, tactile feel to cards. Changes can be seen on example cards across the site. */
 .ex__c{
-  /* Keep existing flexbox layout */
   display:flex;flex-direction:column;gap:9px;padding:18px;
-  /* Keeps the card height consistent */
   min-height:190px;
-  /* Smoother transition durations for hover effects (background, border, shadow, transform) */
-  transition:background .3s,border-color .3s,box-shadow .3s,transform .3s;
-  /* Glass border to match the wrappers */
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  /* Translucent background for glassmorphic style */
-  background: rgba(10, 10, 10, 0.7);
-  /* Blur for backdrop elements */
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  /* Removed border-radius */
+  transition:background .18s,border-color .18s,box-shadow .18s;
+  border:1px solid var(--line);
+  background:var(--bg-1);
 }
 .ex__c:hover{
   /* Slightly brighter background on hover for interaction feedback */
   background: rgba(15, 15, 15, 0.8);
   /* Brighter border on hover to catch the eye */
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color:var(--line-3);
   /* Smooth, glowing blue drop-shadow to make the card "pop" */
   box-shadow: 0 10px 40px rgba(77, 155, 255, 0.15);
   /* Subtle lift effect */
-  transform: translateY(-2px);
 }
 .ex__lang{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-5)}
 .ex__c h3{font-size:clamp(19px,2.4vw,26px);letter-spacing:-.02em;text-transform:lowercase}
@@ -869,39 +832,24 @@ kbd{
    ───────────────────────────────────────────────────────────────────── */
 .tenets{
   display:grid;grid-template-columns:1fr 1fr;
-  /* REPLACED: border removed, added gap for spacing */
   gap:20px;
 }
 .tenet{
   padding:24px;
-  /* ADDED: soft subtle border */
-  /* ADDED: soft subtle border */
-  border:1px solid rgba(255,255,255,0.06);
-  /* Removed border-radius */
-  /* ADDED: glassmorphic background */
-  background:rgba(255,255,255,0.03);
-  /* ADDED: backdrop filter for blur */
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  /* ADDED: transitions for hover state */
-  transition:background .2s, transform .2s, box-shadow .2s;
+  border:1px solid var(--line);
+  background:var(--bg-1);
+  transition:background .18s,border-color .18s,box-shadow .18s;
 }
 .tenet:hover{
-  /* REPLACED: background color on hover */
-  background:rgba(255,255,255,0.06);
-  /* ADDED: lift effect on hover */
-  transform:translateY(-2px);
-  /* ADDED: box-shadow on hover for elevation */
+  background:var(--bg-2);
   box-shadow:0 8px 30px rgba(0,0,0,0.5);
 }
 .tenet__k{
   display:block;color:var(--ink-5);font-size:11.5px;margin-bottom:12px;
-  /* ADDED: transitions for hover text shadow */
   transition:color .2s, text-shadow .2s;
 }
 .tenet:hover .tenet__k{
   color:var(--blue);
-  /* ADDED: text glow on hover */
   text-shadow:0 0 8px var(--blue-bleed);
 }
 .tenet h3{font-size:15px;margin-bottom:8px;text-transform:lowercase}
@@ -918,7 +866,7 @@ kbd{
 /* gradient red→blue top border — the signature visual of offense+defense */
 .foot::before{
   content:"";display:block;height:2px;margin-bottom:clamp(34px,5vw,56px);
-  background:linear-gradient(90deg,var(--red),#7d5fba 50%,var(--blue));
+  background:linear-gradient(90deg,var(--red),var(--pair) 50%,var(--blue));
   box-shadow:0 0 20px var(--red-bleed),0 0 20px var(--blue-bleed);
 }
 
@@ -958,7 +906,7 @@ kbd{
   transition:background .2s,box-shadow .2s,transform .15s;
 }
 .foot__cta .key:hover{
-  background:#6db3ff;
+  background:var(--blue);
   box-shadow:0 0 24px var(--blue-bleed);
   transform:translateY(-1px);
 }
@@ -1084,7 +1032,7 @@ kbd{
 .reader__title{
   font-size:clamp(18px,2.6vw,28px);letter-spacing:-.02em;font-weight:700;
   margin:.35em 0 .35em;overflow-wrap:anywhere;
-  color:#ffffff;
+  color:var(--ink);
 }
 /* file path display */
 .reader__path{font-size:11.5px;color:var(--ink-4);background:none;border:none;padding:0}
@@ -1130,7 +1078,7 @@ kbd{
 .md > :first-child{margin-top:0}
 /* all headings — pure white for strong visual hierarchy */
 .md h1,.md h2,.md h3,.md h4,.md h5,.md h6{
-  color:#ffffff;letter-spacing:-.015em;line-height:1.3;
+  color:var(--ink);letter-spacing:-.015em;line-height:1.3;
   margin:2.2em 0 .8em;font-weight:700;
 }
 /* h1 — largest heading, stands out clearly */
@@ -1152,7 +1100,7 @@ kbd{
 /* paragraphs — comfortable line spacing */
 .md p{margin:0 0 1.1em}
 /* bold text — pure white for maximum emphasis */
-.md strong{color:#ffffff;font-weight:700}
+.md strong{color:var(--ink);font-weight:700}
 /* links — bright blue, clearly visible with better underline */
 .md a{
   color:var(--blue);text-decoration:underline;
@@ -1186,7 +1134,7 @@ kbd{
 .md-tablewrap{overflow-x:auto;margin:0 0 1.3em}
 .md-table{border-collapse:collapse;width:100%;font-size:13px}
 .md-table th,.md-table td{padding:9px 12px;text-align:left;border:1px solid var(--line);vertical-align:top}
-.md-table th{background:var(--bg-2);color:#ffffff;font-weight:700}
+.md-table th{background:var(--bg-2);color:var(--ink);font-weight:700}
 .md-table td{color:var(--ink-2)}
 .md-table tbody tr:hover{background:var(--bg-1)}
 
@@ -1204,7 +1152,7 @@ kbd{
 .doclist a:hover{background:var(--bg-2)}
 .doclist a:hover b{color:var(--blue)}
 /* doc list titles — pure white for clear visibility */
-.doclist b{font-size:14px;font-weight:700;color:#ffffff}
+.doclist b{font-size:14px;font-weight:700;color:var(--ink)}
 .doclist b::before{content:"› ";color:var(--blue)}
 .doclist span{font-size:13px;color:var(--ink-2)}
 .doclist code{font-size:11.5px;color:var(--ink-3);background:none;border:none;padding:0}
@@ -1301,71 +1249,67 @@ kbd{
 .row-actions--center { text-align: center; }
 
 /* ═══════════════ TERMINAL MOCKUPS ═══════════════ */
+/* Same primitive as .panel, with a status edge: the guess is red, the
+   proof is green. The macOS traffic lights were removed — this is a TTY,
+   not a screenshot of one, and three decorative dots said nothing. */
 .term-window {
-  background: #0d0d10;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background:var(--bg-1);
+  border:1px solid var(--line);
+  border-radius:var(--r);
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255,255,255,0.2) inset;
   display: flex;
   flex-direction: column;
 }
 .term-window__bar {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  gap: 8px;
+  gap:10px;
+  padding:7px 13px;
+  background:var(--bg-2);
+  border-bottom:1px solid var(--line);
 }
-.term-window__dots {
-  display: flex;
-  gap: 6px;
-}
-.term-window__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.term-window__dot:nth-child(1) { background: #ff5f56; }
-.term-window__dot:nth-child(2) { background: #ffbd2e; }
-.term-window__dot:nth-child(3) { background: #27c93f; }
 .term-window__title {
-  margin: 0 auto;
-  transform: translateX(-20px); /* offset the dots */
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--ink-3);
-  font-weight: 500;
-  text-transform: uppercase;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
 }
+.term-window__title::before{content:"[ "}
+.term-window__title::after{content:" ]"}
+/* verdict chip, right-aligned — carries the meaning the dots didn't */
+.term-window__verdict{
+  margin-left:auto;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:2px 7px;border-radius:var(--r-sm);
+}
+.term-window--guess .term-window__verdict{color:var(--red-2);background:var(--red-wash);box-shadow:inset 0 0 0 1px var(--red-3)}
+.term-window--proof .term-window__verdict{color:var(--green);background:var(--green-wash);box-shadow:inset 0 0 0 1px var(--green-bleed)}
+.term-window--guess{border-top:2px solid var(--red-3)}
+.term-window--proof{border-top:2px solid var(--green-bleed)}
 .term-window__body {
-  padding: 20px;
+  padding:18px 20px;
   font-family: var(--mono);
   font-size: 12.5px;
-  line-height: 1.6;
+  line-height:var(--row);
   color: var(--ink-2);
   overflow-x: auto; white-space: pre-wrap;
 }
 
-/* Syntax Highlighting */
-.hl-key { color: #8BE9FD; }      /* Cyan for JSON keys */
-.hl-str { color: #F1FA8C; }      /* Yellow for strings */
-.hl-bool { color: #FF79C6; }     /* Pink for booleans */
-.hl-err { color: #FF5555; }      /* Red for errors */
-.hl-comment { color: #6272A4; }  /* Gray/Blue for comments */
-.hl-prompt { color: #50FA7B; font-weight: bold; } /* Green prompt */
+/* Syntax tokens — the page's own four colours, no imported palette.
+   ink for data, blue for keys, red for doubt, green for proof. */
+.hl-key { color:var(--blue-2); }
+.hl-str { color:var(--ink); }
+.hl-bool { color:var(--pair-2); }
+.hl-err { color:var(--red-2); }
+.hl-comment { color:var(--ink-4); }
+.hl-prompt { color:var(--green); font-weight:700; }
+.hl-ok { color:var(--green); }
 
 /* ═══════════════ TABLE CONTROLS & EXPAND BTN ═══════════════ */
 .table__controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 32px;
-  background: rgba(10, 10, 10, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
+  gap:12px;flex-wrap:wrap;
+  padding:12px 16px;
+  background:var(--bg-2);
+  border-top:1px solid var(--line);
 }
 .table__controls-left { display: flex; align-items: center; }
 .table__controls-right { display: flex; align-items: center; gap: 12px; }
@@ -1373,45 +1317,42 @@ kbd{
 .catalog-expand-btn {
   display: block;
   text-align: center;
-  padding: 18px;
-  margin: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: all 0.2s ease;
+  padding:13px;
+  margin:14px;
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:var(--r-sm);
+  color:var(--ink-2);
+  font-size:12.5px;
+  letter-spacing:.06em;
+  transition:color .15s,border-color .15s,background .15s;
   cursor: pointer;
   text-decoration: none;
 }
 .catalog-expand-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
+  background:var(--bg-2);
+  color:var(--ink);
+  border-color:var(--line-3);
 }
 
+/* primary command — the only element on the page that glows blue at rest */
 .cmd--glow {
-  border: 1px solid rgba(85, 170, 255, 0.3);
-  box-shadow: 0 0 10px rgba(85, 170, 255, 0.1);
-  background: rgba(85, 170, 255, 0.05);
-  border-radius: 100px;
+  border:1px solid var(--blue-3);
+  background:var(--blue-wash);
+  box-shadow:0 0 18px rgba(77,155,255,.10);
 }
 .cmd--glow:hover {
-  box-shadow: 0 0 20px rgba(85, 170, 255, 0.3);
-  border-color: rgba(85, 170, 255, 0.6);
+  border-color:var(--blue);
+  box-shadow:0 0 24px rgba(77,155,255,.22);
 }
 .key--solid {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: none;
-  border-radius: 100px;
-  padding: 8px 16px;
+  background:var(--bg-3);
+  color:var(--ink);
+  border:1px solid var(--line-2);
+  padding:7px 14px;
 }
 .key--solid:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background:var(--blue);border-color:var(--blue);color:#000;
 }
 
 /* ═══════════════ SKILL CARD GRID ═══════════════ */
@@ -1424,50 +1365,47 @@ kbd{
 .skill-card {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
+  padding:18px;
+  background:var(--bg-1);
+  border:1px solid var(--line);
+  border-radius:var(--r);
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:border-color .16s,background .16s,box-shadow .16s;
   position: relative;
   overflow: hidden;
 }
+/* team edge — the same red/blue coding the map and ledger use */
 .skill-card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; width: 3px; height: 100%;
+  top: 0; left: 0; width:2px; height: 100%;
 }
 .skill-card--red::before { background: var(--red); }
 .skill-card--blue::before { background: var(--blue); }
 
-.skill-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-.skill-card--red:hover { box-shadow: 0 10px 30px rgba(255, 65, 82, 0.15); }
-.skill-card--blue:hover { box-shadow: 0 10px 30px rgba(85, 170, 255, 0.15); }
+.skill-card:hover { background:var(--bg-2);border-color:var(--line-3); }
+.skill-card--red:hover { box-shadow:0 0 20px rgba(255,65,82,.10); }
+.skill-card--blue:hover { box-shadow:0 0 20px rgba(77,155,255,.12); }
 
 .skill-card__head {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap:10px;
+  margin-bottom:6px;
 }
 .skill-card__title {
-  font-size: 15px;
+  font-size:14px;
   font-weight: 700;
-  color: #fff;
+  color:var(--ink);
   line-height: 1.3;
 }
 .skill-card__stage {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-2);
-  margin-bottom: 16px;
+  color:var(--ink-3);
+  margin-bottom:14px;
 }
 .skill-card__path {
   font-family: var(--mono);
@@ -1475,13 +1413,13 @@ kbd{
   color: var(--ink-4);
   word-break: break-all;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top:10px;
+  border-top:1px solid var(--line);
 }
 
 /* ═══════════════ COVERAGE MAP (#map / map.js) ═══════════════ */
-:root{ --green:#2ee6a6; --green-bleed:rgba(46,230,166,.55); }
-
+/* --green / --pair now live in the root token block — this section is
+   where that vocabulary was invented, and the rest of the page adopted it. */
 .cmap{ margin-top:clamp(20px,3vw,40px); }
 .cmap__stage{ position:relative; width:100%; }
 .cmap__svg{ display:block; width:100%; height:auto; max-height:min(78vh,760px);
@@ -1497,8 +1435,8 @@ kbd{
 .cmap-bead:hover, .cmap-bead:focus{ transform:scale(1.28); outline:none; }
 .cmap-bead--red{ fill:var(--red); }
 .cmap-bead--blue{ fill:var(--blue); }
-.cmap-bead--both{ fill:#a56bff; }             /* paired = violet blend of red+blue */
-.cmap-bead--dark{ fill:#2a2a2a; }
+.cmap-bead--both{ fill:var(--pair); }             /* paired = violet blend of red+blue */
+.cmap-bead--dark{ fill:var(--bg-3); }
 .cmap-ring{ fill:none; stroke:var(--green); stroke-width:1.6; opacity:.9; }
 
 /* surface label nodes */
@@ -1528,9 +1466,9 @@ kbd{
 .cmap__lg{ display:inline-flex; align-items:center; gap:7px; }
 .cmap__sw{ width:12px; height:12px; border-radius:50%; display:inline-block; }
 .cmap__sw--red{ background:var(--red); } .cmap__sw--blue{ background:var(--blue); }
-.cmap__sw--both{ background:#a56bff; }
+.cmap__sw--both{ background:var(--pair); }
 .cmap__sw--val{ background:transparent; border:2px solid var(--green); }
-.cmap__sw--dark{ background:#2a2a2a; }
+.cmap__sw--dark{ background:var(--bg-3); }
 
 /* matrix */
 .cmap__matrix{ margin-top:26px; overflow-x:auto; }
@@ -1546,7 +1484,7 @@ kbd{
 .cmap-tbl td.c-dark{ color:var(--ink-5); background:repeating-linear-gradient(-45deg,transparent,transparent 5px,rgba(255,255,255,.015) 5px,rgba(255,255,255,.015) 10px); }
 .cmap-tbl td.c-red{ background:var(--red-wash); color:var(--red-2); box-shadow:inset 0 0 0 1px rgba(255,65,82,.25); }
 .cmap-tbl td.c-blue{ background:var(--blue-wash); color:var(--blue-2); box-shadow:inset 0 0 0 1px rgba(77,155,255,.25); }
-.cmap-tbl td.c-both{ background:rgba(165,107,255,.12); color:#c6a6ff; box-shadow:inset 0 0 0 1px rgba(165,107,255,.28); }
+.cmap-tbl td.c-both{ background:var(--pair-wash); color:var(--pair-2); box-shadow:inset 0 0 0 1px rgba(165,107,255,.28); }
 .cmap-tbl td.is-val{ box-shadow:inset 0 0 0 1px var(--green-bleed); }
 .cmap-tbl td.c-total{ color:var(--ink-2); background:var(--bg-2); }
 

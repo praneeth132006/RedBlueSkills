@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:43134617-6e5e-5433-bb11-875ac5fd6a11",
+  "serialNumber": "urn:uuid:2900a0ad-f5b2-5f69-baba-6b58f205d1df",
   "version": 1,
   "metadata": {
     "component": {
@@ -2514,6 +2514,48 @@
     },
     {
       "type": "data",
+      "bom-ref": "skill:llm-grounding-verification",
+      "name": "llm-grounding-verification",
+      "version": "1.0.0",
+      "description": "blue skill for llm-ai (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9d8a6641fe4a2ff8e8950c1e969849128db5c56c8b909f2f73f26afc79c2ae8d"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "info"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
       "bom-ref": "skill:llm-output-dlp",
       "name": "llm-output-dlp",
       "version": "1.0.0",
@@ -2529,6 +2571,48 @@
         {
           "alg": "SHA-256",
           "content": "000c045cf3ddfbb0e7e9cb487f1e328b7db10d46b8a7c161cb69c51450a2878f"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "info"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-output-encoding",
+      "name": "llm-output-encoding",
+      "version": "1.0.0",
+      "description": "blue skill for llm-ai (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "cd2dc8e5e93ba60dbb6e54d3b8a64e1076b97d057b735af99442b9fdd954866a"
         }
       ],
       "properties": [
@@ -2598,6 +2682,90 @@
     },
     {
       "type": "data",
+      "bom-ref": "skill:llm-training-data-provenance",
+      "name": "llm-training-data-provenance",
+      "version": "1.0.0",
+      "description": "blue skill for llm-ai (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29a2d4ebcac47fada6e6d863111767a0909676968931300547def95c48afe5c1"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "info"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-vector-store-isolation",
+      "name": "llm-vector-store-isolation",
+      "version": "1.0.0",
+      "description": "blue skill for llm-ai (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7aabdcf5fd2c553b7fe03e1adb7d979fc59e31bb4e4eaafad1a1cf5e79d679ca"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "info"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
       "bom-ref": "skill:llm-sensitive-info-disclosure",
       "name": "llm-sensitive-info-disclosure",
       "version": "1.0.0",
@@ -2613,6 +2781,48 @@
         {
           "alg": "SHA-256",
           "content": "b4cd9135ecd22d8718f37f690a3a20831ea03ac3c2d325d6e40bbbdf55afedc6"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "collection"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "high"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-vector-store-leakage",
+      "name": "llm-vector-store-leakage",
+      "version": "1.0.0",
+      "description": "red skill for llm-ai (collection)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c98437e89ebd797408aa9b13e575991dce373a20d6fe080ed8b4792d423ca1ea"
         }
       ],
       "properties": [
@@ -2682,6 +2892,90 @@
     },
     {
       "type": "data",
+      "bom-ref": "skill:llm-improper-output-handling",
+      "name": "llm-improper-output-handling",
+      "version": "1.0.0",
+      "description": "red skill for llm-ai (execution)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "82743cf3d905f179d535d570084079c72d47a39a675bf16cf924f96103d33cdc"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "execution"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "high"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-misinformation",
+      "name": "llm-misinformation",
+      "version": "1.0.0",
+      "description": "red skill for llm-ai (impact)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ee1573520813976b453b27a3309c89c5f3bb84d353b6b6eddd058f08f6337783"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "impact"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
       "bom-ref": "skill:llm-unbounded-consumption",
       "name": "llm-unbounded-consumption",
       "version": "1.0.0",
@@ -2715,6 +3009,48 @@
         {
           "name": "redblueskills:risk",
           "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-data-poisoning",
+      "name": "llm-data-poisoning",
+      "version": "1.0.0",
+      "description": "red skill for llm-ai (initial-access)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3787796e86b45459d659404d9dfb1544a811d0af7601d01e31257789d8e75179"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "initial-access"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "high"
         },
         {
           "name": "redblueskills:maturity",

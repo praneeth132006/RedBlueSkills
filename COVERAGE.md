@@ -162,8 +162,8 @@ data as a radial coverage map and matrix.
 | `ci-cd` | · | 2 | 2 | · | 2 | 1✓ | 1 | 1✓ | · | · | 1 | 7 | 3 | · | **20** |
 | `mobile` | 2 | 2 | · | · | 1 | 1 | 2 | · | 2 | · | · | 9 | 1 | · | **20** |
 | `network` | 2 | 2 | · | · | · | · | 1 | 1 | · | 1 | · | 4 | 3 | · | **14** |
-| `llm-ai` | · | 1✓ | · | · | 1✓ | · | 1✓ | · | 1✓ | · | 1✓ | 4✓ | 1✓ | · | **10** |
+| `llm-ai` | · | 2✓ | 1✓ | · | 1✓ | · | 1✓ | · | 2✓ | · | 2✓ | 8✓ | 1✓ | · | **18** |
 
-_120 skills across 7 live surfaces; 57 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
+_128 skills across 7 live surfaces; 65 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
 
 <!-- COVERAGE:END -->
