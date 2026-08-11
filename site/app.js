@@ -124,6 +124,89 @@
   });
 
   /* ─────────────────────────────────────────────────────────────────
+     RUNNER SWITCHER
+     Every command on the page is authored as `npx redblueskills …`.
+     Picking a runner rewrites that prefix in place — button labels,
+     the clipboard payload, and the terminal panes — so a pnpm/bun/deno
+     user can copy something that actually runs on their machine.
+     ───────────────────────────────────────────────────────────────── */
+  var RUNNERS = {
+    npx:    { cmd: 'npx redblueskills',              note: '' },
+    pnpm:   { cmd: 'pnpm dlx redblueskills',         note: '' },
+    yarn:   { cmd: 'yarn dlx redblueskills',         note: 'dlx needs Yarn 2+ — on Yarn 1, use npx' },
+    bun:    { cmd: 'bunx redblueskills',             note: '' },
+    deno:   { cmd: 'deno run -A npm:redblueskills',  note: 'grants full permissions — the skills write into ./.claude' },
+    global: { cmd: 'redblueskills',                  note: 'one-time install: npm i -g redblueskills' }
+  };
+  var RUNNER_KEY = 'rbs:runner';
+  var SRC = /\bnpx redblueskills\b/g;
+
+  /* collected once, before anything is rewritten, so every switch
+     renders from the authored source rather than the previous runner */
+  var cmdTargets = [];
+
+  function collectRunnerTargets() {
+    $$('[data-copy]').forEach(function (node) {
+      if (SRC.test(node.getAttribute('data-copy'))) {
+        SRC.lastIndex = 0;
+        cmdTargets.push({ node: node, attr: 'data-copy', src: node.getAttribute('data-copy') });
+      }
+      SRC.lastIndex = 0;
+    });
+
+    /* label spans and the raw text nodes inside the terminal panes */
+    $$('.cmd__t').forEach(function (node) { pushText(node.firstChild); });
+    $$('pre.pane code').forEach(function (code) {
+      Array.prototype.forEach.call(code.childNodes, function (n) {
+        if (n.nodeType === 3) pushText(n);
+      });
+    });
+
+    function pushText(n) {
+      if (!n || n.nodeType !== 3 || !SRC.test(n.nodeValue)) { SRC.lastIndex = 0; return; }
+      SRC.lastIndex = 0;
+      cmdTargets.push({ node: n, attr: null, src: n.nodeValue });
+    }
+  }
+
+  function applyRunner(key) {
+    var runner = RUNNERS[key] || RUNNERS.npx;
+
+    cmdTargets.forEach(function (t) {
+      var out = t.src.replace(SRC, runner.cmd);
+      if (t.attr) t.node.setAttribute(t.attr, out);
+      else t.node.nodeValue = out;
+    });
+
+    $$('.pm__t').forEach(function (tab) {
+      var on = tab.getAttribute('data-runner') === key;
+      tab.classList.toggle('is-on', on);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    var note = $('[data-pm-note]');
+    if (note) {
+      note.textContent = runner.note;
+      note.hidden = !runner.note;
+    }
+
+    try { localStorage.setItem(RUNNER_KEY, key); } catch (e) { /* private mode — fine */ }
+  }
+
+  if ($('.pm')) {
+    collectRunnerTargets();
+
+    var saved;
+    try { saved = localStorage.getItem(RUNNER_KEY); } catch (e) { saved = null; }
+    if (saved && RUNNERS[saved] && saved !== 'npx') applyRunner(saved);
+
+    $('.pm').addEventListener('click', function (ev) {
+      var tab = ev.target.closest('[data-runner]');
+      if (tab) applyRunner(tab.getAttribute('data-runner'));
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────────────
      CATALOG
      ───────────────────────────────────────────────────────────────── */
   var ledgerBody = $('[data-ledger]');

@@ -12,7 +12,7 @@
 <!-- STATS:BEGIN -->
 | skills | red↔blue pairs | validated end-to-end | live surfaces |
 |:--:|:--:|:--:|:--:|
-| **120** | **60** | **57** (48%) | **7** |
+| **128** | **64** | **65** (51%) | **7** |
 
 <sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — never hand-edited. CI fails if this table drifts.</sub>
 <!-- STATS:END -->
@@ -102,9 +102,11 @@ transport / missing cert-pinning, insecure deep links, mobile-to-backend API abu
 weakness, credential sniffing & layer-2 AiTM, and lateral movement — mapped across
 **MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53 Rev 5 / CSF 2.0, and CIS Controls v8**.
 **`llm-ai`** maps the **OWASP Top 10 for LLM Applications 2025** — prompt injection
-(LLM01), sensitive information disclosure (LLM02), excessive agency (LLM06), system
-prompt leakage (LLM07), and unbounded consumption (LLM10) — validated end-to-end
-against a dependency-free stdlib-Python mock-LLM lab.
+(LLM01), sensitive information disclosure (LLM02), data & model poisoning (LLM04),
+improper output handling (LLM05), excessive agency (LLM06), system prompt leakage
+(LLM07), vector & embedding weaknesses (LLM08), misinformation (LLM09), and
+unbounded consumption (LLM10) — every one validated end-to-end against a
+dependency-free stdlib-Python mock-LLM lab.
 A large share are **`validated` end-to-end** (see the *validated* badge) against
 live labs — OWASP crAPI, Docker/Colima, a mock EC2 IMDS, MinIO, a git+bash CI lab,
 and the mock-LLM lab — with the exact evidence recorded in each skill's
@@ -151,6 +153,16 @@ path in one step:
 npx redblueskills init          # all skills + orchestrator → ./.claude/skills/redblueskills
 npx redblueskills add web-ssrf  # just one (its paired defense comes along)
 npx redblueskills list red      # browse offense (or: blue, a stage, or free text)
+```
+
+Not an npm user? Every runner works — the package has no install step of its own:
+
+```bash
+pnpm dlx redblueskills init             # pnpm
+yarn dlx redblueskills init             # yarn 2+ (yarn 1: use npx)
+bunx redblueskills init                 # bun
+deno run -A npm:redblueskills init      # deno — -A because it writes ./.claude
+npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
 ```
 
 Then simply tell your agent **"attack my application"** (see below), or point it

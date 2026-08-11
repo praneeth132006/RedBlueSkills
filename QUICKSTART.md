@@ -34,6 +34,11 @@ From the root of the project you want to test:
 npx redblueskills init
 ```
 
+Use whatever runner you already have — `pnpm dlx redblueskills init`,
+`yarn dlx redblueskills init` (yarn 2+), `bunx redblueskills init`, or
+`deno run -A npm:redblueskills init`. Prefer it on your PATH?
+`npm i -g redblueskills`, then drop the runner prefix from every command below.
+
 That copies every skill **and** the `attack-my-application` orchestrator into
 `./.claude/skills/redblueskills/`, plus a generated `README.md` that tells your
 agent when to load each one. No repo to clone, no submodules.

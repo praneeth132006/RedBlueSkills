@@ -18,6 +18,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M16 4 L27 8 v9c0 6-4.6 9.6-11 11-6.4-1.4-11-5-11-11V8z' fill='%23e5484d'/%3E%3Cpath d='M16 4 v28c-6.4-1.4-11-5-11-11V8z' fill='%233b82f6'/%3E%3C/svg%3E" />
+
 <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -70,6 +72,17 @@
       the raw power of paired offense and defense. True security isn't just a checklist—it's absolute control over your environment.
     </p>
 
+    <!-- runner switcher — rewrites every command on the page in place -->
+    <div class="pm" role="tablist" aria-label="package runner">
+      <span class="pm__l">run with</span>
+      <button class="pm__t is-on" type="button" role="tab" aria-selected="true" data-runner="npx">npx</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="pnpm">pnpm</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="yarn">yarn</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="bun">bun</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="deno">deno</button>
+      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="global">global</button>
+    </div>
+
     <div class="hero__act">
       <button class="cmd" data-copy="npx redblueskills init" type="button">
         <span class="cmd__p">$</span>
@@ -78,6 +91,8 @@
       </button>
       <a class="key key--wide" href="#start">read the 5-min quickstart →</a>
     </div>
+
+    <p class="pm__note" data-pm-note hidden></p>
   </div>
 
   <!-- the legend: how offense and defense are told apart without colour -->
@@ -133,15 +148,12 @@
 
   <div class="split split--even">
     <!-- Panel 1: Showing a vague, hallucinated AI output with red/error styling -->
-    <div class="term-window">
+    <div class="term-window term-window--guess">
       <div class="term-window__bar">
-        <div class="term-window__dots">
-          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
-        </div>
         <div class="term-window__title">ai_agent.log</div>
+        <span class="term-window__verdict">guess</span>
       </div>
-      <div class="term-window__body">
-<span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
+      <div class="term-window__body"><span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
 <span class="hl-prompt">user@agent:~$</span> run_scan target.app
 
 I scanned the application. 
@@ -151,20 +163,15 @@ I am <span class="hl-err">not sure if it actually works</span>, but standard pra
 recommends checking all inputs.
 
 <span class="hl-key">STATUS:</span> <span class="hl-err">UNCERTAIN</span>
-<span class="hl-key">PROOF:</span>  NONE
-      </div>
-    </div>
+<span class="hl-key">PROOF:</span>  NONE</div>    </div>
 
     <!-- Panel 2: Showing a definitive, exact JSON output for a confirmed vulnerability and mitigation, using blue/success styling -->
-    <div class="term-window">
+    <div class="term-window term-window--proof">
       <div class="term-window__bar">
-        <div class="term-window__dots">
-          <div class="term-window__dot"></div><div class="term-window__dot"></div><div class="term-window__dot"></div>
-        </div>
         <div class="term-window__title">redblueskills_execution.json</div>
+        <span class="term-window__verdict">proof</span>
       </div>
-      <div class="term-window__body">
-<span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
+      <div class="term-window__body"><span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
 {
   <span class="hl-key">"finding"</span>: <span class="hl-str">"SSRF in /api/webhook"</span>,
   <span class="hl-key">"status"</span>: <span class="hl-prompt">"CONFIRMED"</span>,
@@ -174,8 +181,7 @@ recommends checking all inputs.
   },
   <span class="hl-key">"mitigation_enforced"</span>: <span class="hl-str">"skill: blue-ssrf-guard"</span>,
   <span class="hl-key">"action"</span>: <span class="hl-str">"Deployed network egress filter rules."</span>
-}
-      </div>
+}</div>
     </div>
   </div>
 </section>

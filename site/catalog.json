@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 120,
+  "count": 128,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -382,17 +382,17 @@
         },
         "harden": {
           "red": 0,
-          "blue": 4,
+          "blue": 8,
           "purple": 0,
-          "validated": 4,
-          "total": 4
+          "validated": 8,
+          "total": 8
         },
         "collection": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
-          "validated": 1,
-          "total": 1
+          "validated": 2,
+          "total": 2
         },
         "credential-access": {
           "red": 1,
@@ -401,19 +401,26 @@
           "validated": 1,
           "total": 1
         },
-        "impact": {
+        "execution": {
           "red": 1,
           "blue": 0,
           "purple": 0,
           "validated": 1,
           "total": 1
         },
-        "initial-access": {
-          "red": 1,
+        "impact": {
+          "red": 2,
           "blue": 0,
           "purple": 0,
-          "validated": 1,
-          "total": 1
+          "validated": 2,
+          "total": 2
+        },
+        "initial-access": {
+          "red": 2,
+          "blue": 0,
+          "purple": 0,
+          "validated": 2,
+          "total": 2
         },
         "privilege-escalation": {
           "red": 1,
@@ -468,10 +475,10 @@
         "purple": 0
       },
       "llm-ai": {
-        "total": 10,
-        "validated": 10,
-        "red": 5,
-        "blue": 5,
+        "total": 18,
+        "validated": 18,
+        "red": 9,
+        "blue": 9,
         "purple": 0
       }
     }
@@ -2486,6 +2493,37 @@
       "path": "skills/llm-ai/blue/harden/llm-consumption-limits/SKILL.md"
     },
     {
+      "name": "llm-grounding-verification",
+      "description": "Constrain an LLM application to answer only from retrieved, verifiable grounding — enforce citations, validate that cited sources support the claim, and abstain when grounding is absent. Use when hardening a RAG or Q&A app against confident fabrication.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1565.001"
+        ],
+        "capec": [
+          "CAPEC-148"
+        ],
+        "cwe": [
+          "CWE-1426"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-misinformation"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/blue/harden/llm-grounding-verification/SKILL.md"
+    },
+    {
       "name": "llm-output-dlp",
       "description": "Harden an LLM application against sensitive-data leakage by filtering and redacting model output and constraining what reaches the context. Use when securing a chatbot or RAG app so secrets, PII, and system configuration cannot leave in a response.",
       "team": "blue",
@@ -2515,6 +2553,39 @@
       "version": "1.0.0",
       "last_validated": "2026-08-09",
       "path": "skills/llm-ai/blue/harden/llm-output-dlp/SKILL.md"
+    },
+    {
+      "name": "llm-output-encoding",
+      "description": "Treat LLM output as untrusted and encode it for the specific sink that consumes it — HTML/JS context encoding, parameterized queries, argument-vector exec — so model text cannot execute downstream. Use when hardening any path where LLM output flows into another interpreter.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1059.007"
+        ],
+        "capec": [
+          "CAPEC-63"
+        ],
+        "cwe": [
+          "CWE-79"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": [
+          "D3-ACH"
+        ]
+      },
+      "pairs_with": [
+        "llm-improper-output-handling"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/blue/harden/llm-output-encoding/SKILL.md"
     },
     {
       "name": "llm-system-prompt-hardening",
@@ -2548,6 +2619,70 @@
       "path": "skills/llm-ai/blue/harden/llm-system-prompt-hardening/SKILL.md"
     },
     {
+      "name": "llm-training-data-provenance",
+      "description": "Gate every document that enters an LLM application's knowledge base or fine-tuning corpus behind source allowlisting, provenance signing, and content review, so poisoned data cannot reach production answers. Use when hardening a RAG or fine-tuning ingestion pipeline against data poisoning.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1195.001"
+        ],
+        "capec": [
+          "CAPEC-624"
+        ],
+        "cwe": [
+          "CWE-345"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-DAM"
+        ]
+      },
+      "pairs_with": [
+        "llm-data-poisoning"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/blue/harden/llm-training-data-provenance/SKILL.md"
+    },
+    {
+      "name": "llm-vector-store-isolation",
+      "description": "Enforce tenant and user isolation in a shared vector store by filtering retrieval on an access boundary before ranking, using per-namespace indexes and metadata authorization. Use when hardening a multi-tenant RAG application so similarity search cannot return another principal's documents.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "attack": [
+          "T1213"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-284"
+        ],
+        "owasp": [],
+        "d3fend": [
+          "D3-ACH",
+          "D3-EAL"
+        ]
+      },
+      "pairs_with": [
+        "llm-vector-store-leakage"
+      ],
+      "risk": "info",
+      "authorization": "not-required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/blue/harden/llm-vector-store-isolation/SKILL.md"
+    },
+    {
       "name": "llm-sensitive-info-disclosure",
       "description": "Elicit sensitive information an LLM application should not reveal — training data, other users' data, secrets pulled into context, or backend configuration — during an authorized assessment. Use when you need to prove the app leaks confidential data through its responses.",
       "team": "red",
@@ -2575,6 +2710,35 @@
       "version": "1.0.0",
       "last_validated": "2026-08-09",
       "path": "skills/llm-ai/red/collection/llm-sensitive-info-disclosure/SKILL.md"
+    },
+    {
+      "name": "llm-vector-store-leakage",
+      "description": "Retrieve another tenant's or another user's documents from a shared vector store by exploiting similarity search that is not bounded by an access filter, during an authorized assessment. Use when a RAG application stores multiple principals' data in one index and you need to prove cross-tenant retrieval.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "collection",
+      "techniques": {
+        "attack": [
+          "T1213"
+        ],
+        "capec": [
+          "CAPEC-116"
+        ],
+        "cwe": [
+          "CWE-284"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-vector-store-isolation"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/red/collection/llm-vector-store-leakage/SKILL.md"
     },
     {
       "name": "llm-system-prompt-leakage",
@@ -2606,6 +2770,66 @@
       "path": "skills/llm-ai/red/credential-access/llm-system-prompt-leakage/SKILL.md"
     },
     {
+      "name": "llm-improper-output-handling",
+      "description": "Turn unsanitized LLM output into code execution or injection in the downstream sink that consumes it — XSS in a browser, SQL in a query, a command in a shell — during an authorized assessment. Use when model output flows into another interpreter without context-aware encoding.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "execution",
+      "techniques": {
+        "attack": [
+          "T1059.007"
+        ],
+        "capec": [
+          "CAPEC-63"
+        ],
+        "cwe": [
+          "CWE-79"
+        ],
+        "owasp": [
+          "A03:2021"
+        ],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-output-encoding"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/red/execution/llm-improper-output-handling/SKILL.md"
+    },
+    {
+      "name": "llm-misinformation",
+      "description": "Elicit confident, ungrounded fabrications from an LLM application — invented facts, fake citations, non-existent policies — and show they reach users as authoritative answers, during an authorized assessment. Use when an app answers outside its grounding without abstaining.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "impact",
+      "techniques": {
+        "attack": [
+          "T1565.001"
+        ],
+        "capec": [
+          "CAPEC-148"
+        ],
+        "cwe": [
+          "CWE-1426"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-grounding-verification"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/red/impact/llm-misinformation/SKILL.md"
+    },
+    {
       "name": "llm-unbounded-consumption",
       "description": "Demonstrate unbounded resource consumption against an LLM application — token floods, unbounded output, and cost/denial-of-wallet amplification — during an authorized assessment. Use when you need to prove the app lacks input, output, rate, or cost limits.",
       "team": "red",
@@ -2633,6 +2857,35 @@
       "version": "1.0.0",
       "last_validated": "2026-08-09",
       "path": "skills/llm-ai/red/impact/llm-unbounded-consumption/SKILL.md"
+    },
+    {
+      "name": "llm-data-poisoning",
+      "description": "Poison the data an LLM application trusts — its RAG knowledge base, fine-tuning corpus, or ingestion pipeline — so that later answers carry attacker-controlled content during an authorized assessment. Use when an app ingests documents from a source you can influence and you need to prove that tainted data reaches production answers.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "initial-access",
+      "techniques": {
+        "attack": [
+          "T1195.001"
+        ],
+        "capec": [
+          "CAPEC-624"
+        ],
+        "cwe": [
+          "CWE-345"
+        ],
+        "owasp": [],
+        "d3fend": []
+      },
+      "pairs_with": [
+        "llm-training-data-provenance"
+      ],
+      "risk": "high",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-08-10",
+      "path": "skills/llm-ai/red/initial-access/llm-data-poisoning/SKILL.md"
     },
     {
       "name": "llm-prompt-injection",
