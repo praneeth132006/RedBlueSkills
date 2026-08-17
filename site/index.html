@@ -380,14 +380,15 @@ recommends checking all inputs.
     <span class="sect__num">02</span>
     <h2>"attack my application"</h2>
     <p>One instruction spins up a full authorized assessment. The orchestrator detects
-       what your app is, builds a surface × technique matrix, and drives the whole
-       library in kill-chain order.</p>
+       what your app is — reading the code you built, or probing a running app —
+       builds a surface × technique matrix, and drives the whole library in
+       kill-chain order.</p>
   </div>
 
   <!-- pipeline as an ASCII flow -->
   <ol class="pipe">
     <li class="pipe__s"><span class="pipe__n">00</span><h3>authorization gate</h3><p>Hard stop. Ownership, scope, window, and data-handling confirmed before a single active probe.</p></li>
-    <li class="pipe__s pipe__s--red"><span class="pipe__n">01</span><h3>fingerprint</h3><p>Maps stack, entry points, and session model into a surface map.</p></li>
+    <li class="pipe__s pipe__s--red"><span class="pipe__n">01</span><h3>map the surface</h3><p>Reads your code — or a running app — for stack, entry points, and session model, into a surface map.</p></li>
     <li class="pipe__s"><span class="pipe__n">02</span><h3>select</h3><p>Lights up the matrix — routes each input to the skills whose preconditions it satisfies.</p></li>
     <li class="pipe__s pipe__s--red"><span class="pipe__n">03</span><h3>run in kill-chain order</h3><p>Recon → injection → access control → auth → client-side. Minimal proof first.</p></li>
     <li class="pipe__s pipe__s--blue"><span class="pipe__n">04</span><h3>verify detection</h3><p>For every finding, checks whether the bound blue skill would actually catch it.</p></li>
@@ -482,7 +483,7 @@ recommends checking all inputs.
 
     <ol class="steps">
       <li><h3>install</h3><p><code>init</code> copies <code>skills/</code> and <code>orchestrators/</code> into <code>./.claude/skills/redblueskills</code>.</p></li>
-      <li><h3>instruct</h3><p>Tell your agent: <i>"attack my application at <code>&lt;url&gt;</code> — it's mine and I authorize testing."</i></p></li>
+      <li><h3>instruct</h3><p>Tell your agent: <i>"attack my application — it's my own code and I authorize testing."</i> With no URL it reviews the code in your project; add <code>at &lt;url&gt;</code> to probe a running app.</p></li>
       <li><h3>confirm the gate</h3><p>Ownership, scope, window, data-handling. A hard stop before anything active runs.</p></li>
       <li><h3>read the report</h3><p>Findings, per-screen risk, coverage, and a fix list linked to each defense skill.</p></li>
     </ol>
