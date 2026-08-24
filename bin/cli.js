@@ -9,7 +9,8 @@
  *   npx redblueskills init            install all skills + orchestrator locally
  *   npx redblueskills add <name...>   install specific skills (by name)
  *   npx redblueskills list [filter]   list skills (optional team/stage/text filter)
- *   npx redblueskills attack [target] print the attack-my-application playbook
+ *   npx redblueskills attack [target] print the attack-my-application instruction
+ *                                     (target = a code path — default: this project — or a running URL)
  *   npx redblueskills quickstart      print the 5-minute getting-started guide
  *   npx redblueskills path            print the default install directory
  */
@@ -135,7 +136,8 @@ function cmdInit(args) {
   );
   console.log('');
   console.log('  Point your agent at ' + bold(path.join(dest, 'orchestrators/attack-my-application/SKILL.md')));
-  console.log('  or just say: ' + bold('"attack my application"') + '.');
+  console.log('  or just say: ' + bold('"attack my application"') + dim('  — it reviews the code in this project.'));
+  console.log('  Testing a running app instead?  ' + bold('"attack my application at http://localhost:3000"'));
   console.log('');
   console.log('  New here?  ' + bold('npx redblueskills quickstart') + dim('  — 5-minute guide'));
   console.log('');
@@ -148,10 +150,11 @@ function cmdQuickstart() {
     console.log('');
     console.log('  ' + bold('RedBlueSkills quickstart'));
     console.log('  1. ' + bold('npx redblueskills init') + '   — install skills + orchestrator');
-    console.log('  2. Tell your agent: ' + bold('"attack my application at <url>"'));
+    console.log('  2. Tell your agent: ' + bold('"attack my application"') + dim('  (it reviews the code in your project)'));
+    console.log('     or point it at a running app: ' + bold('"attack my application at <url>"'));
     console.log('  3. Answer the authorization gate, then read the report.');
     console.log('');
-    console.log(dim('  Full guide: https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md'));
+    console.log(dim('  Full guide: https://github.com/praneeth132006/RedBlueSkills/blob/main/QUICKSTART.md'));
     console.log('');
   }
 }
@@ -189,28 +192,61 @@ function cmdAdd(args) {
   console.log(dim(`\n  ${n} skill(s) → ${dest}\n`));
 }
 
+// Decide whether the operator pointed us at a running app (URL) or at source
+// code on disk (a path). Default, when nothing is given, is the current
+// project directory — i.e. "the code I have right here".
+function classifyTarget(raw) {
+  if (!raw) {
+    return { kind: 'code', value: '.', display: 'this project (' + process.cwd() + ')' };
+  }
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(raw) || /^localhost(:\d+)?(\/|$)/i.test(raw)) {
+    const url = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw) ? raw : 'http://' + raw;
+    return { kind: 'url', value: url, display: url };
+  }
+  const resolved = path.resolve(process.cwd(), raw);
+  if (fs.existsSync(resolved)) {
+    return { kind: 'code', value: raw, display: 'the code at ' + resolved };
+  }
+  // Not a URL and not an existing path — treat as a code path the operator
+  // intends (e.g. a relative dir), rather than silently assuming a URL.
+  return { kind: 'code', value: raw, display: 'the code at ' + resolved };
+}
+
 function cmdAttack(args) {
-  const target = positionals(args)[0] || '<target-url>';
   const playbook = path.join(ORCH_DIR, 'attack-my-application', 'SKILL.md');
   if (args.includes('--print') || args.includes('-p')) {
     process.stdout.write(fs.readFileSync(playbook, 'utf8'));
     return;
   }
+  const t = classifyTarget(positionals(args)[0]);
   console.log('');
   console.log(bold('  attack-my-application') + dim('  ·  authorized testing only'));
+  console.log('');
+  if (t.kind === 'code') {
+    console.log(dim('  Target: source code on disk — a full security review of the app you built.'));
+  } else {
+    console.log(dim('  Target: a running app — live probing of the deployed surface.'));
+  }
   console.log('');
   console.log('  Give your coding agent this instruction:');
   console.log('');
   console.log(dim('  ─────────────────────────────────────────────────────────'));
   console.log('    Load the RedBlueSkills orchestrator at');
   console.log('    ' + bold('orchestrators/attack-my-application/SKILL.md'));
-  console.log('    and run a full assessment of ' + bold(target));
+  if (t.kind === 'code') {
+    console.log('    and run a full security review of ' + bold(t.display) + '.');
+    console.log('    It\'s my own code and I authorize testing it.');
+  } else {
+    console.log('    and run a full assessment of ' + bold(t.display) + '.');
+    console.log('    It\'s my own app and I authorize testing it.');
+  }
   console.log(dim('  ─────────────────────────────────────────────────────────'));
   console.log('');
-  console.log('  The agent will: confirm authorization → fingerprint → select skills');
+  console.log('  The agent will: confirm authorization → map the surface → select skills');
   console.log('  → run them in kill-chain order → verify detection → report.');
   console.log('');
-  console.log(dim('  Full playbook:  npx redblueskills attack --print'));
+  console.log('  Point at a running app instead:  ' + dim('npx redblueskills attack http://localhost:3000'));
+  console.log('  Full playbook:                   ' + dim('npx redblueskills attack --print'));
   console.log('');
 }
 
@@ -289,7 +325,8 @@ function usage() {
     init [--dest DIR]         install ALL skills + orchestrator (default ./.claude/skills)
     add <name...> [--dest DIR] install specific skills (paired skill comes along)
     list [filter]            list skills (filter by team/stage/text)
-    attack [target] [--print] print the "attack my application" playbook
+    attack [target] [--print] print the "attack my application" instruction
+                             target = a code path (default: this project) or a running URL
     quickstart               print the 5-minute getting-started guide
     path                     print the default install directory
 
@@ -297,7 +334,9 @@ function usage() {
     npx redblueskills init
     npx redblueskills add web-sql-injection
     npx redblueskills list red
-    npx redblueskills attack https://staging.example.com
+    npx redblueskills attack                         ${dim('# review the code in the current project')}
+    npx redblueskills attack ./src                   ${dim('# review a specific code path')}
+    npx redblueskills attack http://localhost:3000   ${dim('# probe a running app')}
 `);
 }
 

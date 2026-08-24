@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security or abuse report
-    url: https://github.com/Security-Environment/RedBlueSkills/security/advisories/new
+    url: https://github.com/praneeth132006/RedBlueSkills/security/advisories/new
     about: Privately report a vulnerability in the tooling, or abuse of this project. See SECURITY.md.
   - name: Responsible-use policy
-    url: https://github.com/Security-Environment/RedBlueSkills/blob/main/ETHICS.md
+    url: https://github.com/praneeth132006/RedBlueSkills/blob/main/ETHICS.md
     about: Read before using or contributing offensive content.

@@ -2,11 +2,11 @@
 
 **Agent-native, validated security skills for red teams and blue teams — paired offense and defense, risk-labeled, and proven before merge.**
 
-[![Validate](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml)
+[![Validate](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/skills.json)](INDEX.md)
-[![Validated](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/validated.json)](COVERAGE.md)
-[![Pairs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/pairs.json)](INDEX.md)
+[![Skills](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/skills.json)](INDEX.md)
+[![Validated](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/validated.json)](COVERAGE.md)
+[![Pairs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/pairs.json)](INDEX.md)
 [![npm](https://img.shields.io/badge/npm-redblueskills-c4362a)](https://www.npmjs.com/package/redblueskills)
 
 <!-- STATS:BEGIN -->
@@ -42,8 +42,9 @@ That means four things most "awesome-security" lists don't give you:
 ## New here? Start with the Quickstart
 
 **[`QUICKSTART.md`](QUICKSTART.md) — zero to a security report in 5 minutes.** No
-security background needed: install, point your agent at an app you own, say
-"attack my application," read the report.
+security background needed: install, open your agent in your project, say
+"attack my application" — it reviews the code you built (or a running app, if you
+point it at a URL) — and read the report.
 
 | Guide | What it covers |
 |---|---|
@@ -132,7 +133,7 @@ signing identity is the GitHub Actions OIDC token. Verify a release:
 
 ```bash
 cosign verify-blob \
-  --certificate-identity-regexp 'https://github.com/Security-Environment/RedBlueSkills' \
+  --certificate-identity-regexp 'https://github.com/praneeth132006/RedBlueSkills' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --signature provenance.json.sig --certificate provenance.json.pem \
   provenance.json
@@ -165,9 +166,10 @@ deno run -A npm:redblueskills init      # deno — -A because it writes ./.claud
 npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
 ```
 
-Then simply tell your agent **"attack my application"** (see below), or point it
-at any `skills/**/SKILL.md`. A generated `README` in the install directory tells
-the agent when to load each skill.
+Then simply tell your agent **"attack my application"** (see below) — with no URL
+it reviews the code in your project; add `at <url>` to probe a running app — or
+point it at any `skills/**/SKILL.md`. A generated `README` in the install directory
+tells the agent when to load each skill.
 
 There's also a **website** — a browsable catalog with the same install flow — in
 [`site/`](site/). It is fully self-contained: every `SKILL.md` and every doc is
@@ -186,14 +188,25 @@ static directory, deployable to any static host if you ever want it published.
 
 The headline capability. One instruction runs a full, authorized assessment: the
 orchestrator ([`orchestrators/attack-my-application/SKILL.md`](orchestrators/attack-my-application/SKILL.md))
-**fingerprints** the target, **selects** the skills whose preconditions the app
-satisfies, **runs** them in kill-chain order (minimal-proof first), **verifies**
-each finding against its paired blue skill, and produces a prioritized report —
-behind a hard **authorization gate** it will not cross.
+**maps** the target, **selects** the skills whose preconditions the app satisfies,
+**runs** them in kill-chain order (minimal-proof first), **verifies** each finding
+against its paired blue skill, and produces a prioritized report — behind a hard
+**authorization gate** it will not cross.
+
+Point it at **the code you built** or at a **running app** — it handles both:
+
+- **Source review (default).** Given a code path — or nothing, meaning the current
+  project — it reads your actual source: routes, queries, templates, config, and
+  dependencies, tracing each user input to the dangerous sink it reaches and proving
+  findings with `file:line`. No traffic is sent.
+- **Live assessment.** Given a running URL, it probes the deployed surface over HTTP
+  with the minimal proof each skill defines.
 
 ```bash
-npx redblueskills attack https://staging.example.com     # prints the instruction
-npx redblueskills attack --print                          # the full playbook
+npx redblueskills attack                          # review the code in this project (default)
+npx redblueskills attack ./src                     # review a specific code path
+npx redblueskills attack http://localhost:3000     # probe a running app
+npx redblueskills attack --print                   # the full playbook
 ```
 
 > ⚠️ It only assesses systems you own or are explicitly authorized to test. The
@@ -223,7 +236,7 @@ jq '.skills[] | select(.team == "blue" and .stage == "detect") | .name' catalog.
 New skills are welcome — the bar is quality and pairing, not volume.
 
 ```bash
-git clone https://github.com/Security-Environment/RedBlueSkills.git
+git clone https://github.com/praneeth132006/RedBlueSkills.git
 cd RedBlueSkills
 make install                       # dev deps into your environment
 cp -r _template skills/web-app/red/initial-access/my-skill

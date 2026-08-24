@@ -770,6 +770,36 @@
 
     /* observe all marked elements */
     $$('.reveal').forEach(function (el) { revealObs.observe(el); });
+
+    /* ── Fail-safe: content must NEVER stay permanently invisible. ──
+       The observer only reveals on intersection, so in environments where it
+       never fires as expected — a zero/odd-height viewport, a deep-link that
+       skips past sections, some headless/print renderers — un-revealed
+       `.reveal` blocks would be stuck at opacity:0 and the page would look
+       blank/broken. These nets guarantee everything ends up visible. */
+    function revealAllRemaining() {
+      $$('.reveal').forEach(function (el) {
+        if (!el.classList.contains('is-visible')) {
+          el.classList.add('is-visible');
+          /* Set the end state inline too, so content is visible even in a
+             renderer that never advances the CSS transition (frozen/0-height
+             viewports, print). The class alone would leave opacity stuck at 0
+             there; these inline styles win immediately, no animation needed. */
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          revealObs.unobserve(el);
+        }
+      });
+    }
+    /* if the viewport has no usable height, the observer can't fire at all —
+       reveal immediately rather than animate into a void. */
+    if (!window.innerHeight) revealAllRemaining();
+    /* second net: once everything has loaded, reveal anything still hidden. */
+    window.addEventListener('load', function () {
+      setTimeout(revealAllRemaining, 1200);
+    });
+    /* third net: hard timeout so nothing can outlive a slow/absent load event. */
+    setTimeout(revealAllRemaining, 2500);
   }
 
 })();

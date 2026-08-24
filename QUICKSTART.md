@@ -60,7 +60,21 @@ npx redblueskills list ssrf     # free-text search
 
 ## Step 2 — Point your agent at a target and give the instruction
 
-Open your coding agent **in the same project** and say, in plain English:
+You don't need a link or a deployed server. There are two ways to point the
+orchestrator at your app — pick whichever you have.
+
+**A) Review the code you built (default).** Open your coding agent **in your
+project** and say, in plain English:
+
+> **Attack my application. It's my own code in this project and I authorize testing
+> it.**
+
+The agent reads your actual source — routes, queries, templates, config, and
+dependencies — traces each user input to the risky sink it reaches, and proves each
+finding with the exact `file:line`. Nothing is sent over the network. Want a
+specific folder instead of the whole project? Say *"…review the code at `./src`."*
+
+**B) Probe a running app.** If you have the app running, give it the URL instead:
 
 > **Attack my application at `http://localhost:3000`. It's my own app running
 > locally and I authorize testing it.**
@@ -68,8 +82,10 @@ Open your coding agent **in the same project** and say, in plain English:
 Or, to see the exact instruction and playbook without guessing:
 
 ```bash
-npx redblueskills attack http://localhost:3000     # prints the instruction to paste
-npx redblueskills attack --print                   # prints the full orchestrator playbook
+npx redblueskills attack                          # review the code in this project
+npx redblueskills attack ./src                     # review a specific code path
+npx redblueskills attack http://localhost:3000     # probe a running app
+npx redblueskills attack --print                   # the full orchestrator playbook
 ```
 
 ## Step 3 — Answer the authorization questions
