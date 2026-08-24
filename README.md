@@ -2,11 +2,11 @@
 
 **Agent-native, validated security skills for red teams and blue teams — paired offense and defense, risk-labeled, and proven before merge.**
 
-[![Validate](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/Security-Environment/RedBlueSkills/actions/workflows/validate.yml)
+[![Validate](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/skills.json)](INDEX.md)
-[![Validated](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/validated.json)](COVERAGE.md)
-[![Pairs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Security-Environment/RedBlueSkills/main/site/badges/pairs.json)](INDEX.md)
+[![Skills](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/skills.json)](INDEX.md)
+[![Validated](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/validated.json)](COVERAGE.md)
+[![Pairs](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/pairs.json)](INDEX.md)
 [![npm](https://img.shields.io/badge/npm-redblueskills-c4362a)](https://www.npmjs.com/package/redblueskills)
 
 <!-- STATS:BEGIN -->
@@ -133,7 +133,7 @@ signing identity is the GitHub Actions OIDC token. Verify a release:
 
 ```bash
 cosign verify-blob \
-  --certificate-identity-regexp 'https://github.com/Security-Environment/RedBlueSkills' \
+  --certificate-identity-regexp 'https://github.com/praneeth132006/RedBlueSkills' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --signature provenance.json.sig --certificate provenance.json.pem \
   provenance.json
@@ -236,7 +236,7 @@ jq '.skills[] | select(.team == "blue" and .stage == "detect") | .name' catalog.
 New skills are welcome — the bar is quality and pairing, not volume.
 
 ```bash
-git clone https://github.com/Security-Environment/RedBlueSkills.git
+git clone https://github.com/praneeth132006/RedBlueSkills.git
 cd RedBlueSkills
 make install                       # dev deps into your environment
 cp -r _template skills/web-app/red/initial-access/my-skill

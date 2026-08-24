@@ -198,5 +198,5 @@ Initial public release. Establishes the framework and the first vertical.
   `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`.
 - **CI** running the full validation + test gate on every push and PR.
 
-[Unreleased]: https://github.com/Security-Environment/RedBlueSkills/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/Security-Environment/RedBlueSkills/releases/tag/v0.1.0
+[Unreleased]: https://github.com/praneeth132006/RedBlueSkills/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/praneeth132006/RedBlueSkills/releases/tag/v0.1.0

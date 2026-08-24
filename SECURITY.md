@@ -5,7 +5,7 @@
 If you find a security issue in the **tooling** (`tools/`, CI workflows) or the
 repository infrastructure, please report it privately:
 
-- Use GitHub's **[Report a vulnerability](https://github.com/Security-Environment/RedBlueSkills/security/advisories/new)**
+- Use GitHub's **[Report a vulnerability](https://github.com/praneeth132006/RedBlueSkills/security/advisories/new)**
   (Security → Advisories) to open a private advisory, **or**
 - Open a minimal issue asking a maintainer to contact you, without disclosing
   details publicly.

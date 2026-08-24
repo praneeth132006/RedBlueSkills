@@ -154,7 +154,7 @@ function cmdQuickstart() {
     console.log('     or point it at a running app: ' + bold('"attack my application at <url>"'));
     console.log('  3. Answer the authorization gate, then read the report.');
     console.log('');
-    console.log(dim('  Full guide: https://github.com/Security-Environment/RedBlueSkills/blob/main/QUICKSTART.md'));
+    console.log(dim('  Full guide: https://github.com/praneeth132006/RedBlueSkills/blob/main/QUICKSTART.md'));
     console.log('');
   }
 }

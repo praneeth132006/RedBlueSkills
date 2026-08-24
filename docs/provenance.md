@@ -41,7 +41,7 @@ in the public Rekor transparency log. The release also carries a
 ```bash
 # from a downloaded release (provenance.json, .sig, .pem alongside it)
 cosign verify-blob \
-  --certificate-identity-regexp 'https://github.com/Security-Environment/RedBlueSkills' \
+  --certificate-identity-regexp 'https://github.com/praneeth132006/RedBlueSkills' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --signature provenance.json.sig \
   --certificate provenance.json.pem \
