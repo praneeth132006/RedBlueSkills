@@ -71,10 +71,13 @@ is done — both need a person on npmjs.com, neither can be done from CI:
   `npm publish` from a laptop first. Then: npmjs.com → the package → Settings →
   Trusted publishing → GitHub Actions, repo `praneeth132006/RedBlueSkills`,
   workflow `npm-publish.yml`. Afterwards delete the `NPM_TOKEN` secret.
-- **Or — replace the token.** The current `NPM_TOKEN` is a classic *Publish*
-  token, which does not bypass 2FA. Generate an **Automation** classic token (or a
-  granular access token) at npmjs.com → Access Tokens, and replace the repo
-  secret. Until then, `npx redblueskills` will not resolve.
+- **Or — replace the token.** npmjs.com → Access Tokens → Generate → **Granular
+  access token**, with **Bypass 2FA enabled** (it defaults to off — this is the
+  step that is easy to miss, and without it CI is challenged for an OTP and dies
+  with `EOTP` even though the token type is correct). The account has
+  `two-factor auth: auth-and-writes`, so nothing else gets through. Classic
+  automation/publish tokens were removed from npm in November 2025. Until this is
+  set, `npx redblueskills` will not resolve.
 
 Nothing else in the release flow depends on npmjs.com — the tarball and GitHub
 Packages channels work today.

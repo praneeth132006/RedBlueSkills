@@ -8,9 +8,11 @@ name: Publish to npm
 #      GitHub Actions, repo praneeth132006/RedBlueSkills, workflow
 #      npm-publish.yml). Requires npm >= 11.5.1, which is why Node 24 is pinned
 #      below. Only configurable once the package exists on the registry.
-#   2. NPM_TOKEN repo secret. This MUST be an npm *Automation* classic token or
-#      a granular access token. A classic "Publish" token does not bypass 2FA
-#      and the run dies with `npm error code EOTP` after the tarball is built.
+#   2. NPM_TOKEN repo secret. This MUST be a granular access token created with
+#      the **Bypass 2FA** option ENABLED. That option is off by default, and
+#      without it the run dies with `npm error code EOTP` after the tarball is
+#      built — the token type is right but it still gets challenged. (Classic
+#      automation/publish tokens were removed from npm in November 2025.)
 #
 # The release tag must match the version in package.json.
 
@@ -67,7 +69,7 @@ jobs:
             exit 0
           fi
           if grep -q "code EOTP" "$RUNNER_TEMP/publish.log"; then
-            echo "::error::NPM_TOKEN asked for a one-time password, so it is not an automation token. Replace the NPM_TOKEN secret with an npm Automation classic token or a granular access token (both bypass 2FA), or configure trusted publishing on npmjs.com and drop the token entirely."
+            echo "::error::NPM_TOKEN was challenged for a one-time password, so it was created without the Bypass 2FA option (it is off by default). Regenerate the granular access token on npmjs.com with Bypass 2FA enabled and re-set the NPM_TOKEN secret, or configure trusted publishing and drop the token entirely."
           fi
           exit 1
         env:
