@@ -1,0 +1,97 @@
+name: Release (GitHub Packages)
+
+# GitHub-native release path — no npmjs.com account, no external secret.
+#
+# On a published GitHub Release this workflow:
+#   1. re-runs the CLI/MCP sanity checks against the tagged tree,
+#   2. proves the release tag matches package.json,
+#   3. builds the unscoped tarball and attaches it to the Release, so anyone can
+#      `npm i <release-url>.tgz` with NO authentication at all,
+#   4. publishes the same tree to GitHub Packages as
+#      @praneeth132006/redblueskills using the built-in GITHUB_TOKEN,
+#   5. emits a SLSA build-provenance attestation for the tarball.
+#
+# Note on step 4: installing from GitHub Packages requires the consumer to
+# authenticate with a GitHub token even for public packages. That is a registry
+# limitation, not a config mistake — step 3 is the auth-free path, and npmjs.com
+# (see npm-publish.yml) remains the path for a plain `npx redblueskills`.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write # attach the tarball to the Release
+  packages: write # publish to GitHub Packages
+  id-token: write # OIDC for the attestation
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@praneeth132006"
+
+      - name: Sanity-check the CLI + MCP server
+        run: |
+          node -c bin/cli.js
+          node -c bin/mcp.js
+          node bin/cli.js list > /dev/null
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
+            | node bin/mcp.js | grep -q '"list_skills"'
+
+      - name: Release tag must match package.json version
+        if: github.event_name == 'release'
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          tag="${TAG#v}"
+          pkg=$(jq -r .version package.json)
+          test "$tag" = "$pkg" || { echo "tag $tag != package.json $pkg"; exit 1; }
+
+      - name: Verify the published file set installs cleanly
+        run: |
+          node bin/cli.js init --dest "$RUNNER_TEMP/verify" > /dev/null
+          test "$(find "$RUNNER_TEMP/verify/skills" -name SKILL.md | wc -l | tr -d ' ')" -ge 20
+          npm pack --dry-run --json | jq -e \
+            '.[0].files | map(.path) | index("sbom.cdx.json") and index("provenance.json")' > /dev/null
+
+      - name: Build the unscoped tarball
+        id: pack
+        run: |
+          tgz=$(npm pack --silent)
+          echo "tgz=$tgz" >> "$GITHUB_OUTPUT"
+          ls -la "$tgz"
+
+      - name: SLSA build provenance for the tarball
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: ${{ steps.pack.outputs.tgz }}
+
+      - name: Attach the tarball to the Release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+          TGZ: ${{ steps.pack.outputs.tgz }}
+        run: gh release upload "$TAG" "$TGZ" --clobber
+
+      - name: Publish to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GitHub Packages only accepts names scoped to the repo owner. Rewrite
+          # the name for this publish only; the tarball attached above keeps the
+          # unscoped name so npmjs.com stays the canonical identity.
+          jq '.name = "@praneeth132006/redblueskills"
+              | .publishConfig = {"registry": "https://npm.pkg.github.com"}' \
+            package.json > package.json.tmp && mv package.json.tmp package.json
+          npm publish --access public

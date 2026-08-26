@@ -1,4 +1,4 @@
-.PHONY: help install validate catalog provenance check test clean site site-build validate-labs
+.PHONY: help install validate catalog provenance check test clean site site-build validate-labs release
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -38,6 +38,10 @@ site: site-build ## Build the site, then serve it at http://localhost:8799
 	@echo "  →  http://localhost:8799"
 	@echo ""
 	python -m http.server 8799 --directory site
+
+release: ## Cut a release (usage: make release VERSION=1.1.0)
+	@test -n "$(VERSION)" || { echo "usage: make release VERSION=1.1.0"; exit 1; }
+	tools/release.sh $(VERSION)
 
 clean: ## Remove Python caches
 	find . -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null || true

@@ -166,6 +166,17 @@ deno run -A npm:redblueskills init      # deno — -A because it writes ./.claud
 npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
 ```
 
+> **While the npmjs.com publish is being unblocked**, install straight from the
+> GitHub Release tarball — no account, no auth, same package:
+>
+> ```bash
+> npm i -g https://github.com/praneeth132006/RedBlueSkills/releases/download/v1.0.0/redblueskills-1.0.0.tgz
+> ```
+>
+> It is also on GitHub Packages as `@praneeth132006/redblueskills` (that registry
+> requires a GitHub token even for public packages). See
+> [`docs/RELEASING.md`](docs/RELEASING.md).
+
 Then simply tell your agent **"attack my application"** (see below) — with no URL
 it reviews the code in your project; add `at <url>` to probe a running app — or
 point it at any `skills/**/SKILL.md`. A generated `README` in the install directory
