@@ -1,8 +1,18 @@
 name: Publish to npm
 
 # Publishes the `redblueskills` package when a GitHub Release is published.
-# Requires an NPM_TOKEN repo secret (npm automation token) and that the release
-# tag matches the version in package.json.
+#
+# Auth, in order of preference:
+#   1. Trusted publishing (OIDC) — no secret at all. Configure a trusted
+#      publisher for the package on npmjs.com (Settings -> Trusted publishing:
+#      GitHub Actions, repo praneeth132006/RedBlueSkills, workflow
+#      npm-publish.yml). Requires npm >= 11.5.1, which is why Node 24 is pinned
+#      below. Only configurable once the package exists on the registry.
+#   2. NPM_TOKEN repo secret. This MUST be an npm *Automation* classic token or
+#      a granular access token. A classic "Publish" token does not bypass 2FA
+#      and the run dies with `npm error code EOTP` after the tarball is built.
+#
+# The release tag must match the version in package.json.
 
 on:
   release:
@@ -22,7 +32,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"  # ships npm >= 11.5.1, required for OIDC trusted publishing
           registry-url: "https://registry.npmjs.org"
 
       - name: Sanity-check the CLI + MCP server before publishing
@@ -51,6 +61,14 @@ jobs:
             '.[0].files | map(.path) | index("sbom.cdx.json") and index("provenance.json")' > /dev/null
 
       - name: Publish
-        run: npm publish --provenance --access public
+        run: |
+          set -o pipefail
+          if npm publish --provenance --access public 2>&1 | tee "$RUNNER_TEMP/publish.log"; then
+            exit 0
+          fi
+          if grep -q "code EOTP" "$RUNNER_TEMP/publish.log"; then
+            echo "::error::NPM_TOKEN asked for a one-time password, so it is not an automation token. Replace the NPM_TOKEN secret with an npm Automation classic token or a granular access token (both bypass 2FA), or configure trusted publishing on npmjs.com and drop the token entirely."
+          fi
+          exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
