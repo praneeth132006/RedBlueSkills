@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RedBlueSkills</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --fg: #22262E;
+    --muted: #6B7280;
+    --rule: #E5E3DC;
+    --accent: #2F7F72;
+    --code-bg: #F5F3ED;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 3rem 1.5rem 6rem;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  h1, h2, h3, h4 { line-height: 1.25; margin: 2.5rem 0 1rem; font-weight: 650; }
+  h1 { font-size: 2.25rem; margin-top: 0; letter-spacing: -0.02em; }
+  h2 { font-size: 1.6rem; }
+  h3 { font-size: 1.25rem; }
+  p, ul, ol, blockquote, table, pre { margin: 0 0 1.25rem; }
+  a { color: var(--accent); }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  blockquote {
+    margin-left: 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    color: var(--muted);
+  }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid var(--rule); padding: 0.5rem 0.75rem; text-align: left; }
+  th { background: var(--code-bg); font-weight: 600; }
+  img { max-width: 100%; height: auto; }
+  ul li::marker { color: var(--muted); }
+  input[type="checkbox"] { margin-right: 0.5rem; }
+  .diagram { margin: 2rem 0; text-align: center; overflow-x: auto; }
+  .diagram svg { max-width: 100%; height: auto; }
+  /* ── The document's own title block ──────────────────────────────────
+     A PDF gets handed on with no filename attached to it once it is in an
+     email, so it has to say what it is on the page itself. */
+  .doc-head {
+    margin: 0 0 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .doc-title {
+    margin: 0;
+    font-size: 2.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 650;
+  }
+  .doc-meta { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.85rem; }
+  /* The body's own leading H1 would repeat the title block. */
+  .doc-head + h1:first-of-type { margin-top: 0; }
+
+  /* ── The footer ──────────────────────────────────────────────────────
+     Hidden on screen, where the app's own chrome is already saying all of
+     this, and shown on paper where nothing else is. */
+  .doc-foot { display: none; }
+
+  /* Keep headings with their content and never split a diagram across pages. */
+  @media print {
+    /* Margins belong to the page, not the body: a body margin is applied once
+       at the top of the document, so every page after the first printed into
+       the sheet's edge. */
+    @page { margin: 18mm 16mm 20mm; }
+    body { padding: 0; background: #fff; color: #000; }
+    h1, h2, h3 { break-after: avoid; }
+    pre, blockquote, table, .diagram, figure, img { break-inside: avoid; }
+    /* An image taller than a sheet has to be allowed to shrink, or the printer
+       clips it at the page edge and the bottom half is simply gone. */
+    img { max-height: 88vh; object-fit: contain; }
+    /* Backgrounds are what tells a code block from prose; browsers drop them
+       when printing unless asked not to. */
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    a { color: inherit; text-decoration: none; }
+    /* A link is worth nothing on paper unless you can see where it goes. */
+    a[href^="http"]::after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+      color: #555;
+      word-break: break-all;
+    }
+    .doc-head { border-bottom-color: #ccc; }
+    .doc-meta { color: #555; }
+
+    /* A fixed element inside a paged context repeats on every sheet, which is
+       how a running footer is done without the @page margin boxes that no
+       browser actually implements. */
+    .doc-foot {
+      position: fixed;
+      bottom: -12mm;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 2mm;
+      border-top: 1px solid #ddd;
+      font-size: 9pt;
+      color: #666;
+    }
+    .doc-foot-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .doc-foot-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+<header class="doc-head">
+  <h1 class="doc-title">RedBlueSkills</h1>
+  <p class="doc-meta">August 26, 2026</p>
+</header>
+
+<p><strong>Agent-native, validated security skills for red teams and blue teams — paired offense and defense, risk-labeled, and proven before merge.</strong></p>
+<p><a href="https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml"><img decoding="sync" src="https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml/badge.svg" alt="Validate"></a><br>
+<a href="LICENSE"><img decoding="sync" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache-2.0"></a><br>
+<a href="INDEX.md"><img decoding="sync" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/skills.json" alt="Skills"></a><br>
+<a href="COVERAGE.md"><img decoding="sync" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/validated.json" alt="Validated"></a><br>
+<a href="INDEX.md"><img decoding="sync" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/praneeth132006/RedBlueSkills/main/site/badges/pairs.json" alt="Pairs"></a><br>
+<a href="https://www.npmjs.com/package/redblueskills"><img decoding="sync" src="https://img.shields.io/badge/npm-redblueskills-c4362a" alt="npm"></a></p>
+<table>
+<thead>
+<tr>
+<th align="center">skills</th>
+<th align="center">red↔blue pairs</th>
+<th align="center">validated end-to-end</th>
+<th align="center">live surfaces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>128</strong></td>
+<td align="center"><strong>64</strong></td>
+<td align="center"><strong>65</strong> (51%)</td>
+<td align="center"><strong>7</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Counts generated from <code>catalog.json</code> by <code>tools/build_catalog.py</code> — never hand-edited. CI fails if this table drifts.</p>
+<p>RedBlueSkills is a library of <a href="https://docs.claude.com/en/docs/agents/skills">Claude Agent Skills</a> —<br>
+<code>SKILL.md</code> packages an AI agent (or a human) can load to actually <em>perform</em><br>
+security work: recon, exploitation for authorized assessments, detection<br>
+engineering, hardening, threat hunting, and incident response.</p>
+<p>It is built to be <strong>used inside CI, SOCs, and pentest workflows</strong>, not just read.<br>
+That means four things most "awesome-security" lists don't give you:</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>What it means here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🤖 <strong>Agent-native</strong></td>
+<td>Every skill is an executable <code>SKILL.md</code> with a machine-readable header — loadable by Claude Code and other agents, not just human-readable notes.</td>
+</tr>
+<tr>
+<td>🔗 <strong>Paired red ↔ blue</strong></td>
+<td>Every offensive technique links to its detection/defense counterpart, and CI enforces the pairing is bidirectional. Offense you can't detect doesn't ship.</td>
+</tr>
+<tr>
+<td>✅ <strong>Validated &#x26; provenanced</strong></td>
+<td>Skills are proven against a real lab or CTF target, stamped with who validated them and when, and auto-flagged as <code>stale</code> after 6 months.</td>
+</tr>
+<tr>
+<td>🛠️ <strong>Tooled</strong></td>
+<td>A schema validator, catalog generator, and test suite gate every PR. Quality scales with contributors instead of rotting.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>Authorized use only.</strong> These skills are for security testing on systems you<br>
+own or are explicitly permitted to test, and for defending systems you operate.<br>
+Read <a href="ETHICS.md"><code>ETHICS.md</code></a> before using anything here. You are responsible<br>
+for staying within your authorization and the law.</p>
+</blockquote>
+<hr>
+<h2>New here? Start with the Quickstart</h2>
+<p><strong><a href="QUICKSTART.md"><code>QUICKSTART.md</code></a> — zero to a security report in 5 minutes.</strong> No<br>
+security background needed: install, open your agent in your project, say<br>
+"attack my application" — it reviews the code you built (or a running app, if you<br>
+point it at a URL) — and read the report.</p>
+<table>
+<thead>
+<tr>
+<th>Guide</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="QUICKSTART.md">QUICKSTART.md</a></strong></td>
+<td>The 5-minute, no-jargon path from install to report.</td>
+</tr>
+<tr>
+<td><strong><a href="docs/orchestrator.md">docs/orchestrator.md</a></strong></td>
+<td>How <code>attack-my-application</code> works, stage by stage, with a sample transcript.</td>
+</tr>
+<tr>
+<td><strong><a href="docs/examples/">docs/examples/</a></strong></td>
+<td>Full runs against real stacks — <a href="docs/examples/flask.md">Flask</a> · <a href="docs/examples/node-express.md">Node/Express</a> · <a href="docs/examples/rails.md">Rails</a>.</td>
+</tr>
+<tr>
+<td><strong><a href="docs/adding-a-skill.md">docs/adding-a-skill.md</a></strong></td>
+<td>Write your own red↔blue pair; every CI gate explained.</td>
+</tr>
+<tr>
+<td><strong><a href="ETHICS.md">ETHICS.md</a></strong></td>
+<td>The rules of the road. Read once.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Browse the library</h2>
+<p>See <strong><a href="INDEX.md">INDEX.md</a></strong> for the full catalog (auto-generated), or<br>
+<a href="catalog.json"><code>catalog.json</code></a> for a machine-readable feed.</p>
+<p>Skills are organized by <strong>application type → team → kill-chain stage</strong>:</p>
+<pre><code>skills/web-app/
+├── red/                          # offense                    ⟷ paired blue skill
+│   ├── recon/web-http-fingerprinting/          ⟷ web-security-headers
+│   ├── initial-access/
+│   │   ├── web-sql-injection/                  ⟷ web-sqli-detection
+│   │   ├── web-reflected-xss/                  ⟷ web-xss-detection
+│   │   ├── web-command-injection/              ⟷ web-command-injection-detection
+│   │   ├── web-path-traversal/                 ⟷ web-path-traversal-detection
+│   │   ├── web-ssrf/                           ⟷ web-ssrf-hardening
+│   │   └── web-xxe/                            ⟷ web-xxe-hardening
+│   ├── privilege-escalation/web-idor/          ⟷ web-access-control-monitoring
+│   ├── credential-access/web-broken-authentication/ ⟷ web-authentication-hardening
+│   └── execution/web-csrf/                     ⟷ web-csrf-hardening
+└── blue/                         # defense
+    ├── detect/    web-sqli-detection · web-xss-detection · web-command-injection-detection
+    │              web-path-traversal-detection · web-access-control-monitoring
+    └── harden/    web-security-headers · web-ssrf-hardening · web-xxe-hardening
+                   web-authentication-hardening · web-csrf-hardening
+</code></pre>
+<p><strong>Every skill is paired red↔blue across seven live surfaces</strong> (live counts in the<br>
+badges above and the table at the top of this file — both generated from<br>
+<code>catalog.json</code>, never hand-typed). <strong><code>web-app</code></strong><br>
+is the reference implementation — 10 pairs covering the OWASP Top 10 core. The<br>
+<strong><code>api</code></strong> vertical is complete across the <strong>OWASP API Security Top 10 (2023),<br>
+API1–API10</strong>: BOLA, broken authentication, BFLA, mass assignment, excessive data<br>
+exposure, unrestricted resource consumption, plus SSRF, security misconfiguration,<br>
+improper inventory management, unsafe consumption, and sensitive-business-flow<br>
+abuse. <strong><code>cloud-native</code></strong> covers IMDS credential theft, public object-storage<br>
+exposure, privileged-container escape, cloud IAM persistence, and Kubernetes RBAC<br>
+abuse; <strong><code>ci-cd</code></strong> maps the <strong>OWASP Top 10<br>
+CI/CD Security Risks</strong> (poisoned pipeline execution, credential hygiene,<br>
+dependency-chain abuse, artifact provenance, runner abuse). <strong><code>mobile</code></strong> maps the<br>
+<strong>OWASP Mobile Top 10 / MASVS</strong> (insecure data storage, hardcoded secrets, weak<br>
+transport / missing cert-pinning, insecure deep links, mobile-to-backend API abuse).<br>
+<strong><code>network</code></strong> covers service discovery, exposed-service exploitation, TLS/certificate<br>
+weakness, credential sniffing &#x26; layer-2 AiTM, and lateral movement — mapped across<br>
+<strong>MITRE ATT&#x26;CK, MITRE D3FEND, NIST SP 800-53 Rev 5 / CSF 2.0, and CIS Controls v8</strong>.<br>
+<strong><code>llm-ai</code></strong> maps the <strong>OWASP Top 10 for LLM Applications 2025</strong> — prompt injection<br>
+(LLM01), sensitive information disclosure (LLM02), data &#x26; model poisoning (LLM04),<br>
+improper output handling (LLM05), excessive agency (LLM06), system prompt leakage<br>
+(LLM07), vector &#x26; embedding weaknesses (LLM08), misinformation (LLM09), and<br>
+unbounded consumption (LLM10) — every one validated end-to-end against a<br>
+dependency-free stdlib-Python mock-LLM lab.<br>
+A large share are <strong><code>validated</code> end-to-end</strong> (see the <em>validated</em> badge) against<br>
+live labs — OWASP crAPI, Docker/Colima, a mock EC2 IMDS, MinIO, a git+bash CI lab,<br>
+and the mock-LLM lab — with the exact evidence recorded in each skill's<br>
+<code>## Validation</code> section; the rest stay <code>reviewed</code> with the blocker documented<br>
+in-skill. The validated labs are <strong>re-provable on demand</strong> with <code>make validate-labs</code>,<br>
+so a stamp is a claim you can re-run, not just trust.</p>
+<p><img decoding="sync" src="site/coverage.svg" alt="Coverage heatmap — surface × kill-chain stage"></p>
+<p>See the <a href="site/"><strong>coverage map</strong></a> (a radial <em>surface × kill-chain</em> map plus the<br>
+heatmap above) and <a href="COVERAGE.md"><code>COVERAGE.md</code></a> for the full taxonomy and every<br>
+field a skill is classified on. All seven surfaces share the same schema, tooling,<br>
+and pairing discipline.</p>
+<h3>Supply-chain provenance</h3>
+<p>Every release ships a <strong>CycloneDX SBOM</strong> (<a href="sbom.cdx.json"><code>sbom.cdx.json</code></a>) and a<br>
+<strong>provenance manifest</strong> (<a href="provenance.json"><code>provenance.json</code></a>) that records, for<br>
+each skill, the SHA-256 of its <code>SKILL.md</code> and who validated it against which lab.<br>
+Both are regenerated from the tree by <code>make provenance</code> (CI fails if they drift)<br>
+and <strong>signed at release with cosign keyless signing</strong> — no long-lived keys, the<br>
+signing identity is the GitHub Actions OIDC token. Verify a release:</p>
+<pre><code class="language-bash">cosign verify-blob \
+  --certificate-identity-regexp <span class="hljs-string">'https://github.com/praneeth132006/RedBlueSkills'</span> \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --signature provenance.json.sig --certificate provenance.json.pem \
+  provenance.json
+</code></pre>
+<p>See <a href="docs/provenance.md"><code>docs/provenance.md</code></a> for the full verification walkthrough.</p>
+<hr>
+<h2>Install into your agent — one command</h2>
+<p>You don't need to clone this repo to use it. The library is published to npm, so<br>
+any coding LLM (Claude Code and friends) can pull the whole thing — skills,<br>
+<code>catalog.json</code>, and the <code>attack-my-application</code> orchestrator — into its skills<br>
+path in one step:</p>
+<pre><code class="language-bash">npx redblueskills init          <span class="hljs-comment"># all skills + orchestrator → ./.claude/skills/redblueskills</span>
+npx redblueskills add web-ssrf  <span class="hljs-comment"># just one (its paired defense comes along)</span>
+npx redblueskills list red      <span class="hljs-comment"># browse offense (or: blue, a stage, or free text)</span>
+</code></pre>
+<p>Not an npm user? Every runner works — the package has no install step of its own:</p>
+<pre><code class="language-bash">pnpm dlx redblueskills init             <span class="hljs-comment"># pnpm</span>
+yarn dlx redblueskills init             <span class="hljs-comment"># yarn 2+ (yarn 1: use npx)</span>
+bunx redblueskills init                 <span class="hljs-comment"># bun</span>
+deno run -A npm:redblueskills init      <span class="hljs-comment"># deno — -A because it writes ./.claude</span>
+npm i -g redblueskills &#x26;&#x26; redblueskills init   <span class="hljs-comment"># global, if you'd rather have it on PATH</span>
+</code></pre>
+<p>Then simply tell your agent <strong>"attack my application"</strong> (see below) — with no URL<br>
+it reviews the code in your project; add <code>at &#x3C;url></code> to probe a running app — or<br>
+point it at any <code>skills/**/SKILL.md</code>. A generated <code>README</code> in the install directory<br>
+tells the agent when to load each skill.</p>
+<p>There's also a <strong>website</strong> — a browsable catalog with the same install flow — in<br>
+<a href="site/"><code>site/</code></a>. It is fully self-contained: every <code>SKILL.md</code> and every doc is<br>
+bundled into <code>site/content.json</code> at build time and rendered in-page, so browsing<br>
+the library never sends you off to GitHub. To run it locally:</p>
+<pre><code>make site        # builds the catalog + content bundle, serves http://localhost:8799
+</code></pre>
+<p><code>make site-build</code> regenerates <code>site/catalog.json</code> and <code>site/content.json</code> without<br>
+starting a server — run it after editing any skill or doc. The result is a plain<br>
+static directory, deployable to any static host if you ever want it published.</p>
+<h2>The <code>attack-my-application</code> orchestrator</h2>
+<p>The headline capability. One instruction runs a full, authorized assessment: the<br>
+orchestrator (<a href="orchestrators/attack-my-application/SKILL.md"><code>orchestrators/attack-my-application/SKILL.md</code></a>)<br>
+<strong>maps</strong> the target, <strong>selects</strong> the skills whose preconditions the app satisfies,<br>
+<strong>runs</strong> them in kill-chain order (minimal-proof first), <strong>verifies</strong> each finding<br>
+against its paired blue skill, and produces a prioritized report — behind a hard<br>
+<strong>authorization gate</strong> it will not cross.</p>
+<p>Point it at <strong>the code you built</strong> or at a <strong>running app</strong> — it handles both:</p>
+<ul>
+<li><strong>Source review (default).</strong> Given a code path — or nothing, meaning the current<br>
+project — it reads your actual source: routes, queries, templates, config, and<br>
+dependencies, tracing each user input to the dangerous sink it reaches and proving<br>
+findings with <code>file:line</code>. No traffic is sent.</li>
+<li><strong>Live assessment.</strong> Given a running URL, it probes the deployed surface over HTTP<br>
+with the minimal proof each skill defines.</li>
+</ul>
+<pre><code class="language-bash">npx redblueskills attack                          <span class="hljs-comment"># review the code in this project (default)</span>
+npx redblueskills attack ./src                     <span class="hljs-comment"># review a specific code path</span>
+npx redblueskills attack http://localhost:3000     <span class="hljs-comment"># probe a running app</span>
+npx redblueskills attack --<span class="hljs-built_in">print</span>                   <span class="hljs-comment"># the full playbook</span>
+</code></pre>
+<blockquote>
+<p>⚠️ It only assesses systems you own or are explicitly authorized to test. The<br>
+authorization gate is non-negotiable and per-session.</p>
+</blockquote>
+<h2>Use a single skill</h2>
+<p><strong>With an AI agent (e.g. Claude Code):</strong> point the agent at a skill directory, or<br>
+copy the skill into your agent's skills path. The frontmatter <code>description</code> tells<br>
+the agent when to use it; the body tells it how.</p>
+<p><strong>As a human:</strong> each <code>SKILL.md</code> is a self-contained, reproducible runbook —<br>
+overview, authorization checklist, preconditions, numbered procedure, the paired<br>
+defense/offense, and how to validate it yourself.</p>
+<p>Search the catalog by ATT&#x26;CK technique, risk level, or team:</p>
+<pre><code class="language-bash">jq <span class="hljs-string">'.skills[] | select(.techniques.attack[]? == "T1190")'</span> catalog.json
+jq <span class="hljs-string">'.skills[] | select(.team == "blue" and .stage == "detect") | .name'</span> catalog.json
+</code></pre>
+<hr>
+<h2>Contribute</h2>
+<p>New skills are welcome — the bar is quality and pairing, not volume.</p>
+<pre><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/praneeth132006/RedBlueSkills.git
+<span class="hljs-built_in">cd</span> RedBlueSkills
+make install                       <span class="hljs-comment"># dev deps into your environment</span>
+<span class="hljs-built_in">cp</span> -r _template skills/web-app/red/initial-access/my-skill
+<span class="hljs-comment"># ...author SKILL.md per SKILL-SPEC.md...</span>
+make check                         <span class="hljs-comment"># validate + catalog freshness + tests</span>
+</code></pre>
+<p>The same <code>make check</code> gate runs in CI. A PR that adds offense without a paired<br>
+detection, skips its validation stamp, or breaks the schema will fail<br>
+automatically. See <a href="CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a> and<br>
+<a href="SKILL-SPEC.md"><code>SKILL-SPEC.md</code></a>.</p>
+<hr>
+<h2>Repository map</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="skills/"><code>skills/</code></a></td>
+<td>The skill library.</td>
+</tr>
+<tr>
+<td><a href="orchestrators/"><code>orchestrators/</code></a></td>
+<td>Multi-skill playbooks — home of <code>attack-my-application</code>.</td>
+</tr>
+<tr>
+<td><a href="bin/cli.js"><code>bin/cli.js</code></a> · <a href="package.json"><code>package.json</code></a></td>
+<td>The <code>redblueskills</code> npm CLI (<code>init</code> / <code>add</code> / <code>list</code> / <code>attack</code>).</td>
+</tr>
+<tr>
+<td><a href="site/"><code>site/</code></a></td>
+<td>The browsable website (static; reads <code>catalog.json</code>).</td>
+</tr>
+<tr>
+<td><a href="SKILL-SPEC.md"><code>SKILL-SPEC.md</code></a></td>
+<td>The frontmatter schema + body structure every skill follows.</td>
+</tr>
+<tr>
+<td><a href="_template/"><code>_template/</code></a></td>
+<td>Copy-to-start skeleton for a new skill.</td>
+</tr>
+<tr>
+<td><a href="tools/"><code>tools/</code></a></td>
+<td>Validator, catalog generator, tests.</td>
+</tr>
+<tr>
+<td><a href="_lab/"><code>_lab/</code></a></td>
+<td>Docker targets skills are validated against.</td>
+</tr>
+<tr>
+<td><a href="INDEX.md"><code>INDEX.md</code></a> / <a href="catalog.json"><code>catalog.json</code></a></td>
+<td>Generated catalog (human / machine).</td>
+</tr>
+<tr>
+<td><a href="ETHICS.md"><code>ETHICS.md</code></a></td>
+<td>Responsible-use policy. <strong>Read first.</strong></td>
+</tr>
+<tr>
+<td><a href="GOVERNANCE.md"><code>GOVERNANCE.md</code></a> · <a href="SECURITY.md"><code>SECURITY.md</code></a> · <a href="CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td>
+<td>How the project is run, reported to, and extended.</td>
+</tr>
+</tbody>
+</table>
+<h2>License</h2>
+<p><a href="LICENSE">Apache License 2.0</a>. Content herein is provided for lawful, authorized<br>
+security testing and defense only.</p>
+</main>
+<footer class="doc-foot" aria-hidden="true">
+  <span class="doc-foot-title">RedBlueSkills</span>
+  <span class="doc-foot-brand"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-7"/><path d="M12 14 6.5 8.5A4 4 0 0 1 5.4 5.7L5 3l2.7.4a4 4 0 0 1 2.8 1.1L12 6"/><path d="m12 14 5.5-5.5a4 4 0 0 0 1.1-2.8L19 3l-2.7.4a4 4 0 0 0-2.8 1.1L12 6"/></svg> ForkLeaf</span>
+</footer>
+</body>
+</html>
