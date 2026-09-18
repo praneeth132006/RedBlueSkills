@@ -41,6 +41,14 @@ license: Apache-2.0
 
 ## Overview
 Text.
+## Authorization & scope
+Text.
+## Preconditions
+Text.
+## Procedure
+Text.
+## Paired defense / offense
+Text.
 ## Validation
 Text.
 ## References
@@ -129,3 +137,70 @@ def test_shipped_skills_all_valid():
         assert errors == [], f"{path}: {errors}"
         parsed[fm["name"]] = fm
     assert validate.check_pairings(parsed) == []
+
+
+@pytest.mark.parametrize("field,value", [
+    ("name", []), ("team", {}), ("description", False),
+    ("killchain", "bad"), ("risk", []), ("techniques", 3),
+    ("validation", []), ("pairs_with", [{}]),
+])
+def test_malformed_types_report_errors(tmp_path, field, value):
+    import yaml
+    data = yaml.safe_load(GOOD.split("---")[1])
+    data[field] = value
+    content = "---\n" + yaml.safe_dump(data) + "---\n" + GOOD.split("---")[2]
+    root = tmp_path / "skills"
+    path = _write_skill(root, "web-app", "red", "initial-access", "web-demo-skill", content)
+    _, errors = validate.validate_skill(path, root)
+    assert errors
+
+
+def test_frontmatter_can_contain_dashes(tmp_path):
+    path = tmp_path / "SKILL.md"
+    path.write_text(GOOD.replace("A valid demo skill used for tests.", "'A --- separator in a description.'"))
+    fm, _, errors = validate.load_frontmatter(path)
+    assert not errors
+    assert fm["description"] == "A --- separator in a description."
+
+
+@pytest.mark.parametrize("section", validate.REQUIRED_BODY_SECTIONS)
+def test_every_required_section_is_enforced(tmp_path, section):
+    heading = "Paired defense / offense" if section == "Paired" else section
+    content = GOOD.replace(f"## {heading}\nText.", f"```markdown\n## {heading}\nText.\n```")
+    root = tmp_path / "skills"
+    path = _write_skill(root, "web-app", "red", "initial-access", "web-demo-skill", content)
+    _, errors = validate.validate_skill(path, root)
+    assert any("missing required" in e for e in errors)
+
+
+def test_external_skills_directory_supported(tmp_path):
+    import subprocess
+    root = tmp_path / "skills"
+    _write_skill(root, "web-app", "red", "initial-access", "web-demo-skill", GOOD)
+    result = subprocess.run([sys.executable, str(TOOLS / "validate.py"), "--skills-dir", str(root)], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr + result.stdout
+
+
+@pytest.mark.parametrize("method,date", [("none", "2026-01-01"), ("lab", "2999-01-01")])
+def test_invalid_validation_evidence(tmp_path, method, date):
+    content = GOOD.replace("maturity: reviewed", f"maturity: validated\nvalidation:\n  method: {method}\n  target: fixture\n  validated_by: tester\n  last_validated: {date}")
+    root = tmp_path / "skills"
+    path = _write_skill(root, "web-app", "red", "initial-access", "web-demo-skill", content)
+    _, errors = validate.validate_skill(path, root)
+    assert any("evidence-bearing" in e or "future" in e for e in errors)
+
+
+def test_malformed_pairings_do_not_crash_global_check():
+    skills = {
+        'a': {'team': 'red', 'pairs_with': ['b', {}]},
+        'b': {'team': 'blue', 'pairs_with': 7},
+    }
+    assert any('not reciprocated' in error for _, error in validate.check_pairings(skills))
+
+
+def test_section_order_is_enforced(tmp_path):
+    content = GOOD.replace('## Overview', '## TEMP').replace('## References', '## Overview').replace('## TEMP', '## References')
+    root = tmp_path / 'skills'
+    path = _write_skill(root, 'web-app', 'red', 'initial-access', 'web-demo-skill', content)
+    _, errors = validate.validate_skill(path, root)
+    assert any('out of order' in error for error in errors)

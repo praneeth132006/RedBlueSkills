@@ -14,7 +14,10 @@ red/blue skills end-to-end — no GPU, no API key, no network, no Docker. Python
 The mock is not a real model — it is a small state machine that *follows
 instructions deterministically*. That is exactly the property prompt injection
 abuses, so the vulnerable/hardened contrast is faithful to the real failure mode
-while staying 100% reproducible.
+while staying reproducible. Passing this lab validates the fixture and control
+examples only; it does not establish robustness against a real model, provider,
+retrieval backend, or production tool executor. Validate those integrations
+separately before making deployment-specific claims.
 
 ## Run it
 
@@ -34,5 +37,9 @@ blocked on `hardened`).
 | LLM06 Excessive Agency | `llm-excessive-agency` | `llm-agency-confinement` |
 | LLM07 System Prompt Leakage | `llm-system-prompt-leakage` | `llm-system-prompt-hardening` |
 | LLM10 Unbounded Consumption | `llm-unbounded-consumption` | `llm-consumption-limits` |
+| LLM04 Data Poisoning | `llm-data-poisoning` | `llm-training-data-provenance` |
+| LLM05 Improper Output Handling | `llm-improper-output-handling` | `llm-output-encoding` |
+| LLM08 Vector & Embedding Weaknesses | `llm-vector-store-leakage` | `llm-vector-store-isolation` |
+| LLM09 Misinformation | `llm-misinformation` | `llm-grounding-verification` |
 
 Validation target name used in skill frontmatter: **`llm-local`**.

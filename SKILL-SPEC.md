@@ -23,7 +23,7 @@ skills/<app-type>/<team>/<killchain-stage>/<skill-name>/
 ```
 
 - `<app-type>` — the target surface. Shipping: `web-app`, `api`, `cloud-native`,
-  `ci-cd`, `mobile`, `network`.
+  `ci-cd`, `mobile`, `network`, `llm-ai`.
 - `<team>` — `red` (offense), `blue` (defense), or `purple` (joint / detection
   engineering that spans both).
 - `<killchain-stage>` — see the enum below.
@@ -62,7 +62,7 @@ authorization: required              # REQUIRED. required | not-required
                                      #   Active/offensive actions are 'required'. Passive defensive analysis is 'not-required'.
 maturity: validated                  # REQUIRED. draft | reviewed | validated | stale
 validation:                          # REQUIRED when maturity == validated.
-  method: lab                        #   lab | ctf | field | none
+  method: lab                        #   lab | ctf | field (none only for unvalidated skills)
   target: owasp-juice-shop           #   the target the skill was proven against.
   last_validated: 2026-07-20         #   ISO-8601 date.
   validated_by: praneeth132006        #   GitHub handle of the validator.

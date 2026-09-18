@@ -54,6 +54,10 @@ RE_D3FEND = re.compile(r"^D3-[A-Z]{2,}$")
 
 REQUIRED_BODY_SECTIONS = [
     "Overview",
+    "Authorization & scope",
+    "Preconditions",
+    "Procedure",
+    "Paired",
     "Validation",
     "References",
 ]
@@ -63,13 +67,17 @@ STALE_AFTER = _dt.timedelta(days=182)  # ~6 months
 
 def load_frontmatter(path: Path) -> tuple[dict | None, str, list[str]]:
     """Return (frontmatter_dict, body, errors)."""
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        return None, "", [f"cannot read skill: {exc}"]
+    lines = text.splitlines(keepends=True)
+    if not lines or lines[0].strip() != "---":
         return None, "", ["file does not begin with '---' frontmatter"]
-    parts = text.split("---", 2)
-    if len(parts) < 3:
+    end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
+    if end is None:
         return None, "", ["frontmatter block is not terminated by a second '---'"]
-    raw, body = parts[1], parts[2]
+    raw, body = "".join(lines[1:end]), "".join(lines[end + 1:])
     try:
         data = yaml.safe_load(raw)
     except yaml.YAMLError as exc:
@@ -83,7 +91,7 @@ def _check_id_list(fm: dict, path: str, pattern: re.Pattern, errors: list[str]):
     node = fm
     for key in path.split("."):
         node = node.get(key, {}) if isinstance(node, dict) else {}
-    if node in ({}, None):
+    if node == {}:
         return
     if not isinstance(node, list):
         errors.append(f"techniques.{path.split('.')[-1]} must be a list")
@@ -97,6 +105,32 @@ def validate_skill(path: Path, skills_dir: Path) -> tuple[dict | None, list[str]
     fm, body, errors = load_frontmatter(path)
     if fm is None:
         return None, errors
+
+    # Validate shapes before vocabulary checks or nested lookups. Bad contributor
+    # input must produce diagnostics, never a traceback that hides other skills.
+    for key in ("name", "description", "version", "team", "app_type", "license",
+                "authorization", "maturity"):
+        if key in fm and (not isinstance(fm[key], str) or not fm[key].strip()):
+            errors.append(f"{key} must be a non-empty string")
+    for key in ("killchain", "techniques", "risk", "validation"):
+        if key in fm and not isinstance(fm[key], dict):
+            errors.append(f"{key} must be a mapping")
+    for key, fields in {"killchain": ("framework", "stage"),
+                        "risk": ("level", "data_touch"),
+                        "validation": ("method", "target", "validated_by")}.items():
+        node = fm.get(key)
+        if isinstance(node, dict):
+            for field in fields:
+                if field in node and (not isinstance(node[field], str) or not node[field].strip()):
+                    errors.append(f"{key}.{field} must be a non-empty string")
+    partners = fm.get("pairs_with")
+    if isinstance(partners, list):
+        if any(not isinstance(x, str) or not RE_NAME.fullmatch(x) for x in partners):
+            errors.append("pairs_with entries must be kebab-case skill names")
+        elif len(set(partners)) != len(partners):
+            errors.append("pairs_with contains duplicate names")
+    if errors:
+        return fm, errors
 
     def req(key):
         if key not in fm or fm[key] in (None, ""):
@@ -171,10 +205,14 @@ def validate_skill(path: Path, skills_dir: Path) -> tuple[dict | None, list[str]
             for k in ("target", "last_validated", "validated_by"):
                 if not v.get(k):
                     errors.append(f"validation.{k} is required when validated")
+            if v.get("method") == "none":
+                errors.append("validated skills require an evidence-bearing validation.method")
             lv = v.get("last_validated")
             if lv:
                 try:
                     d = _dt.date.fromisoformat(str(lv))
+                    if d > _dt.date.today():
+                        errors.append("validation.last_validated cannot be in the future")
                     if _dt.date.today() - d > STALE_AFTER:
                         errors.append(
                             f"validation.last_validated {lv} is older than 6 months; "
@@ -185,7 +223,7 @@ def validate_skill(path: Path, skills_dir: Path) -> tuple[dict | None, list[str]
 
     # directory <-> metadata agreement
     rel = path.parent.relative_to(skills_dir).parts
-    if len(rel) >= 4:
+    if len(rel) == 4:
         d_app, d_team, d_stage, d_name = rel[0], rel[1], rel[2], rel[-1]
         if fm.get("app_type") and fm["app_type"] != d_app:
             errors.append(f"app_type '{fm.get('app_type')}' != directory '{d_app}'")
@@ -201,10 +239,31 @@ def validate_skill(path: Path, skills_dir: Path) -> tuple[dict | None, list[str]
             "skill path must be skills/<app-type>/<team>/<stage>/<name>/SKILL.md"
         )
 
-    # required body sections
+    # Ignore fenced examples: a heading inside a code sample is not a section.
+    prose = []
+    fence = None
+    for line in body.splitlines():
+        match = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if match:
+            marker = match.group(1)
+            if fence is None:
+                fence = marker
+            elif marker[0] == fence[0] and len(marker) >= len(fence):
+                fence = None
+            continue
+        if fence is None:
+            prose.append(line)
+    headings = re.findall(r"^##[ \t]+(.+?)\s*$", "\n".join(prose), re.MULTILINE)
+    last = -1
     for section in REQUIRED_BODY_SECTIONS:
-        if not re.search(rf"^##\s+.*{re.escape(section)}", body, re.MULTILINE | re.IGNORECASE):
+        choices = ("Paired defense / offense", "Paired offense / defense") if section == "Paired" else (section,)
+        positions = [i for i, h in enumerate(headings) if h.lower() in {c.lower() for c in choices}]
+        if not positions:
             errors.append(f"body is missing required '## {section}' section")
+        elif positions[0] <= last:
+            errors.append(f"body section '{section}' is out of order")
+        else:
+            last = positions[0]
 
     return fm, errors
 
@@ -213,12 +272,17 @@ def check_pairings(skills: dict[str, dict]) -> list[tuple[str, str]]:
     """Return (skill_name, error) for broken pairings."""
     problems = []
     for name, fm in skills.items():
-        for partner in fm.get("pairs_with") or []:
+        partners = fm.get("pairs_with")
+        if not isinstance(partners, list):
+            continue  # diagnosed by validate_skill
+        for partner in partners:
+            if not isinstance(partner, str):
+                continue  # diagnosed by validate_skill
             if partner not in skills:
                 problems.append((name, f"pairs_with '{partner}' does not exist"))
                 continue
             back = skills[partner].get("pairs_with") or []
-            if name not in back:
+            if not isinstance(back, list) or name not in back:
                 problems.append(
                     (name, f"pairing with '{partner}' is not reciprocated "
                            f"('{partner}' must list '{name}' in pairs_with)")
@@ -255,8 +319,8 @@ def main() -> int:
 
     for path in skill_files:
         fm, errors = validate_skill(path, skills_dir)
-        rel = path.relative_to(repo_root)
-        if fm and fm.get("name"):
+        rel = path.relative_to(repo_root) if path.is_relative_to(repo_root) else path
+        if fm and isinstance(fm.get("name"), str) and fm["name"]:
             if fm["name"] in parsed:
                 errors.append(f"duplicate skill name '{fm['name']}' "
                               f"(also at {name_to_path[fm['name']]})")
