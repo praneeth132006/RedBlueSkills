@@ -26,6 +26,8 @@ DOCS: dict[str, tuple[str, str, str]] = {
     "index": ("INDEX.md", "Full index", "Every skill, grouped by team and stage."),
     "coverage": ("COVERAGE.md", "Coverage & taxonomy", "Every field a skill is classified on, and what each surface covers."),
     "orchestrator": ("docs/orchestrator.md", "Orchestrator walkthrough", "What happens when you say \"attack my application\"."),
+    "research-1.1": ("docs/research-1.1.md", "v1.1 research & test scope", "Sources, new skill coverage, and validation limits."),
+    "releasing": ("docs/RELEASING.md", "Package releases", "Build, publish, and verify the distributed package."),
     "provenance": ("docs/provenance.md", "Provenance & integrity", "SBOM, signed manifests, and how to verify a release."),
     "adding-a-skill": ("docs/adding-a-skill.md", "Adding a skill", "The contributor path, end to end."),
     "example-flask": ("docs/examples/flask.md", "Example · Flask", "A worked run against a Python/Flask app."),
