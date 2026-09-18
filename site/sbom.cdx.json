@@ -1,14 +1,14 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:2900a0ad-f5b2-5f69-baba-6b58f205d1df",
+  "serialNumber": "urn:uuid:837b0cf5-c330-514a-977e-1bce1c6ce444",
   "version": 1,
   "metadata": {
     "component": {
       "type": "library",
-      "bom-ref": "pkg:npm/redblueskills@1.0.0",
+      "bom-ref": "pkg:npm/redblueskills@1.1.0",
       "name": "redblueskills",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "licenses": [
         {
           "license": {
@@ -28,7 +28,7 @@
         {
           "type": "application",
           "name": "redblueskills-provenance",
-          "version": "1.0.0"
+          "version": "1.1.0"
         }
       ]
     }
@@ -283,6 +283,48 @@
         {
           "name": "redblueskills:maturity",
           "value": "reviewed"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:api-jwt-validation-hardening",
+      "name": "api-jwt-validation-hardening",
+      "version": "1.0.0",
+      "description": "blue skill for api (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4f0de8f6f120fa602520f30f434484ed949a25716151d21e274f93991a789a89"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "api"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
         }
       ]
     },
@@ -573,6 +615,48 @@
         {
           "name": "redblueskills:risk",
           "value": "high"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:api-jwt-validation-abuse",
+      "name": "api-jwt-validation-abuse",
+      "version": "1.0.0",
+      "description": "red skill for api (credential-access)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "498ed3b33860745bd03b574a38b300457f72d964cdc7505155570ae4415491c7"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "api"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "credential-access"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
         },
         {
           "name": "redblueskills:maturity",
@@ -2472,6 +2556,48 @@
     },
     {
       "type": "data",
+      "bom-ref": "skill:llm-artifact-supply-chain-hardening",
+      "name": "llm-artifact-supply-chain-hardening",
+      "version": "1.0.0",
+      "description": "blue skill for llm-ai (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2838696540ef6ae18c36569d8b3c2d9f3186ea841b654a6b45f05b12edd7ec9f"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
       "bom-ref": "skill:llm-consumption-limits",
       "name": "llm-consumption-limits",
       "version": "1.0.0",
@@ -2684,7 +2810,7 @@
       "type": "data",
       "bom-ref": "skill:llm-training-data-provenance",
       "name": "llm-training-data-provenance",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "blue skill for llm-ai (harden)",
       "licenses": [
         {
@@ -2696,7 +2822,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "29a2d4ebcac47fada6e6d863111767a0909676968931300547def95c48afe5c1"
+          "content": "bed39eea2017c4f002b82ad3ba369e6c8a23b382f9290123839a6047a79bf8f1"
         }
       ],
       "properties": [
@@ -3005,6 +3131,48 @@
         {
           "name": "redblueskills:stage",
           "value": "impact"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:llm-artifact-supply-chain-assessment",
+      "name": "llm-artifact-supply-chain-assessment",
+      "version": "1.0.0",
+      "description": "red skill for llm-ai (initial-access)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d2fd65eba34c455ba06c124037b3787758dadd7dcaacc9ef4988731a04c05a56"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "llm-ai"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "initial-access"
         },
         {
           "name": "redblueskills:risk",
@@ -4866,6 +5034,48 @@
     },
     {
       "type": "data",
+      "bom-ref": "skill:web-file-upload-hardening",
+      "name": "web-file-upload-hardening",
+      "version": "1.0.0",
+      "description": "blue skill for web-app (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f56290f2dd136a1d17c14912174b6606c0b1dcd2b886e26467ef29761efdc08f"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "web-app"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
       "bom-ref": "skill:web-security-headers",
       "name": "web-security-headers",
       "version": "1.0.0",
@@ -5109,6 +5319,48 @@
         {
           "name": "redblueskills:risk",
           "value": "critical"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:web-file-upload-abuse",
+      "name": "web-file-upload-abuse",
+      "version": "1.0.0",
+      "description": "red skill for web-app (initial-access)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "56f3fae60e1d37704f9338ee168711fa36c01a66a99e7374a4e616e2ef915974"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "web-app"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "initial-access"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
         },
         {
           "name": "redblueskills:maturity",

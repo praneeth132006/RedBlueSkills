@@ -18,6 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
 const PKG_ROOT = path.resolve(__dirname, '..');
 const SKILLS_DIR = path.join(PKG_ROOT, 'skills');
@@ -49,12 +50,40 @@ function fail(msg) {
   process.exit(1);
 }
 
-// true iff `child` is `root` itself or lives inside it (after resolving symlinks
-// via normalized absolute paths). Used to keep copies inside their trees.
+// True iff normalized child is root or below it. This comparison is lexical;
+// callers canonicalize source paths and reject destination symlinks separately.
 function isInside(root, child) {
   const r = path.resolve(root);
   const c = path.resolve(child);
   return c === r || c.startsWith(r + path.sep);
+}
+
+function rejectSymlink(file) {
+  try {
+    if (fs.lstatSync(file).isSymbolicLink()) fail(`refusing symbolic link in install path: ${file}`);
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
+}
+
+function installDestination(args) {
+  const dest = path.resolve(process.cwd(), argValue(args, '--dest') || DEST_SUBDIR);
+  rejectSymlink(dest);
+  // Canonicalize existing parents so aliased paths cannot recurse into sources.
+  let parent = dest;
+  const missing = [];
+  while (!fs.existsSync(parent)) { missing.unshift(path.basename(parent)); parent = path.dirname(parent); }
+  const real = path.join(fs.realpathSync(parent), ...missing);
+  if (real === fs.realpathSync(PKG_ROOT) || isInside(fs.realpathSync(SKILLS_DIR), real) ||
+      isInside(fs.realpathSync(ORCH_DIR), real)) fail('install destination overlaps bundled source');
+  function inspect(dir) {
+    rejectSymlink(dir);
+    if (fs.existsSync(dir) && fs.statSync(dir).isDirectory()) {
+      for (const entry of fs.readdirSync(dir)) inspect(path.join(dir, entry));
+    }
+  }
+  inspect(dest);
+  return dest;
 }
 
 function copyDir(src, dest, destRoot) {
@@ -62,10 +91,13 @@ function copyDir(src, dest, destRoot) {
   if (destRoot && !isInside(destRoot, dest)) {
     fail(`refusing to write outside the install directory: ${dest}`);
   }
+  rejectSymlink(dest);
   fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
     const s = path.join(src, entry.name);
     const d = path.join(dest, entry.name);
+    if (entry.isSymbolicLink()) fail(`refusing symbolic link in bundled source: ${s}`);
+    rejectSymlink(d);
     if (entry.isDirectory()) copyDir(s, d, destRoot);
     else fs.copyFileSync(s, d);
   }
@@ -77,8 +109,8 @@ function copyDir(src, dest, destRoot) {
 function skillDir(name, catalog) {
   const row = catalog.skills.find((s) => s.name === name);
   if (!row) return null;
-  const dir = path.resolve(PKG_ROOT, path.dirname(row.path));
-  if (!isInside(SKILLS_DIR, dir)) {
+  const dir = fs.realpathSync(path.resolve(PKG_ROOT, path.dirname(row.path)));
+  if (!isInside(fs.realpathSync(SKILLS_DIR), dir)) {
     fail(`catalog entry '${name}' points outside the skills tree (${row.path})`);
   }
   return dir;
@@ -116,7 +148,7 @@ function cmdList(args) {
 
 function cmdInit(args) {
   const catalog = loadCatalog();
-  const dest = path.resolve(process.cwd(), argValue(args, '--dest') || DEST_SUBDIR);
+  const dest = installDestination(args);
   console.log('');
   console.log(bold('  Installing RedBlueSkills → ') + dim(dest));
 
@@ -164,7 +196,7 @@ function cmdAdd(args) {
   const names = positionals(args);
   if (names.length === 0) fail('usage: redblueskills add <skill-name> [more...]  (or use `init` for all)');
   const catalog = loadCatalog();
-  const dest = path.resolve(process.cwd(), argValue(args, '--dest') || DEST_SUBDIR);
+  const dest = installDestination(args);
   const unknown = names.filter((name) => !skillDir(name, catalog));
   if (unknown.length) fail(`unknown skill(s): ${unknown.join(', ')}`);
   let n = 0;
@@ -239,7 +271,7 @@ function cmdAttack(args) {
   console.log('');
   console.log(dim('  ─────────────────────────────────────────────────────────'));
   console.log('    Load the RedBlueSkills orchestrator at');
-  console.log('    ' + bold('orchestrators/attack-my-application/SKILL.md'));
+  console.log('    ' + bold(playbook));
   if (t.kind === 'code') {
     console.log('    and run a full security review of ' + bold(t.display) + '.');
     console.log('    It\'s my own code and I authorize testing it.');
@@ -255,6 +287,24 @@ function cmdAttack(args) {
   console.log('  Point at a running app instead:  ' + dim('npx redblueskills attack http://localhost:3000'));
   console.log('  Full playbook:                   ' + dim('npx redblueskills attack --print'));
   console.log('');
+}
+
+function cmdLab(args) {
+  const labs = {
+    'security-controls': ['python3', '_lab/security-controls/validate.py'],
+    'llm-local': ['python3', '_lab/llm-local/validate.py'],
+    'ci-local': ['bash', '_lab/ci-local/validate.sh'],
+  };
+  if (!args.length || args[0] === '--list') {
+    console.log('Offline labs: ' + Object.keys(labs).join(', '));
+    console.log('Python labs require Python 3.10+; ci-local requires bash and git.');
+    return;
+  }
+  const spec = labs[args[0]];
+  if (!spec || args.length !== 1) fail('usage: redblueskills lab [--list|security-controls|llm-local|ci-local]');
+  const result = spawnSync(spec[0], [path.join(PKG_ROOT, spec[1])], { stdio: 'inherit' });
+  if (result.error) fail(`could not run ${spec[0]}: ${result.error.message}`);
+  process.exitCode = result.status === 0 ? 0 : 1;
 }
 
 function cmdBanner() {
@@ -279,6 +329,7 @@ const VALUE_FLAGS = ['--dest']; // flags that consume the next token as their va
 
 function argValue(args, flag) {
   const i = args.indexOf(flag);
+  if (i >= 0 && (!args[i + 1] || args[i + 1].startsWith('-'))) fail(`${flag} requires a directory`);
   return i >= 0 ? args[i + 1] : null;
 }
 
@@ -334,6 +385,9 @@ function usage() {
     list [filter]            list skills (filter by team/stage/text)
     attack [target] [--print] print the "attack my application" instruction
                              target = a code path (default: this project) or a running URL
+    verify                   verify installed skill hashes, pairings, and metadata
+    lab [name|--list]         run or list bundled offline labs
+    --version                print the package version
     quickstart               print the 5-minute getting-started guide
     path                     print the default install directory
 
@@ -350,6 +404,12 @@ function usage() {
 function main() {
   const [, , cmd, ...args] = process.argv;
   switch (cmd) {
+    case '--version': case '-v': return console.log(require('../package.json').version);
+    case 'verify': {
+      const result = require('./verify').verify();
+      return console.log(`Verified v${result.version}: ${result.skills} skill files, hashes, and pairings. This does not validate live targets.`);
+    }
+    case 'lab': return cmdLab(args);
     case 'init': return cmdInit(args);
     case 'add': return cmdAdd(args);
     case 'list': case 'ls': return cmdList(args);
@@ -365,4 +425,4 @@ function main() {
   }
 }
 
-main();
+try { main(); } catch (err) { fail(err.message); }

@@ -9,10 +9,14 @@
   },
   "crapi": {
     "offline": false,
-    "description": "OWASP crAPI — needs Docker/Colima"
+    "description": "OWASP crAPI \u2014 needs Docker/Colima"
   },
   "hardening": {
     "offline": false,
-    "description": "nginx hardening reference — config only, no runner"
+    "description": "nginx hardening reference \u2014 config only, no runner"
+  },
+  "security-controls": {
+    "offline": true,
+    "description": "JWT, upload, and LLM artifact admission controls with negative and positive fixtures"
   }
 }

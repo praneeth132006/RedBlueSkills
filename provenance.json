@@ -2,12 +2,12 @@
   "schema": "redblueskills/provenance/v1",
   "package": {
     "name": "redblueskills",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "repository": "https://github.com/praneeth132006/RedBlueSkills.git"
   },
   "summary": {
-    "total": 128,
-    "validated": 65,
+    "total": 134,
+    "validated": 71,
     "reviewed": 63,
     "labs": [
       "ci-local",
@@ -16,7 +16,8 @@
       "llm-local",
       "minio-s3",
       "owasp-crapi",
-      "owasp-juice-shop"
+      "owasp-juice-shop",
+      "security-controls"
     ]
   },
   "algorithm": "sha256",
@@ -127,6 +128,25 @@
       "validation": null
     },
     {
+      "name": "api-jwt-validation-hardening",
+      "path": "skills/api/blue/harden/api-jwt-validation-hardening/SKILL.md",
+      "sha256": "4f0de8f6f120fa602520f30f434484ed949a25716151d21e274f93991a789a89",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-jwt-validation-abuse"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
+      }
+    },
+    {
       "name": "api-mass-assignment-hardening",
       "path": "skills/api/blue/harden/api-mass-assignment-hardening/SKILL.md",
       "sha256": "c8e7c65c394068259eaa716b7d3f3347778059257f6b203d06ae39c08628def2",
@@ -232,6 +252,25 @@
         "target": "owasp-crapi",
         "last_validated": "2026-08-05",
         "validated_by": "praneeth132006"
+      }
+    },
+    {
+      "name": "api-jwt-validation-abuse",
+      "path": "skills/api/red/credential-access/api-jwt-validation-abuse/SKILL.md",
+      "sha256": "498ed3b33860745bd03b574a38b300457f72d964cdc7505155570ae4415491c7",
+      "team": "red",
+      "app_type": "api",
+      "stage": "credential-access",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-jwt-validation-hardening"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
       }
     },
     {
@@ -980,6 +1019,25 @@
       }
     },
     {
+      "name": "llm-artifact-supply-chain-hardening",
+      "path": "skills/llm-ai/blue/harden/llm-artifact-supply-chain-hardening/SKILL.md",
+      "sha256": "2838696540ef6ae18c36569d8b3c2d9f3186ea841b654a6b45f05b12edd7ec9f",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "llm-artifact-supply-chain-assessment"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
+      }
+    },
+    {
       "name": "llm-consumption-limits",
       "path": "skills/llm-ai/blue/harden/llm-consumption-limits/SKILL.md",
       "sha256": "3f2ea41c217669a5a390237fcc87d743f917cdfc37994ec5cc6835b25f79c71c",
@@ -1077,7 +1135,7 @@
     {
       "name": "llm-training-data-provenance",
       "path": "skills/llm-ai/blue/harden/llm-training-data-provenance/SKILL.md",
-      "sha256": "29a2d4ebcac47fada6e6d863111767a0909676968931300547def95c48afe5c1",
+      "sha256": "bed39eea2017c4f002b82ad3ba369e6c8a23b382f9290123839a6047a79bf8f1",
       "team": "blue",
       "app_type": "llm-ai",
       "stage": "harden",
@@ -1224,6 +1282,25 @@
         "target": "llm-local",
         "last_validated": "2026-08-09",
         "validated_by": "praneeth132006"
+      }
+    },
+    {
+      "name": "llm-artifact-supply-chain-assessment",
+      "path": "skills/llm-ai/red/initial-access/llm-artifact-supply-chain-assessment/SKILL.md",
+      "sha256": "d2fd65eba34c455ba06c124037b3787758dadd7dcaacc9ef4988731a04c05a56",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "initial-access",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "llm-artifact-supply-chain-hardening"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
       }
     },
     {
@@ -1893,6 +1970,25 @@
       }
     },
     {
+      "name": "web-file-upload-hardening",
+      "path": "skills/web-app/blue/harden/web-file-upload-hardening/SKILL.md",
+      "sha256": "f56290f2dd136a1d17c14912174b6606c0b1dcd2b886e26467ef29761efdc08f",
+      "team": "blue",
+      "app_type": "web-app",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "web-file-upload-abuse"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
+      }
+    },
+    {
       "name": "web-security-headers",
       "path": "skills/web-app/blue/harden/web-security-headers/SKILL.md",
       "sha256": "cb28ed902b6664def44940ccc223ba63ed6bf18a93992fa1be8248a441a9b547",
@@ -2004,6 +2100,25 @@
         "target": "owasp-juice-shop",
         "last_validated": "2026-07-28",
         "validated_by": "praneeth132006"
+      }
+    },
+    {
+      "name": "web-file-upload-abuse",
+      "path": "skills/web-app/red/initial-access/web-file-upload-abuse/SKILL.md",
+      "sha256": "56f3fae60e1d37704f9338ee168711fa36c01a66a99e7374a4e616e2ef915974",
+      "team": "red",
+      "app_type": "web-app",
+      "stage": "initial-access",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "web-file-upload-hardening"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-18",
+        "validated_by": "codex-local-validation"
       }
     },
     {

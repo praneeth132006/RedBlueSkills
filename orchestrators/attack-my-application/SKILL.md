@@ -9,7 +9,7 @@ description: >-
   library end to end — running each relevant offensive skill, verifying its
   paired detection, and producing a prioritized findings report. Authorized
   testing only.
-version: 1.4.0
+version: 1.5.0
 kind: orchestrator
 app_type: web-app
 license: Apache-2.0
@@ -152,6 +152,8 @@ its paired defensive skill for Step 4). Use this routing table — read
 | An XML/SOAP/SAML/SVG parser | `web-xxe` | `web-xxe-hardening` |
 | Object ids selecting records | `web-idor` | `web-access-control-monitoring` |
 | Login / session / reset flows | `web-broken-authentication` | `web-authentication-hardening` |
+| Uploaded files entering storage or processors | `web-file-upload-abuse` | `web-file-upload-hardening` |
+| JWT bearer-token middleware | `api-jwt-validation-abuse` | `api-jwt-validation-hardening` |
 | State-changing requests | `web-csrf` | `web-csrf-hardening` |
 
 If the target is an **LLM/AI-backed app or agent** (`llm-ai` surface), first build
@@ -192,6 +194,7 @@ OWASP-LLM risk mapped to its red/blue pair:
 | Model output reaching HTML, SQL, a shell, or another interpreter | `llm-improper-output-handling` | `llm-output-encoding` |
 | Retrieval over documents from multiple tenants or access levels | `llm-vector-store-leakage` | `llm-vector-store-isolation` |
 | Answers used for factual decisions or policy advice | `llm-misinformation` | `llm-grounding-verification` |
+| Third-party model/adapter artifacts or custom loaders | `llm-artifact-supply-chain-assessment` | `llm-artifact-supply-chain-hardening` |
 | A training/fine-tuning or RAG ingestion path you can influence | `llm-data-poisoning` | `llm-training-data-provenance` |
 
 For the other surfaces (`api`, `cloud-native`, `ci-cd`, `mobile`, `network`),

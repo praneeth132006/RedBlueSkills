@@ -6,6 +6,9 @@
 set -euo pipefail
 
 version="${1:-}"
+confirm="${2:-}"
+[[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "version must be X.Y.Z"; exit 1; }
+[ -z "$confirm" ] || [ "$confirm" = "--yes" ] || { echo "unknown option: $confirm"; exit 1; }
 [ -n "$version" ] || { echo "usage: tools/release.sh <version>   (e.g. 1.1.0)"; exit 1; }
 case "$version" in v*) echo "pass the bare version, no leading v"; exit 1;; esac
 tag="v$version"
@@ -28,6 +31,15 @@ git fetch --tags --quiet origin
 git diff --quiet HEAD origin/main || { echo "main is not in sync with origin/main"; exit 1; }
 git rev-parse -q --verify "refs/tags/$tag" >/dev/null && { echo "$tag already exists"; exit 1; } || true
 
+grep -Fq "## [$version]" CHANGELOG.md || { echo "commit CHANGELOG.md with a [$version] section first"; exit 1; }
+
+echo "==> update package version and all derived metadata"
+current="$(node -p 'require("./package.json").version')"
+if [ "$current" != "$version" ]; then
+  npm version "$version" --no-git-tag-version > /dev/null
+fi
+make site-build
+
 echo "==> full CI gate (make check + labs)"
 make check
 python tools/replay_labs.py
@@ -37,32 +49,30 @@ node -c bin/cli.js
 node -c bin/mcp.js
 node bin/cli.js list > /dev/null
 
-echo "==> bumping package.json to $version"
-npm version "$version" --no-git-tag-version > /dev/null
 npm pack --dry-run > /dev/null
 
-echo
-echo "Now edit CHANGELOG.md: move [Unreleased] entries under '## [$version] — $(date +%F)'."
-read -r -p "Press enter once CHANGELOG.md is updated (or Ctrl-C to abort). "
-
-grep -q "## \[$version\]" CHANGELOG.md || { echo "CHANGELOG.md has no [$version] section"; exit 1; }
-
-git add package.json package-lock.json CHANGELOG.md
-git commit -m "release: $tag"
+git add package.json package-lock.json CHANGELOG.md catalog.json INDEX.md COVERAGE.md README.md \
+  sbom.cdx.json provenance.json site/catalog.json site/content.json site/coverage.svg \
+  site/badges site/sbom.cdx.json site/provenance.json
+if ! git diff --cached --quiet; then
+  git commit -m "release: $tag"
+fi
 
 echo
 git --no-pager show --stat HEAD
-read -r -p "Push this commit and publish release $tag? [y/N] " ok
-[ "$ok" = "y" ] || { echo "aborted (commit kept locally; 'git reset --hard origin/main' to undo)"; exit 1; }
+if [ "$confirm" != "--yes" ]; then
+  read -r -p "Push this commit and publish release $tag? [y/N] " ok
+  [ "$ok" = "y" ] || { echo "aborted; local commit retained"; exit 1; }
+fi
 
 git push origin main
 git tag -a "$tag" -m "$tag"
 git push origin "$tag"
 
-gh release create "$tag" \
-  --title "$tag" \
-  --notes "$(awk "/^## \\[$version\\]/{f=1;next} /^## \\[/{f=0} f" CHANGELOG.md)" \
-  --verify-tag
+notes="$(mktemp)"
+trap 'rm -f "$notes"' EXIT
+awk -v heading="## [$version]" 'index($0, heading)==1 {f=1;next} /^## \[/{f=0} f' CHANGELOG.md > "$notes"
+gh release create "$tag" --title "$tag" --notes-file "$notes" --verify-tag
 
 echo
 echo "Release published. Watching the release workflows:"

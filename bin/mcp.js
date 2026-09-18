@@ -14,7 +14,7 @@
  *   get_catalog   — the machine-readable catalog (counts, coverage, all skills)
  *   coverage      — the surface × kill-chain coverage summary
  *
- * Register (Claude Code):  claude mcp add redblueskills -- npx redblueskills-mcp
+ * Register (Claude Code):  claude mcp add redblueskills -- npx --package redblueskills redblueskills-mcp
  */
 'use strict';
 
@@ -44,8 +44,8 @@ function loadCatalog() {
 // Defense in depth: catalog paths are trusted, but a tampered catalog must not
 // let this server read arbitrary files.
 function skillBodyPath(row) {
-  const abs = path.resolve(PKG_ROOT, row.path);
-  const root = SKILLS_DIR + path.sep;
+  const abs = fs.realpathSync(path.resolve(PKG_ROOT, row.path));
+  const root = fs.realpathSync(SKILLS_DIR) + path.sep;
   if (abs !== SKILLS_DIR && !abs.startsWith(root)) return null;
   return abs;
 }
@@ -151,7 +151,17 @@ function toolList() {
 }
 
 function handle(msg) {
+  if (!msg || typeof msg !== 'object' || Array.isArray(msg) || msg.jsonrpc !== '2.0' ||
+      typeof msg.method !== 'string' || (Object.hasOwnProperty.call(msg, 'id') &&
+      !(typeof msg.id === 'string' || (typeof msg.id === 'number' && Number.isInteger(msg.id))))) {
+    return error(null, -32600, 'invalid request');
+  }
   const { id, method, params } = msg;
+  // All notifications, including known methods, have no response.
+  if (id === undefined) return null;
+  if (params !== undefined && (!params || typeof params !== 'object' || Array.isArray(params))) {
+    return error(id, -32602, 'params must be an object');
+  }
   switch (method) {
     case 'initialize':
       return reply(id, {
@@ -162,10 +172,24 @@ function handle(msg) {
     case 'tools/list':
       return reply(id, { tools: toolList() });
     case 'tools/call': {
-      const tool = TOOLS[params && params.name];
+      const name = params && params.name;
+      const tool = typeof name === 'string' && Object.prototype.hasOwnProperty.call(TOOLS, name) ? TOOLS[name] : null;
       if (!tool) return error(id, -32602, `unknown tool: ${params && params.name}`);
       try {
-        const result = tool.run((params && params.arguments) || {});
+        const args = params.arguments === undefined ? {} : params.arguments;
+        if (!args || typeof args !== 'object' || Array.isArray(args)) {
+          return error(id, -32602, 'arguments must be an object');
+        }
+        for (const required of tool.inputSchema.required || []) {
+          if (!Object.prototype.hasOwnProperty.call(args, required)) return error(id, -32602, `missing argument: ${required}`);
+        }
+        for (const [key, value] of Object.entries(args)) {
+          const prop = tool.inputSchema.properties[key];
+          if (!prop || typeof value !== prop.type || (prop.enum && !prop.enum.includes(value))) {
+            return error(id, -32602, `invalid argument: ${key}`);
+          }
+        }
+        const result = tool.run(args);
         return reply(id, {
           content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
         });
@@ -215,7 +239,10 @@ function main() {
       send(handle(msg));
     }
   });
-  process.stdin.on('end', () => process.exit(0));
+  // Let Node drain stdout naturally; process.exit() can truncate large catalogs.
+  process.stdin.on('end', () => {
+    if (buf.trim()) send(error(null, -32700, 'unterminated JSON-RPC line'));
+  });
 }
 
 main();

@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 128,
+  "count": 134,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -41,10 +41,10 @@
         },
         "harden": {
           "red": 0,
-          "blue": 5,
+          "blue": 6,
           "purple": 0,
-          "validated": 5,
-          "total": 5
+          "validated": 6,
+          "total": 6
         },
         "credential-access": {
           "red": 1,
@@ -61,11 +61,11 @@
           "total": 1
         },
         "initial-access": {
-          "red": 6,
+          "red": 7,
           "blue": 0,
           "purple": 0,
-          "validated": 6,
-          "total": 6
+          "validated": 7,
+          "total": 7
         },
         "privilege-escalation": {
           "red": 1,
@@ -92,10 +92,10 @@
         },
         "harden": {
           "red": 0,
-          "blue": 6,
+          "blue": 7,
           "purple": 0,
-          "validated": 0,
-          "total": 6
+          "validated": 1,
+          "total": 7
         },
         "collection": {
           "red": 1,
@@ -105,11 +105,11 @@
           "total": 1
         },
         "credential-access": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
-          "validated": 1,
-          "total": 1
+          "validated": 2,
+          "total": 2
         },
         "impact": {
           "red": 2,
@@ -382,10 +382,10 @@
         },
         "harden": {
           "red": 0,
-          "blue": 8,
+          "blue": 9,
           "purple": 0,
-          "validated": 8,
-          "total": 8
+          "validated": 9,
+          "total": 9
         },
         "collection": {
           "red": 2,
@@ -416,11 +416,11 @@
           "total": 2
         },
         "initial-access": {
-          "red": 2,
+          "red": 3,
           "blue": 0,
           "purple": 0,
-          "validated": 2,
-          "total": 2
+          "validated": 3,
+          "total": 3
         },
         "privilege-escalation": {
           "red": 1,
@@ -433,17 +433,17 @@
     },
     "totals": {
       "web-app": {
-        "total": 20,
-        "validated": 20,
-        "red": 10,
-        "blue": 10,
+        "total": 22,
+        "validated": 22,
+        "red": 11,
+        "blue": 11,
         "purple": 0
       },
       "api": {
-        "total": 22,
-        "validated": 15,
-        "red": 11,
-        "blue": 11,
+        "total": 24,
+        "validated": 17,
+        "red": 12,
+        "blue": 12,
         "purple": 0
       },
       "cloud-native": {
@@ -475,10 +475,10 @@
         "purple": 0
       },
       "llm-ai": {
-        "total": 18,
-        "validated": 18,
-        "red": 9,
-        "blue": 9,
+        "total": 20,
+        "validated": 20,
+        "red": 10,
+        "blue": 10,
         "purple": 0
       }
     }
@@ -694,6 +694,27 @@
       "version": "1.0.0",
       "last_validated": null,
       "path": "skills/api/blue/harden/api-business-flow-hardening/SKILL.md"
+    },
+    {
+      "name": "api-jwt-validation-hardening",
+      "description": "Harden JWT authentication with a server-chosen algorithm/key policy and required issuer, audience, type, and time checks. Use when configuring API token verification, not general login or password storage.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "cwe": [
+          "CWE-347"
+        ]
+      },
+      "pairs_with": [
+        "api-jwt-validation-abuse"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/api/blue/harden/api-jwt-validation-hardening/SKILL.md"
     },
     {
       "name": "api-mass-assignment-hardening",
@@ -930,6 +951,27 @@
       "version": "1.0.0",
       "last_validated": "2026-08-05",
       "path": "skills/api/red/credential-access/api-broken-authentication/SKILL.md"
+    },
+    {
+      "name": "api-jwt-validation-abuse",
+      "description": "Assess JWT signature and claim validation during an authorized API review. Use for bearer-token middleware that must reject unsigned, incorrectly signed, expired, or wrong-audience access tokens.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "credential-access",
+      "techniques": {
+        "cwe": [
+          "CWE-347"
+        ]
+      },
+      "pairs_with": [
+        "api-jwt-validation-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/api/red/credential-access/api-jwt-validation-abuse/SKILL.md"
     },
     {
       "name": "api-sensitive-business-flow-abuse",
@@ -2462,6 +2504,27 @@
       "path": "skills/llm-ai/blue/harden/llm-agency-confinement/SKILL.md"
     },
     {
+      "name": "llm-artifact-supply-chain-hardening",
+      "description": "Harden LLM artifact acquisition with trusted origins, immutable revisions, independently approved hashes, and constrained loading. Use for model/adapter deployment pipelines exposed to supply-chain risk.",
+      "team": "blue",
+      "app_type": "llm-ai",
+      "stage": "harden",
+      "techniques": {
+        "cwe": [
+          "CWE-494"
+        ]
+      },
+      "pairs_with": [
+        "llm-artifact-supply-chain-assessment"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/llm-ai/blue/harden/llm-artifact-supply-chain-hardening/SKILL.md"
+    },
+    {
       "name": "llm-consumption-limits",
       "description": "Harden an LLM application against unbounded consumption with input/output caps, token budgets, rate limiting, and cost controls. Use when protecting a model-backed service from resource exhaustion and denial-of-wallet abuse.",
       "team": "blue",
@@ -2620,7 +2683,7 @@
     },
     {
       "name": "llm-training-data-provenance",
-      "description": "Gate every document that enters an LLM application's knowledge base or fine-tuning corpus behind source allowlisting, provenance signing, and content review, so poisoned data cannot reach production answers. Use when hardening a RAG or fine-tuning ingestion pipeline against data poisoning.",
+      "description": "Gate every document that enters an LLM application's knowledge base or fine-tuning corpus behind source allowlisting, provenance signing, and content review to reduce untrusted-data poisoning risk. Use when hardening a RAG or fine-tuning ingestion pipeline against data poisoning.",
       "team": "blue",
       "app_type": "llm-ai",
       "stage": "harden",
@@ -2646,7 +2709,7 @@
       "risk": "info",
       "authorization": "not-required",
       "maturity": "validated",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "last_validated": "2026-08-10",
       "path": "skills/llm-ai/blue/harden/llm-training-data-provenance/SKILL.md"
     },
@@ -2857,6 +2920,27 @@
       "version": "1.0.0",
       "last_validated": "2026-08-09",
       "path": "skills/llm-ai/red/impact/llm-unbounded-consumption/SKILL.md"
+    },
+    {
+      "name": "llm-artifact-supply-chain-assessment",
+      "description": "Assess LLM model, adapter, and loader artifact provenance for OWASP LLM03:2025. Use when an application imports third-party model artifacts or custom loader code; use inert fixture substitutions.",
+      "team": "red",
+      "app_type": "llm-ai",
+      "stage": "initial-access",
+      "techniques": {
+        "cwe": [
+          "CWE-494"
+        ]
+      },
+      "pairs_with": [
+        "llm-artifact-supply-chain-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/llm-ai/red/initial-access/llm-artifact-supply-chain-assessment/SKILL.md"
     },
     {
       "name": "llm-data-poisoning",
@@ -4333,6 +4417,27 @@
       "path": "skills/web-app/blue/harden/web-csrf-hardening/SKILL.md"
     },
     {
+      "name": "web-file-upload-hardening",
+      "description": "Harden application upload validation, generated storage names, size limits, and retrieval boundaries. Use when implementing or reviewing an upload pipeline and testing benign rejection cases.",
+      "team": "blue",
+      "app_type": "web-app",
+      "stage": "harden",
+      "techniques": {
+        "cwe": [
+          "CWE-434"
+        ]
+      },
+      "pairs_with": [
+        "web-file-upload-abuse"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/web-app/blue/harden/web-file-upload-hardening/SKILL.md"
+    },
+    {
       "name": "web-security-headers",
       "description": "Harden a web application by suppressing stack-leaking response headers and deploying the security header set (CSP, HSTS, frame/content-type options, referrer and permissions policy). Use when reducing fingerprint surface, remediating information disclosure, or establishing a secure response baseline.",
       "team": "blue",
@@ -4532,6 +4637,27 @@
       "version": "1.0.0",
       "last_validated": "2026-07-28",
       "path": "skills/web-app/red/initial-access/web-command-injection/SKILL.md"
+    },
+    {
+      "name": "web-file-upload-abuse",
+      "description": "Assess file upload validation and storage during an authorized application review. Use when users submit files that are stored, processed, or served; demonstrate gaps with inert canaries.",
+      "team": "red",
+      "app_type": "web-app",
+      "stage": "initial-access",
+      "techniques": {
+        "cwe": [
+          "CWE-434"
+        ]
+      },
+      "pairs_with": [
+        "web-file-upload-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-18",
+      "path": "skills/web-app/red/initial-access/web-file-upload-abuse/SKILL.md"
     },
     {
       "name": "web-path-traversal",

@@ -12,7 +12,7 @@
 <!-- STATS:BEGIN -->
 | skills | red↔blue pairs | validated end-to-end | live surfaces |
 |:--:|:--:|:--:|:--:|
-| **128** | **64** | **65** (51%) | **7** |
+| **134** | **67** | **71** (53%) | **7** |
 
 <sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — never hand-edited. CI fails if this table drifts.</sub>
 <!-- STATS:END -->
@@ -103,11 +103,14 @@ transport / missing cert-pinning, insecure deep links, mobile-to-backend API abu
 weakness, credential sniffing & layer-2 AiTM, and lateral movement — mapped across
 **MITRE ATT&CK, MITRE D3FEND, NIST SP 800-53 Rev 5 / CSF 2.0, and CIS Controls v8**.
 **`llm-ai`** maps the **OWASP Top 10 for LLM Applications 2025** — prompt injection
-(LLM01), sensitive information disclosure (LLM02), data & model poisoning (LLM04),
+(LLM01), sensitive information disclosure (LLM02), artifact supply chain (LLM03),
+data & model poisoning (LLM04),
 improper output handling (LLM05), excessive agency (LLM06), system prompt leakage
 (LLM07), vector & embedding weaknesses (LLM08), misinformation (LLM09), and
-unbounded consumption (LLM10) — every one validated end-to-end against a
-dependency-free stdlib-Python mock-LLM lab.
+unbounded consumption (LLM10). The bundled mock-LLM and security-controls labs
+exercise the named fixtures; production providers and integrations require
+separate validation. Dedicated JWT and file-upload pairs extend the API and web
+surfaces. See [the research and validation notes](docs/research-1.1.md).
 A large share are **`validated` end-to-end** (see the *validated* badge) against
 live labs — OWASP crAPI, Docker/Colima, a mock EC2 IMDS, MinIO, a git+bash CI lab,
 and the mock-LLM lab — with the exact evidence recorded in each skill's
@@ -166,11 +169,11 @@ deno run -A npm:redblueskills init      # deno — -A because it writes ./.claud
 npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
 ```
 
-> **While the npmjs.com publish is being unblocked**, install straight from the
-> GitHub Release tarball — no account, no auth, same package:
+> **Alternative distribution:** install the GitHub Release tarball — no account,
+> no auth, same package:
 >
 > ```bash
-> npm i -g https://github.com/praneeth132006/RedBlueSkills/releases/download/v1.0.0/redblueskills-1.0.0.tgz
+> npm i -g https://github.com/praneeth132006/RedBlueSkills/releases/download/v1.1.0/redblueskills-1.1.0.tgz
 > ```
 >
 > It is also on GitHub Packages as `@praneeth132006/redblueskills` (that registry
@@ -194,6 +197,25 @@ make site        # builds the catalog + content bundle, serves http://localhost:
 `make site-build` regenerates `site/catalog.json` and `site/content.json` without
 starting a server — run it after editing any skill or doc. The result is a plain
 static directory, deployable to any static host if you ever want it published.
+
+## Verify the installed package
+
+```bash
+npx --package redblueskills@1.1.0 redblueskills verify
+npx --package redblueskills@1.1.0 redblueskills lab --list
+npx --package redblueskills@1.1.0 redblueskills lab security-controls
+```
+
+`verify` checks all bundled skill hashes, pairings, and package metadata offline.
+Labs are optional: Python 3.10+ for the Python fixtures; bash and git for `ci-local`.
+They use synthetic data and do not contact live targets. Node.js 16+ runs the CLI
+and MCP without runtime npm dependencies; use a maintained Node release.
+
+To register the MCP server (the binary is shipped by the `redblueskills` package):
+
+```bash
+claude mcp add redblueskills -- npx --yes --package redblueskills@1.1.0 redblueskills-mcp
+```
 
 ## The `attack-my-application` orchestrator
 
