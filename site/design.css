@@ -1,0 +1,23 @@
+/* Presentation layer: readable prose, quiet surfaces, native scrolling. */
+:root{--bg:#0b0f15;--bg-1:#111720;--bg-2:#19212c;--bg-3:#222d3a;--line:#293342;--line-2:#3c495a;--ink:#f1f4f8;--ink-2:#bbc5d3;--ink-3:#98a6b8;--red:#ff6977;--blue:#7cafff;--red-bleed:transparent;--blue-bleed:transparent;--green-bleed:transparent;--r:12px}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.65;padding:20px 0 0}
+body::before,.hero::before,.hero::after{display:none}
+code,pre,.cmd,.pm,.mark,.gauge__n,.checks,.reader__body pre{font-family:var(--mono)}
+.tabbar{top:12px;border-radius:14px;min-height:64px;background:rgba(17,23,32,.94);box-shadow:0 8px 25px #0002}
+.tabbar__brand{font-size:16px}.tabbar__tabs a{font-size:13px;padding:10px 12px;margin:0;border-radius:8px}
+.hero{padding-top:88px;padding-bottom:48px}.hero__eyebrow{color:var(--ink-3);font:11px var(--mono);letter-spacing:.16em;margin:0 0 24px}
+.hero__h1{font-family:inherit;font-size:clamp(38px,5.4vw,72px);font-weight:650;line-height:1.1;letter-spacing:-.055em;max-width:100%;text-shadow:none;margin-bottom:30px}
+.hero__body{display:grid;grid-template-columns:1.1fr 1fr;gap:14px 64px;align-items:start}
+.hero__lede{grid-column:1;grid-row:1 / span 3;font-size:19px;line-height:1.75;color:var(--ink-2);max-width:540px;margin:0}
+.package-install{grid-column:2;display:grid;gap:10px;min-width:0}.package-install>span{font-size:13px;font-weight:600}.package-install small{font-size:12px;color:var(--ink-3)}
+.cmd{font-size:13px;min-height:54px;border-radius:8px;max-width:100%;text-align:left;gap:12px}.cmd__k{margin-left:auto;white-space:nowrap}
+.pm{grid-column:2;flex-wrap:wrap;margin-top:8px}.pm__t{min-height:36px}.hero__act{grid-column:2;gap:12px}.pm__note{grid-column:2}
+.legend{margin-top:44px;gap:18px;font-size:11px}.gauges{margin-top:24px;background:transparent;box-shadow:none}.gauge{padding:24px}.gauge__n{font-size:30px}.gauge__bar{display:none}
+.tape{display:none}.sect{padding-top:72px;padding-bottom:72px}.sect__head{margin-bottom:32px}.sect__head h2{font-family:inherit;font-size:clamp(26px,3vw,38px);font-weight:600;letter-spacing:-.035em;text-transform:none}.sect__head p{font-size:15px;line-height:1.75;max-width:680px;color:var(--ink-2)}
+.panel::before,.panel::after{display:none}.panel{box-shadow:none}.workflow__card{padding:32px;display:block;transition:border-color .2s,transform .2s}.workflow__card:hover{transform:translateY(-3px);border-color:var(--ink-3)}.workflow__card h3{font-size:23px;line-height:1.3;letter-spacing:-.03em;margin:24px 0 14px}.workflow__card p{color:var(--ink-2);line-height:1.8;margin-bottom:24px}.workflow__card code{font-size:11px;overflow-wrap:anywhere;background:none;border:0;padding:0;color:var(--ink-3)}.workflow__note{font-size:12px;color:var(--ink-3);margin-top:20px}
+.ctrl__row{flex-wrap:wrap;gap:12px}.checks{flex-wrap:wrap}.chk{min-height:38px;font-size:11px}.ctrl__div{display:none}
+.key{min-height:40px;display:inline-flex;align-items:center;border-radius:6px}.cmap{background:var(--bg-1)}.cmap__stage{max-height:620px}.foot__sigil{display:none}.foot{padding-top:48px}.foot__warn{font-size:13px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:4px}section[id]{scroll-margin-top:100px}
+@media(max-width:900px){.tabbar__tabs a{padding:10px 8px}.hero__body{gap:24px}.hero__lede{font-size:17px}.legend{flex-wrap:wrap}.gauge{padding:16px}}
+@media(max-width:700px){body{padding-top:12px}.tabbar{top:8px}.hero{padding-top:52px}.hero__body{display:flex;flex-direction:column;gap:20px}.hero__lede{max-width:100%}.package-install,.hero__act{width:100%}.hero__h1{font-size:clamp(34px,8.4vw,52px)}.pm{margin:0}.cmd{font-size:11px;padding:12px;gap:8px}.workflow__card{padding:24px}.sect{padding-block:48px}.tabbar__burger{min-width:44px;min-height:44px}.gauge__n{font-size:24px}.legend{line-height:1.8}.ctrl__row{align-items:flex-start}.checks{gap:6px}.gauge{padding:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.workflow__card:hover{transform:none}*,*::before,*::after{animation:none!important;transition:none!important}}

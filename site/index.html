@@ -21,6 +21,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M16 4 L27 8 v9c0 6-4.6 9.6-11 11-6.4-1.4-11-5-11-11V8z' fill='%23e5484d'/%3E%3Cpath d='M16 4 v28c-6.4-1.4-11-5-11-11V8z' fill='%233b82f6'/%3E%3C/svg%3E" />
 
 <link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./design.css?v=1.1.0" />
 </head>
 <body>
 
@@ -30,18 +31,16 @@
     <span class="glyph" aria-hidden="true"><i class="glyph--solid"></i><i class="glyph--hollow"></i></span>
     <span>redblueskills</span>
   </a>
-  <nav class="tabbar__tabs" aria-label="Sections">
-    <a href="#map">map</a>
-    <a href="#library">library</a>
-    <a href="#attack">attack</a>
-    <a href="#provenance">provenance</a>
-    <a href="#start">start</a>
-    <a href="#doctrine">doctrine</a>
-    <a href="#/docs">docs</a>
+  <nav class="tabbar__tabs" id="section-nav" aria-label="Sections">
+    <a href="#library">Library</a>
+    <a href="#impact">How it works</a>
+    <a href="#map">Coverage</a>
+    <a href="#/docs">Docs</a>
+    <a href="#start">Get started ↗</a>
   </nav>
   <div class="tabbar__end">
     <a class="key" href="https://github.com/praneeth132006/RedBlueSkills" target="_blank" rel="noopener">github&nbsp;↗</a>
-    <button class="tabbar__burger" type="button" data-burger aria-label="Menu" aria-expanded="false">≡</button>
+    <button class="tabbar__burger" type="button" data-burger aria-controls="section-nav" aria-label="Menu" aria-expanded="false">≡</button>
   </div>
 </header>
 
@@ -50,28 +49,15 @@
 <!-- ═══════════════ 00 · BOOT / HERO ═══════════════ -->
 <section class="hero">
 
-  <!-- boot log — types itself in, then settles -->
-  <div class="boot" data-boot aria-label="Boot log">
-    <div class="boot__line"><b>[ ok ]</b> mounting skills/ … <span data-boot-skills>--</span> loaded</div>
-    <div class="boot__line"><b>[ ok ]</b> verifying red ⟷ blue pairing … <span data-boot-pairs>--</span> pairs bidirectional</div>
-    <div class="boot__line"><b>[ ok ]</b> provenance check … <span data-boot-val>--</span> validated</div>
-    <div class="boot__line boot__line--warn"><b>[warn]</b> authorized use only — you are responsible for staying in scope</div>
-  </div>
-
-  <!-- Added an ideological hero copy to invoke a sense of hacker empowerment and trust -->
-  <h1 class="hero__h1">
-    <span class="hero__prompt">$</span>
-    <span class="hero__type">unleash your <span class="hl-red">agent</span>. eliminate the <em>fear</em>.</span><span class="caret" aria-hidden="true"></span>
-  </h1>
-
+  <p class="hero__eyebrow">OPEN SOURCE · PAIRED SECURITY SKILLS</p>
+  <h1 class="hero__h1">Think like an <span class="hl-red">attacker.</span><br>Build like a <span class="hl-blue">defender.</span></h1>
   <div class="hero__body">
-    <!-- Updated the lede to emphasize the hacker mindset and breaking static rules -->
-    <p class="hero__lede">
-      Hackers don't play by static rules, why should your AI? RedBlueSkills empowers your coding agent with the true hacker mindset. 
-      Move from blind trust to definitive proof. Point your agent at an app you own, say <b>"attack my application,"</b> and experience 
-      the raw power of paired offense and defense. True security isn't just a checklist—it's absolute control over your environment.
-    </p>
-
+    <p class="hero__lede">Give your coding agent a practical security playbook. Every offensive technique comes with a defensive counterpart—so you can investigate, collect evidence, and verify the fix.</p>
+    <div class="package-install">
+      <span>Install the package</span>
+      <button class="cmd" data-copy="npm install redblueskills" type="button"><span class="cmd__p">$</span><span>npm install redblueskills</span><span class="cmd__k">[copy]</span></button>
+      <small>Unscoped npm package · publication awaiting npm account verification.</small>
+    </div>
     <!-- runner switcher — rewrites every command on the page in place -->
     <div class="pm" role="tablist" aria-label="package runner">
       <span class="pm__l">run with</span>
@@ -89,7 +75,7 @@
         <span class="cmd__t">npx redblueskills init</span>
         <span class="cmd__k">[copy]</span>
       </button>
-      <a class="key key--wide" href="#start">read the 5-min quickstart →</a>
+      <a class="key key--wide" href="#start">Explore the quickstart →</a>
     </div>
 
     <p class="pm__note" data-pm-note hidden></p>
@@ -98,7 +84,7 @@
   <!-- the legend: how offense and defense are told apart without colour -->
   <div class="legend" aria-label="Legend">
     <span class="legend__i"><span class="mark mark--red">RED</span> offense — an executable technique</span>
-    <span class="legend__i"><span class="mark mark--blue">BLU</span> defense — the detection that catches it</span>
+    <span class="legend__i"><span class="mark mark--blue">BLU</span> defense — detection, hardening & response</span>
     <span class="legend__i"><span class="mark mark--pair">◄──►</span> bound pair — CI rejects one without the other</span>
   </div>
 
@@ -139,51 +125,13 @@
 </section>
 
 <!-- ═══════════════ THE IMPACT ═══════════════ -->
-<!-- New section to visually contrast hallucinated AI with actual, structured RedBlueSkills execution output -->
 <section class="sect" id="impact">
-  <div class="sect__head">
-    <h2>the impact</h2>
-    <p>The difference between a hallucinated guess and a definitive, executed reality. Empower your agent with absolute certainty.</p>
+  <div class="sect__head"><span class="sect__num">01</span><h2>One technique. Both sides.</h2><p>Follow a paired workflow in an environment you are authorized to test. Record what actually happened, then repeat the check after remediation.</p></div>
+  <div class="split split--even workflow">
+    <a class="panel workflow__card" href="#/skill/api-jwt-validation-abuse"><span class="mark mark--red">01 / INVESTIGATE</span><h3>Challenge the trust boundary.</h3><p>Test JWT validation against an explicit scope. Collect the request, response, and expected result before declaring a finding.</p><code>api-jwt-validation-abuse ↗</code></a>
+    <a class="panel workflow__card" href="#/skill/api-jwt-validation-hardening"><span class="mark mark--blue">02 / VERIFY</span><h3>Make the control measurable.</h3><p>Pin the allowed algorithm, issuer, and audience. Reject invalid tokens and replay the documented regression checks.</p><code>api-jwt-validation-hardening ↗</code></a>
   </div>
-
-  <div class="split split--even">
-    <!-- Panel 1: Showing a vague, hallucinated AI output with red/error styling -->
-    <div class="term-window term-window--guess">
-      <div class="term-window__bar">
-        <div class="term-window__title">ai_agent.log</div>
-        <span class="term-window__verdict">guess</span>
-      </div>
-      <div class="term-window__body"><span class="hl-comment"># STANDARD AI AGENT SCAN LOG</span>
-<span class="hl-prompt">user@agent:~$</span> run_scan target.app
-
-I scanned the application. 
-It <span class="hl-err">might be vulnerable</span> to SQL injection on the login page.
-You should probably use parameterized queries to fix it.
-I am <span class="hl-err">not sure if it actually works</span>, but standard practice
-recommends checking all inputs.
-
-<span class="hl-key">STATUS:</span> <span class="hl-err">UNCERTAIN</span>
-<span class="hl-key">PROOF:</span>  NONE</div>    </div>
-
-    <!-- Panel 2: Showing a definitive, exact JSON output for a confirmed vulnerability and mitigation, using blue/success styling -->
-    <div class="term-window term-window--proof">
-      <div class="term-window__bar">
-        <div class="term-window__title">redblueskills_execution.json</div>
-        <span class="term-window__verdict">proof</span>
-      </div>
-      <div class="term-window__body"><span class="hl-comment"># REDBLUESKILLS EXECUTION REPORT</span>
-{
-  <span class="hl-key">"finding"</span>: <span class="hl-str">"SSRF in /api/webhook"</span>,
-  <span class="hl-key">"status"</span>: <span class="hl-prompt">"CONFIRMED"</span>,
-  <span class="hl-key">"proof_of_concept"</span>: {
-    <span class="hl-key">"payload"</span>: <span class="hl-str">"http://127.0.0.1/admin-console"</span>,
-    <span class="hl-key">"response_received"</span>: <span class="hl-str">"HTTP 200 OK (Internal Admin Panel)"</span>
-  },
-  <span class="hl-key">"mitigation_enforced"</span>: <span class="hl-str">"skill: blue-ssrf-guard"</span>,
-  <span class="hl-key">"action"</span>: <span class="hl-str">"Deployed network egress filter rules."</span>
-}</div>
-    </div>
-  </div>
+  <p class="workflow__note">Validation has a scope. Offline fixtures check specific controls; they do not certify your application. <a href="#/doc/research-1.1">Read the release research ↗</a></p>
 </section>
 
 <!-- ═══════════════ 00 · COVERAGE MAP ═══════════════ -->
@@ -192,7 +140,7 @@ recommends checking all inputs.
     <span class="sect__num">00</span>
     <h2>the coverage map</h2>
     <p>Every surface, every stage of the kill chain. Lit paths are covered by paired
-       red&nbsp;↔&nbsp;blue skills; a ring means the whole cell is validated end-to-end.
+       red&nbsp;↔&nbsp;blue skills; a ring means all skills in that cell carry validation metadata.
        Dark branches are surfaces not yet started.</p>
   </div>
 
@@ -260,7 +208,7 @@ recommends checking all inputs.
         <h3>Signed &amp; reproducible</h3>
         <p>Deterministic bytes (no timestamps/random UUIDs), signed with
            <b>cosign keyless</b> via GitHub OIDC + a SLSA attestation.</p>
-        <a class="cmd" href="#/docs/provenance">
+        <a class="cmd" href="#/doc/provenance">
           <span class="cmd__t">how to verify</span><span class="cmd__k">→</span>
         </a>
       </article>
@@ -303,6 +251,11 @@ recommends checking all inputs.
         <button class="chk is-on" data-val="all" type="button">all<b data-c-vert-all>0</b></button>
         <button class="chk" data-val="web-app" type="button">web-app<b data-c-vert-web-app>0</b></button>
         <button class="chk" data-val="api" type="button">api<b data-c-vert-api>0</b></button>
+        <button class="chk" data-val="cloud-native" type="button">cloud-native<b data-c-vert-cloud-native>0</b></button>
+        <button class="chk" data-val="ci-cd" type="button">ci-cd<b data-c-vert-ci-cd>0</b></button>
+        <button class="chk" data-val="mobile" type="button">mobile<b data-c-vert-mobile>0</b></button>
+        <button class="chk" data-val="network" type="button">network<b data-c-vert-network>0</b></button>
+        <button class="chk" data-val="llm-ai" type="button">llm-ai<b data-c-vert-llm-ai>0</b></button>
       </div>
 
       <span class="ctrl__div">│</span>
@@ -463,7 +416,7 @@ recommends checking all inputs.
 <section class="sect" id="start">
   <div class="sect__head">
     <span class="sect__num">03</span>
-    <h2>zero to a report in five minutes</h2>
+    <h2>Start with a scoped assessment</h2>
     <p>No security background needed. Install the library into your agent, point it at
        an app you own, and let it work.</p>
   </div>
@@ -520,35 +473,30 @@ recommends checking all inputs.
 <section class="sect" id="doctrine">
   <div class="sect__head">
     <span class="sect__num">04</span>
-    <!-- Updated section title and subtitle to align with AI empowerment and security trust -->
-    <h2>the doctrine of empowerment</h2>
-    <p>Security through absolute clarity. We believe AI should be your ultimate ally, fearless and fully equipped.</p>
+    <h2>Built for evidence</h2>
+    <p>Clear instructions, documented limitations, and reproducible checks.</p>
   </div>
 
   <ol class="tenets">
     <li class="tenet">
       <span class="tenet__k">[a]</span>
-      <!-- Restyled tenet for a stronger, more emotional impact on agent capabilities -->
-      <h3>agent-native supremacy</h3>
-      <p>Your agent isn't just reading text—it's executing intent. Every skill is a living, breathing <code>SKILL.md</code> designed to grant AI autonomous mastery over defensive and offensive maneuvers.</p>
+      <h3>Agent-readable instructions</h3>
+      <p>Each <code>SKILL.md</code> documents prerequisites, scope, steps, evidence, and its defensive or offensive counterpart.</p>
     </li>
     <li class="tenet">
       <span class="tenet__k">[b]</span>
-      <!-- Reworded to highlight the philosophy of bounded responsibility -->
       <h3>bound <span class="hl-red">red</span> ⟷ <span class="hl-blue">blue</span></h3>
-      <p>True empowerment means total responsibility. Every offensive technique links intrinsically to its detection. We forge a perfect equilibrium where offense serves defense.</p>
+      <p>Every offensive technique links to a detection or hardening skill. CI checks that each pairing points in both directions.</p>
     </li>
     <li class="tenet">
       <span class="tenet__k">[c]</span>
-      <!-- Enhanced tenet for absolute confidence and removing fear -->
-      <h3>validated &amp; unapologetic</h3>
-      <p>Proven against real targets. There is no room for doubt. Each skill is forged in the fire of real-world labs, stamped, and strictly validated so you can trust your AI implicitly.</p>
+      <h3>Transparent validation</h3>
+      <p>Validation metadata records who tested a skill, when, and against which lab. Reviewed skills remain distinct from validated ones; fixture results have explicit limits.</p>
     </li>
     <li class="tenet">
       <span class="tenet__k">[d]</span>
-      <!-- Reworded the final tenet to celebrate precision tooling and audacity -->
-      <h3>tooled for the bold</h3>
-      <p>A flawless pipeline for flawless execution. Our validator and test suite ensure that as the library scales, the quality remains razor-sharp. We build for the bold.</p>
+      <h3>Reproducible checks</h3>
+      <p>Schema checks, content hashes, package installation tests, and offline regression labs help catch errors before a release.</p>
     </li>
   </ol>
 </section>
@@ -654,7 +602,7 @@ recommends checking all inputs.
 <div class="toast" data-toast role="status" aria-live="polite"></div>
 
 <script src="./reader.js" defer></script>
-<script src="./app.js" defer></script>
+<script src="./app.js?v=1.1.0" defer></script>
 <script src="./map.js" defer></script>
 </body>
 </html>

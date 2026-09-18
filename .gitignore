@@ -23,3 +23,5 @@ _lab/loot/
 _lab/**/*.local
 _lab/crapi/.env
 *.log
+.vercel
+.env*
