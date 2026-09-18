@@ -3,9 +3,9 @@ name: llm-training-data-provenance
 description: >-
   Gate every document that enters an LLM application's knowledge base or
   fine-tuning corpus behind source allowlisting, provenance signing, and content
-  review, so poisoned data cannot reach production answers. Use when hardening a
+  review to reduce untrusted-data poisoning risk. Use when hardening a
   RAG or fine-tuning ingestion pipeline against data poisoning.
-version: 1.0.0
+version: 1.0.1
 team: blue
 app_type: llm-ai
 killchain:
@@ -61,7 +61,8 @@ content of user conversations.
 ## Procedure
 
 1. **Source allowlist.** Enumerate the systems permitted to contribute grounding
-   data (`catalog-db`, `policy-repo`) and deny by default. Dispatch ingestion
+   data (`catalog-db`, `policy-repo`) and deny by default. Derive source identity
+   from an authenticated connector, not a caller-controlled `source` field. Dispatch ingestion
    through a wrapper that rejects any document whose `source` is not allowlisted.
    ```python
    TRUSTED_SOURCES = {"catalog-db", "policy-repo"}
@@ -70,8 +71,11 @@ content of user conversations.
            raise IngestRejected(doc.source)   # provenance gate
        store.add(doc)
    ```
-2. **Attest integrity.** Require a signature or checksum from the source so a
-   document cannot be altered in transit; record the signer with the document.
+2. **Attest integrity.** Verify a signature against an approved signer, or compare
+   a digest obtained through an independently authenticated channel. A checksum
+   supplied alongside untrusted content does not authenticate it. Record the
+   trusted identity and revision, and review content separately: authentic data
+   can still be inaccurate or malicious.
 3. **Review untrusted contributions.** Route anything from a lower-trust source
    (uploads, crawled pages, tickets) to a human/allowlisted-reviewer queue
    instead of straight into the corpus.
@@ -97,7 +101,10 @@ python3 _lab/llm-local/validate.py
 The `LLM04 data-poisoning` case attempts to ingest a document from `user-upload`.
 The **hardened** build's `ingest()` refuses it (source not in `TRUSTED_SOURCES`),
 so `policy_answer()` still returns the authentic policy — the poisoned answer
-never appears. Steps 1 and 4 are the enforced controls.
+never appears. The fixture enforces a string source allowlist; it does not
+authenticate connector identities or verify signatures. This demonstrates only
+that narrow admission policy. Test authenticated provenance and forged source
+metadata separately against the actual ingestion pipeline.
 
 ## References
 

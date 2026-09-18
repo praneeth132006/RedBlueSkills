@@ -1,7 +1,7 @@
 {
   "name": "redblueskills",
-  "version": "1.0.0",
-  "description": "Agent-native, validated red/blue security skills — paired offense and defense — installable into any coding LLM with one command.",
+  "version": "1.1.0",
+  "description": "Agent-native, validated red/blue security skills \u2014 paired offense and defense \u2014 installable into any coding LLM with one command.",
   "keywords": [
     "security",
     "pentest",
@@ -36,10 +36,18 @@
     "QUICKSTART.md",
     "ETHICS.md",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "_lab/security-controls/*.py",
+    "_lab/security-controls/README.md",
+    "_lab/llm-local/*.py",
+    "_lab/llm-local/README.md",
+    "_lab/ci-local/*.sh",
+    "_lab/ci-local/README.md",
+    "_lab/ci-local/scenarios/*.sh"
   ],
   "scripts": {
-    "postinstall": "node bin/cli.js banner || true"
+    "test": "node bin/verify.js",
+    "prepack": "node bin/verify.js --quiet"
   },
   "engines": {
     "node": ">=16"

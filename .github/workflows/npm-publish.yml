@@ -37,6 +37,18 @@ jobs:
           node-version: "24"  # ships npm >= 11.5.1, required for OIDC trusted publishing
           registry-url: "https://registry.npmjs.org"
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Full release gate including packed installation and labs
+        run: |
+          python -m pip install -r tools/requirements-dev.txt
+          make check
+          make validate-labs
+          npm test
+
       - name: Sanity-check the CLI + MCP server before publishing
         run: |
           node -c bin/cli.js

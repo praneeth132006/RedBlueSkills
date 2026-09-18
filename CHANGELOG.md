@@ -6,6 +6,28 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-09-18
+
+### Added
+- Six researched skills: JWT validation, file upload controls, and LLM artifact
+  supply-chain assessment/hardening, each paired and validated against the new
+  `security-controls` fixture (16 tests with negative and positive controls).
+- `redblueskills verify`, `--version`, and bundled `lab` commands. Actual packed
+  npm installs are tested, including all offline labs and integrity-failure cases.
+
+### Fixed
+- Skill schema errors now produce diagnostics instead of crashes; all required
+  sections, pairing types, and evidence dates are checked.
+- Partial-install catalogs list only installed skills, ETHICS.md ships with
+  installs, source-overlapping/symlink destinations are rejected, and missing
+  destination arguments fail explicitly.
+- MCP malformed requests return protocol errors, notifications receive no reply,
+  and large catalog output drains before shutdown.
+- The orchestrator covers new routes, respects source-review boundaries, and
+  separates execution risk from vulnerability severity and missing telemetry.
+- Removed the npm postinstall banner; package installation has no lifecycle side
+  effects. Release gates test the packed package and regenerated provenance.
+
 ### Added
 - **Four new red↔blue LLM pairs (8 skills), each validated end-to-end.** The
   `llm-ai` surface now covers nine OWASP LLM Top-10 2025 categories: added data &
