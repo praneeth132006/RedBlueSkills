@@ -126,6 +126,7 @@ function cmdInit(args) {
   if (fs.existsSync(ORCH_DIR)) copyDir(ORCH_DIR, path.join(dest, 'orchestrators'), dest);
   // catalog for the agent to reason over
   fs.copyFileSync(CATALOG, path.join(dest, 'catalog.json'));
+  fs.copyFileSync(path.join(PKG_ROOT, 'ETHICS.md'), path.join(dest, 'ETHICS.md'));
   writeAgentReadme(dest, catalog);
 
   console.log(
@@ -164,6 +165,8 @@ function cmdAdd(args) {
   if (names.length === 0) fail('usage: redblueskills add <skill-name> [more...]  (or use `init` for all)');
   const catalog = loadCatalog();
   const dest = path.resolve(process.cwd(), argValue(args, '--dest') || DEST_SUBDIR);
+  const unknown = names.filter((name) => !skillDir(name, catalog));
+  if (unknown.length) fail(`unknown skill(s): ${unknown.join(', ')}`);
   let n = 0;
   for (const name of names) {
     const src = skillDir(name, catalog);
@@ -188,7 +191,11 @@ function cmdAdd(args) {
   if (n === 0) {
     fail('no known skills matched. Try `redblueskills list` to see available names.');
   }
-  fs.copyFileSync(CATALOG, path.join(dest, 'catalog.json'));
+  fs.copyFileSync(path.join(PKG_ROOT, 'ETHICS.md'), path.join(dest, 'ETHICS.md'));
+  const installed = catalog.skills.filter((s) => fs.existsSync(path.join(dest, s.path)));
+  const localCatalog = { ...catalog, skills: installed, count: installed.length };
+  delete localCatalog.coverage; // Full-library coverage would misrepresent this subset.
+  fs.writeFileSync(path.join(dest, 'catalog.json'), JSON.stringify(localCatalog, null, 2) + '\n');
   console.log(dim(`\n  ${n} skill(s) → ${dest}\n`));
 }
 
@@ -293,7 +300,7 @@ function writeAgentReadme(dest, catalog) {
   const lines = [
     '# RedBlueSkills (installed)',
     '',
-    `${catalog.count} validated, paired red/blue security skills for authorized testing.`,
+    `${catalog.count} paired red/blue security skills for authorized testing; check each skill’s maturity and validation target.`,
     '',
     '## How an agent uses this',
     '',

@@ -9,6 +9,9 @@ Small, dependency-light Python tools that keep the skill library consistent.
 
 ## Setup
 
+Python 3.10+ and Node.js 16+ are required for the full test suite. Distribution
+tests install the library into temporary directories and load all skills via MCP.
+
 ```bash
 python -m pip install -r tools/requirements-dev.txt
 ```
@@ -18,7 +21,8 @@ python -m pip install -r tools/requirements-dev.txt
 ```bash
 make validate     # python tools/validate.py
 make catalog      # python tools/build_catalog.py
-make check        # validate + catalog --check + tests  (what CI runs)
+make check        # schema + artifact freshness + tooling/distribution tests
+make validate-labs # replay the two self-contained labs (also run by CI)
 make test         # pytest tools/tests
 ```
 

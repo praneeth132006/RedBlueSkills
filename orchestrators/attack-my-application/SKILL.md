@@ -9,7 +9,7 @@ description: >-
   library end to end — running each relevant offensive skill, verifying its
   paired detection, and producing a prioritized findings report. Authorized
   testing only.
-version: 1.3.0
+version: 1.4.0
 kind: orchestrator
 app_type: web-app
 license: Apache-2.0
@@ -53,8 +53,8 @@ the live probe to confirm exploitability — note which evidence backs each find
 
 ## Step 0 — Authorization gate (hard stop)
 
-**Do not run any active step until this passes.** Ask the operator to confirm, in
-this session:
+**Do not run any active step until this passes.** Use authorization already
+provided in this session; ask only for missing details:
 
 1. **Ownership / permission** — they own the target or hold written authorization
    (SOW, rules of engagement, or an in-scope bug-bounty program).
@@ -70,7 +70,8 @@ initial-access/exploitation step requires the full gate above.
 
 **Source-review mode is lighter-weight, but not gate-free.** Reading source code the
 operator hands you (their own repo) sends no traffic and needs only ownership
-confirmed — question 1. You still must not act on secrets you find in the code
+established by their request to review the supplied project — question 1. You
+still must not act on secrets you find in the code
 (don't use discovered credentials against live systems), and if the repo is clearly
 not the operator's, stop and ask. Questions 2–4 (scope, window, data handling) apply
 in full the moment you touch a *running* instance.
@@ -104,7 +105,8 @@ code itself:
 
 - **Detect the stack** — manifest/lockfile (`package.json`, `requirements.txt`,
   `go.mod`, `pom.xml`, `Gemfile`, …), framework, language, and the server entry
-  point. Flag known-vulnerable dependency versions as you go.
+  point. Verify suspected vulnerable versions against an authoritative advisory
+  and the resolved lockfile; report unverified matches as candidates.
 - **Enumerate entry points** — every route/controller/handler and the request
   inputs it reads (query, body, headers, path params, uploaded files, message-queue
   or webhook payloads).
@@ -187,6 +189,9 @@ OWASP-LLM risk mapped to its red/blue pair:
 | A hidden system prompt (esp. with embedded secrets/rules) | `llm-system-prompt-leakage` | `llm-system-prompt-hardening` |
 | An agent that can call tools/functions | `llm-excessive-agency` | `llm-agency-confinement` |
 | No apparent input/output/rate/cost limits | `llm-unbounded-consumption` | `llm-consumption-limits` |
+| Model output reaching HTML, SQL, a shell, or another interpreter | `llm-improper-output-handling` | `llm-output-encoding` |
+| Retrieval over documents from multiple tenants or access levels | `llm-vector-store-leakage` | `llm-vector-store-isolation` |
+| Answers used for factual decisions or policy advice | `llm-misinformation` | `llm-grounding-verification` |
 | A training/fine-tuning or RAG ingestion path you can influence | `llm-data-poisoning` | `llm-training-data-provenance` |
 
 For the other surfaces (`api`, `cloud-native`, `ci-cd`, `mobile`, `network`),
@@ -199,20 +204,21 @@ the report (coverage transparency matters).
 
 ## Step 3 — Execute in kill-chain order
 
-Run the selected skills one at a time, in this order, so findings build on each
-other and noise is minimized:
+Run only the selected skills, one at a time. Use the stage metadata from the
+catalog to order applicable work: recon, initial-access, execution, persistence,
+privilege-escalation, defense-evasion, credential-access, lateral-movement,
+collection, exfiltration, impact. Dependencies and the agreed impact limits take
+precedence; selecting a stage does not authorize its side effects. For HTTP live
+assessments, use `web-http-fingerprinting` first when applicable. Do not send HTTP
+probes during source review or force web skills onto unrelated surfaces.
 
-1. **recon** — `web-http-fingerprinting` (always first).
-2. **initial-access** — injection & inclusion: `web-sql-injection`,
-   `web-reflected-xss`, `web-command-injection`, `web-path-traversal`, `web-ssrf`,
-   `web-xxe`.
-3. **privilege-escalation / access control** — `web-idor`.
-4. **credential-access** — `web-broken-authentication`.
-5. **execution (client-driven)** — `web-csrf`.
-
-For each skill: follow its Procedure exactly, honour its Authorization & scope and
-its "prove impact minimally" guidance, and capture the evidence and the minimal
-proof.
+Load each selected skill's Procedure, Preconditions, Authorization & scope, and
+Validation sections. Adapt live commands to source tracing in source-review
+mode. Record missing tools, accounts, telemetry, or lab access as `blocked`;
+never substitute an assumed result. Check maturity and the named validation
+target: a mock or different product demonstrates only that fixture's behavior.
+A `reviewed` skill has no end-to-end validation claim, and stale evidence needs
+rechecking before relying on it.
 
 - **Live mode** — capture the request, the response, and the minimal proof. **Stop
   the moment anything indicates you are outside scope or causing unexpected side
@@ -231,7 +237,8 @@ activity *would be detected or prevented* by that control (and whether the opera
 currently has the telemetry to see it). In live mode, judge against the activity you
 generated; in source-review mode, judge against the code — is the logging,
 input validation, or hardening the blue skill expects actually present in the
-repo? Offense the defender can't see is itself a finding — call it out. This is the
+repo? Distinguish an observed detection/control failure from unavailable telemetry.
+Missing access to logs means `not verified`, not that detection is absent. This is the
 repo's core discipline: every offensive result carries its detection/hardening
 counterpart.
 
@@ -242,8 +249,9 @@ Produce a single report with:
 - **Executive summary** — what was tested, what was found, overall risk.
 - **Scope & authorization** — what was confirmed in Step 0, and the test window.
 - **Findings**, each with: title, affected endpoint **or `file:line`**, severity
-  (use the skill's `risk.level` as a starting point, adjusted for exploitability and
-  data sensitivity), reproduction (the minimal request in live mode, or the
+  (based on demonstrated exploitability, affected privileges, and data sensitivity;
+  the skill's `risk.level` describes execution risk, not finding severity),
+  reproduction (the minimal request in live mode, or the
   input → sink code path in source-review mode), the paired detection/hardening from
   Step 4, and remediation. State which evidence backs each finding (code path,
   live proof, or both).
@@ -258,7 +266,9 @@ Produce a single report with:
   | `/import?url=` | SSRF | MEDIUM | `web-ssrf-hardening` |
   | `/login` | No rate-limit | LOW | `web-authentication-hardening` |
 - **Technique coverage roll-up** — every technique in the library and its outcome
-  for this run: `confirmed` / `tested-clean` / `skipped (reason)`. Nothing is
+  for this run: `confirmed` / `tested-clean` / `inconclusive` / `blocked (reason)` / `skipped (reason)`.
+  `tested-clean` applies only to the tested inputs and controls, not the entire
+  application. Separate source-review candidates from live-confirmed findings. Nothing is
   silently omitted.
 - **Coverage** — which skills ran, which were skipped and why (from Step 2).
 - **Prioritized remediation plan** — highest-impact, lowest-effort fixes first,

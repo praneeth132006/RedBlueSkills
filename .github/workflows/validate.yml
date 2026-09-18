@@ -42,6 +42,11 @@ jobs:
       - name: Re-prove validated skills (self-contained labs)
         run: python tools/replay_labs.py
 
+      - name: Set up Node for distribution tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Run tooling tests
         run: python -m pytest tools/tests -q
 
