@@ -32,3 +32,12 @@ all skill retrieval through MCP, hashes, pairings, malformed protocol inputs,
 and all three offline labs. `redblueskills verify` proves consistency with the
 bundled manifest, not authenticity against a maliciously replaced manifest;
 use the signed GitHub release artifacts for independent provenance verification.
+
+## What was rechecked for this release
+
+All 134 skills pass metadata, pairing, package integrity, install, and MCP-load
+checks. Of the 71 skills carrying a validation stamp, 30 point to the three
+offline labs replayed here (18 mock-LLM, 6 CI, 6 new security-controls skills).
+The other 41 retain earlier external-lab evidence and were not re-executed in
+this release. The remaining 63 skills are `reviewed`, not end-to-end validated.
+These distinctions remain visible in the catalog and per-skill metadata.

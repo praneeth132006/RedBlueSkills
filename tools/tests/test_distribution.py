@@ -106,7 +106,7 @@ def test_mcp_recovers_from_invalid_requests_and_does_not_reply_to_notifications(
 
 def test_actual_tarball_installs_and_runs_all_offline_labs(tmp_path):
     import tarfile
-    pack = subprocess.run(['npm', 'pack', '--json', '--pack-destination', str(tmp_path)], cwd=REPO, capture_output=True, text=True, timeout=60)
+    pack = subprocess.run(['npm', 'pack', '--json', '--silent', '--pack-destination', str(tmp_path)], cwd=REPO, capture_output=True, text=True, timeout=60)
     assert pack.returncode == 0, pack.stderr
     archive = tmp_path / json.loads(pack.stdout)[0]['filename']
     with tarfile.open(archive) as packed:
