@@ -484,6 +484,8 @@
 
     var search = $('[data-search]');
     if (search) {
+      // Preserve input entered while the catalog request was still loading.
+      state.q = search.value.trim().toLowerCase();
       search.addEventListener('input', function () {
         state.q = search.value.trim().toLowerCase();
         state.cursor = -1;
