@@ -7,10 +7,10 @@
 
 <title>redblueskills — paired offense &amp; defense for AI agents</title>
 
-<meta name="description" content="Agent-native, validated red/blue security skills. Every offensive technique ships bound to the detection that catches it. Install in one command, say &quot;attack my application,&quot; get a prioritized report." />
+<meta name="description" content="Paired security playbooks for coding agents. Browse documented techniques, validation metadata, offline test coverage, and current source installation instructions." />
 
 <meta property="og:title" content="redblueskills — security skills an agent can actually run" />
-<meta property="og:description" content="Paired red/blue security skills for AI coding agents. One command to install. One instruction to run. Every finding arrives with its detection." />
+<meta property="og:description" content="Paired red/blue security skills for AI coding agents. Source-installable playbooks with paired defenses and explicit validation limits." />
 <meta property="og:type" content="website" />
 <meta name="theme-color" content="#000000" />
 
@@ -54,25 +54,14 @@
   <div class="hero__body">
     <p class="hero__lede">Give your coding agent a practical security playbook. Every offensive technique comes with a defensive counterpart—so you can investigate, collect evidence, and verify the fix.</p>
     <div class="package-install">
-      <span>Install the package</span>
-      <button class="cmd" data-copy="npm install redblueskills" type="button"><span class="cmd__p">$</span><span>npm install redblueskills</span><span class="cmd__k">[copy]</span></button>
-      <small>Unscoped npm package · publication awaiting npm account verification.</small>
+      <span>Run from the current source checkout</span>
+      <button class="cmd" data-copy="node bin/cli.js init" type="button"><span class="cmd__p">$</span><span>node bin/cli.js init</span><span class="cmd__k">[copy]</span></button>
+      <small>npm is not published. Use the source instructions below. This website includes changes in <a href="https://github.com/praneeth132006/RedBlueSkills/pull/24">PR #24</a>.</small>
     </div>
-    <!-- runner switcher — rewrites every command on the page in place -->
-    <div class="pm" role="tablist" aria-label="package runner">
-      <span class="pm__l">run with</span>
-      <button class="pm__t is-on" type="button" role="tab" aria-selected="true" data-runner="npx">npx</button>
-      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="pnpm">pnpm</button>
-      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="yarn">yarn</button>
-      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="bun">bun</button>
-      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="deno">deno</button>
-      <button class="pm__t" type="button" role="tab" aria-selected="false" data-runner="global">global</button>
-    </div>
-
     <div class="hero__act">
-      <button class="cmd" data-copy="npx redblueskills init" type="button">
+      <button class="cmd" data-copy="node bin/cli.js init" type="button">
         <span class="cmd__p">$</span>
-        <span class="cmd__t">npx redblueskills init</span>
+        <span class="cmd__t">node bin/cli.js init</span>
         <span class="cmd__k">[copy]</span>
       </button>
       <a class="key key--wide" href="#start">Explore the quickstart →</a>
@@ -112,7 +101,7 @@
     </div>
     <div class="gauge">
       <span class="gauge__n" data-stat="validated">00</span>
-      <span class="gauge__l">validated</span>
+      <span class="gauge__l">validation stamps</span>
       <span class="gauge__bar" data-bar="validated"></span>
     </div>
   </div>
@@ -139,7 +128,7 @@
   <div class="sect__head">
     <span class="sect__num">00</span>
     <h2>the coverage map</h2>
-    <p>Every surface, every stage of the kill chain. Lit paths are covered by paired
+    <p>Coverage across the catalog’s seven surfaces. Lit paths are covered by paired
        red&nbsp;↔&nbsp;blue skills; a ring means all skills in that cell carry validation metadata.
        Dark branches are surfaces not yet started.</p>
   </div>
@@ -155,7 +144,7 @@
       <span class="cmap__lg"><i class="cmap__sw cmap__sw--red"></i>offense (red)</span>
       <span class="cmap__lg"><i class="cmap__sw cmap__sw--blue"></i>defense (blue)</span>
       <span class="cmap__lg"><i class="cmap__sw cmap__sw--both"></i>paired</span>
-      <span class="cmap__lg"><i class="cmap__sw cmap__sw--val"></i>validated</span>
+      <span class="cmap__lg"><i class="cmap__sw cmap__sw--val"></i>validation stamps</span>
       <span class="cmap__lg"><i class="cmap__sw cmap__sw--dark"></i>planned</span>
     </div>
 
@@ -168,7 +157,7 @@
     <h3>surface × kill-chain heatmap</h3>
     <p>Generated from <code>catalog.json</code> on every build — never hand-drawn.
        Each cell is the number of skills; green means every skill in the cell is
-       validated end-to-end.</p>
+       marked validated in its metadata, within the recorded test scope.</p>
     <a href="./coverage.svg" target="_blank" rel="noopener">
       <img class="cmap__heat-img" src="./coverage.svg"
            alt="Coverage heatmap: surfaces by kill-chain stage" loading="lazy">
@@ -181,9 +170,9 @@
   <div class="sect__head">
     <span class="sect__num">✓</span>
     <h2>provenance you can verify</h2>
-    <p>A security library should meet the bar it sets. Every artifact here is
-       reproducible from the source, content-hashed, and signed at release —
-       there are no hardcoded numbers and no long-lived keys.</p>
+    <p>The current catalog includes generated content hashes and validation metadata.
+       These establish consistency, not independent proof that a system is secure.
+       The website’s current development artifacts are not signed release artifacts.</p>
   </div>
 
   <div class="prov">
@@ -198,30 +187,28 @@
       </article>
       <article class="prov__card">
         <h3>Provenance manifest</h3>
-        <p>For each skill: the content hash, and who validated it against which
-           lab, and when.</p>
+        <p>For each skill: its content hash and maturity. Validation records, where present,
+           identify the validator, target, method, and date.</p>
         <a class="cmd cmd--glow" href="./provenance.json" target="_blank" rel="noopener">
           <span class="cmd__t">provenance.json</span><span class="cmd__k">↗</span>
         </a>
       </article>
       <article class="prov__card">
-        <h3>Signed &amp; reproducible</h3>
-        <p>Deterministic bytes (no timestamps/random UUIDs), signed with
-           <b>cosign keyless</b> via GitHub OIDC + a SLSA attestation.</p>
+        <h3>Release status</h3>
+        <p>Last checked 19 September 2026: <b>v1.0.0</b> is the latest GitHub release.
+           It includes signature files for its manifests. The current v1.1.0 source
+           changes have not been released or published to npm.</p>
         <a class="cmd" href="#/doc/provenance">
           <span class="cmd__t">how to verify</span><span class="cmd__k">→</span>
         </a>
       </article>
     </div>
-    <pre class="prov__code"><code><span class="d"># re-prove the validated skills, any time</span>
-<span class="p">$</span> make validate-labs
-
-<span class="d"># verify a signed release artifact</span>
-<span class="p">$</span> cosign verify-blob --signature provenance.json.sig \
-    --certificate provenance.json.pem \
-    --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-    --certificate-identity-regexp 'praneeth132006/RedBlueSkills' \
-    provenance.json</code></pre>
+    <p class="validation-summary" data-validation-summary aria-live="polite">Loading validation breakdown from the catalog…</p>
+    <p>Offline fixture results cover the documented test cases. Earlier external-lab stamps were not rerun in this update. <a href="#/doc/research-1.1">Read the test scope</a>.</p>
+    <pre class="prov__code"><code><span class="d"># From the current source checkout: integrity and offline fixtures</span>
+<span class="p">$</span> node bin/cli.js verify
+<span class="p">$</span> node bin/cli.js lab security-controls</code></pre>
+    <p><a href="https://github.com/praneeth132006/RedBlueSkills/releases/tag/v1.0.0">View the older v1.0.0 release and its artifacts ↗</a></p>
   </div>
 </section>
 
@@ -230,7 +217,7 @@
   <div class="sect__head">
     <span class="sect__num">01</span>
     <h2>nothing ships alone</h2>
-    <p>Every offensive skill is bound to the defensive skill that catches it, and CI
+    <p>Every offensive skill is bound to a complementary defense skill, and CI
        refuses the merge if the link isn't bidirectional. So browse it the way it's
        built: <b>in pairs</b>.</p>
   </div>
@@ -285,7 +272,7 @@
       <span class="ta-r">offense</span>
       <span class="ta-c">bound</span>
       <span>defense</span>
-      <span class="ta-r">surface / risk / validated</span>
+      <span class="ta-r">surface / risk / validation date</span>
     </div>
     <div class="table__body" data-ledger>
       <p class="empty">reading catalog.json …</p>
@@ -317,8 +304,8 @@
     </div>
     <div class="table__controls-right">
       <a class="key key--solid" href="#/doc/index">full index →</a>
-      <button class="cmd cmd--glow" data-copy="npx redblueskills list" type="button">
-        <span class="cmd__p">$</span><span class="cmd__t">npx redblueskills list</span><span class="cmd__k">[copy]</span>
+      <button class="cmd cmd--glow" data-copy="node bin/cli.js list" type="button">
+        <span class="cmd__p">$</span><span class="cmd__t">node bin/cli.js list</span><span class="cmd__k">[copy]</span>
       </button>
       <a class="cmd cmd--glow" href="./catalog.json" target="_blank">
         <span class="cmd__t">catalog.json</span><span class="cmd__k">↗</span>
@@ -332,7 +319,7 @@
   <div class="sect__head">
     <span class="sect__num">02</span>
     <h2>"attack my application"</h2>
-    <p>One instruction spins up a full authorized assessment. The orchestrator detects
+    <p>The orchestrator is a documented workflow for a compatible coding agent. The orchestrator detects
        what your app is — reading the code you built, or probing a running app —
        builds a surface × technique matrix, and drives the whole library in
        kill-chain order.</p>
@@ -344,7 +331,7 @@
     <li class="pipe__s pipe__s--red"><span class="pipe__n">01</span><h3>map the surface</h3><p>Reads your code — or a running app — for stack, entry points, and session model, into a surface map.</p></li>
     <li class="pipe__s"><span class="pipe__n">02</span><h3>select</h3><p>Lights up the matrix — routes each input to the skills whose preconditions it satisfies.</p></li>
     <li class="pipe__s pipe__s--red"><span class="pipe__n">03</span><h3>run in kill-chain order</h3><p>Recon → injection → access control → auth → client-side. Minimal proof first.</p></li>
-    <li class="pipe__s pipe__s--blue"><span class="pipe__n">04</span><h3>verify detection</h3><p>For every finding, checks whether the bound blue skill would actually catch it.</p></li>
+    <li class="pipe__s pipe__s--blue"><span class="pipe__n">04</span><h3>verify detection</h3><p>Guides the agent to check the paired defense where telemetry and a test environment are available.</p></li>
     <li class="pipe__s pipe__s--blue"><span class="pipe__n">05</span><h3>report</h3><p>Prioritized findings, per-screen risk, reproduction, remediation, and coverage.</p></li>
   </ol>
 
@@ -403,9 +390,9 @@
   </div>
 
   <div class="row-actions row-actions--center">
-    <button class="cmd" data-copy="npx redblueskills attack https://staging.example.com" type="button">
+    <button class="cmd" data-copy="node bin/cli.js attack https://staging.example.com" type="button">
       <span class="cmd__p">$</span>
-      <span class="cmd__t">npx redblueskills attack https://staging.example.com</span>
+      <span class="cmd__t">node bin/cli.js attack https://staging.example.com</span>
       <span class="cmd__k">[copy]</span>
     </button>
     <a class="key key--wide" href="#/doc/orchestrator">how the orchestrator works →</a>
@@ -424,14 +411,17 @@
   <div class="split split--even">
     <div class="panel">
       <div class="panel__bar"><span class="panel__title">zsh — your project</span></div>
-      <pre class="pane"><code><span class="d"># 1 · install every skill + the orchestrator</span>
-<span class="p">$</span> npx redblueskills init
+      <pre class="pane"><code><span class="d"># Current website content is on this PR branch (not yet in a release)</span>
+<span class="p">$</span> git clone --branch codex/clean-site-unscoped-package https://github.com/praneeth132006/RedBlueSkills.git
+<span class="p">$</span> cd RedBlueSkills
+<span class="d"># Install playbooks into this project, or pass --dest for another project</span>
+<span class="p">$</span> node bin/cli.js init
 
-<span class="d"># 2 · read the 5-minute guide anytime</span>
-<span class="p">$</span> npx redblueskills quickstart
+<span class="d"># 2 · read the source installation guide</span>
+<span class="p">$</span> node bin/cli.js quickstart
 
 <span class="d"># or grab one skill — its pair comes along</span>
-<span class="p">$</span> npx redblueskills add web-sql-injection</code></pre>
+<span class="p">$</span> node bin/cli.js add web-sql-injection</code></pre>
     </div>
 
     <ol class="steps">
@@ -554,10 +544,10 @@
         <span class="glyph" aria-hidden="true"><i class="glyph--solid"></i><i class="glyph--hollow"></i></span>
         <span>redblueskills</span>
       </a>
-      <p>Agent-native, validated security skills — paired offense and defense,
+      <p>Security playbooks for coding agents — paired offense and defense,
          risk-labeled, with traceable validation.</p>
-      <button class="cmd cmd--sm" data-copy="npx redblueskills init" type="button">
-        <span class="cmd__p">$</span><span class="cmd__t">npx redblueskills init</span><span class="cmd__k">[copy]</span>
+      <button class="cmd cmd--sm" data-copy="node bin/cli.js init" type="button">
+        <span class="cmd__p">$</span><span class="cmd__t">node bin/cli.js init</span><span class="cmd__k">[copy]</span>
       </button>
     </div>
 
@@ -573,7 +563,7 @@
       <h4>library</h4>
       <a href="#library">skills catalog</a>
       <a href="#/doc/index">full documentation</a>
-      <a href="https://www.npmjs.com/package/redblueskills" target="_blank" rel="noopener">npm registry ↗</a>
+      <a href="https://www.npmjs.com/package/redblueskills" target="_blank" rel="noopener">npm publication status ↗</a>
       <a href="./catalog.json" target="_blank">raw catalog data ↗</a>
     </nav>
 
@@ -602,7 +592,7 @@
 <div class="toast" data-toast role="status" aria-live="polite"></div>
 
 <script src="./reader.js" defer></script>
-<script src="./app.js?v=1.1.0-motion" defer></script>
-<script src="./map.js" defer></script>
+<script src="./app.js?v=1.1.0-facts" defer></script>
+<script src="./map.js?v=1.1.0-facts" defer></script>
 </body>
 </html>

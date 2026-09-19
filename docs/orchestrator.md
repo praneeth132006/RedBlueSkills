@@ -214,8 +214,8 @@ not just a verdict.
 ## Running it yourself
 
 ```bash
-npx redblueskills attack http://localhost:3000   # prints the instruction to paste
-npx redblueskills attack --print                 # prints the full playbook
+node bin/cli.js attack http://localhost:3000   # prints the instruction to paste
+node bin/cli.js attack --print                 # prints the full playbook
 ```
 
 Or open your agent in the project and just say **"attack my application at

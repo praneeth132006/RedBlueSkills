@@ -302,6 +302,15 @@
     setText('[data-boot-pairs]', state.pairs.length);
     setText('[data-boot-val]', validated + '/' + total);
 
+    var localTargets = ['llm-local', 'ci-local', 'security-controls'];
+    var fixtureCount = skills.filter(function (skill) {
+      return skill.maturity === 'validated' && localTargets.indexOf(skill.validation_target) >= 0;
+    }).length;
+    var reviewed = skills.filter(function (skill) { return skill.maturity === 'reviewed'; }).length;
+    setText('[data-validation-summary]', total + ' skills: ' + reviewed + ' reviewed; ' + validated +
+      ' carry validation stamps. Of those stamps, ' + fixtureCount + ' reference bundled offline labs and ' +
+      (validated - fixtureCount) + ' reference other targets. These are metadata counts, not live test results.');
+
     setText('[data-c-vert-all]', total);
     Object.keys(verticals).forEach(function (v) {
       setText('[data-c-vert-' + v + ']', verticals[v]);

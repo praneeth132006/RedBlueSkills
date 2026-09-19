@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 136,
+  "count": 138,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -92,17 +92,17 @@
         },
         "harden": {
           "red": 0,
-          "blue": 8,
+          "blue": 9,
           "purple": 0,
           "validated": 2,
-          "total": 8
+          "total": 9
         },
         "collection": {
-          "red": 1,
+          "red": 2,
           "blue": 0,
           "purple": 0,
           "validated": 1,
-          "total": 1
+          "total": 2
         },
         "credential-access": {
           "red": 2,
@@ -440,10 +440,10 @@
         "purple": 0
       },
       "api": {
-        "total": 26,
+        "total": 28,
         "validated": 19,
-        "red": 13,
-        "blue": 13,
+        "red": 14,
+        "blue": 14,
         "purple": 0
       },
       "cloud-native": {
@@ -517,6 +517,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/blue/detect/api-authentication-monitoring/SKILL.md"
     },
     {
@@ -552,6 +553,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/blue/detect/api-bola-detection/SKILL.md"
     },
     {
@@ -586,6 +588,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/blue/detect/api-data-exposure-monitoring/SKILL.md"
     },
     {
@@ -621,6 +624,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/detect/api-function-authorization-monitoring/SKILL.md"
     },
     {
@@ -657,6 +661,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/blue/detect/api-inventory-monitoring/SKILL.md"
     },
     {
@@ -693,7 +698,30 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-business-flow-hardening/SKILL.md"
+    },
+    {
+      "name": "api-cors-trust-hardening",
+      "description": "Configure an explicit browser-origin policy for sensitive APIs and verify allowed and denied cross-origin reads. CORS is not a replacement for authentication or CSRF protection.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "cwe": [
+          "CWE-942"
+        ]
+      },
+      "pairs_with": [
+        "api-cors-trust-assessment"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "validation_target": null,
+      "path": "skills/api/blue/harden/api-cors-trust-hardening/SKILL.md"
     },
     {
       "name": "api-jwt-validation-hardening",
@@ -714,6 +742,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/api/blue/harden/api-jwt-validation-hardening/SKILL.md"
     },
     {
@@ -745,6 +774,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-mass-assignment-hardening/SKILL.md"
     },
     {
@@ -777,6 +807,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-rate-limit-hardening/SKILL.md"
     },
     {
@@ -814,6 +845,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-security-configuration-hardening/SKILL.md"
     },
     {
@@ -848,6 +880,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-ssrf-hardening/SKILL.md"
     },
     {
@@ -884,6 +917,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/api/blue/harden/api-third-party-consumption-hardening/SKILL.md"
     },
     {
@@ -905,7 +939,30 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-19",
+      "validation_target": "security-controls",
       "path": "skills/api/blue/harden/api-webhook-authentication-hardening/SKILL.md"
+    },
+    {
+      "name": "api-cors-trust-assessment",
+      "description": "Assess whether a browser can read sensitive API responses from an untrusted origin. Use for CORS trust reviews, not generic CSRF or server-to-server authentication.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "collection",
+      "techniques": {
+        "cwe": [
+          "CWE-942"
+        ]
+      },
+      "pairs_with": [
+        "api-cors-trust-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "reviewed",
+      "version": "1.0.0",
+      "last_validated": null,
+      "validation_target": null,
+      "path": "skills/api/red/collection/api-cors-trust-assessment/SKILL.md"
     },
     {
       "name": "api-excessive-data-exposure",
@@ -937,6 +994,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/collection/api-excessive-data-exposure/SKILL.md"
     },
     {
@@ -971,6 +1029,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/credential-access/api-broken-authentication/SKILL.md"
     },
     {
@@ -992,6 +1051,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/api/red/credential-access/api-jwt-validation-abuse/SKILL.md"
     },
     {
@@ -1025,6 +1085,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/impact/api-sensitive-business-flow-abuse/SKILL.md"
     },
     {
@@ -1057,6 +1118,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/impact/api-unrestricted-resource-consumption/SKILL.md"
     },
     {
@@ -1088,6 +1150,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/initial-access/api-ssrf/SKILL.md"
     },
     {
@@ -1121,6 +1184,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/initial-access/api-unsafe-consumption/SKILL.md"
     },
     {
@@ -1142,6 +1206,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-19",
+      "validation_target": "security-controls",
       "path": "skills/api/red/initial-access/api-webhook-authentication-assessment/SKILL.md"
     },
     {
@@ -1175,6 +1240,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/privilege-escalation/api-bfla/SKILL.md"
     },
     {
@@ -1208,6 +1274,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/privilege-escalation/api-bola/SKILL.md"
     },
     {
@@ -1239,6 +1306,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-05",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/privilege-escalation/api-mass-assignment/SKILL.md"
     },
     {
@@ -1272,6 +1340,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/recon/api-improper-inventory/SKILL.md"
     },
     {
@@ -1306,6 +1375,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "owasp-crapi",
       "path": "skills/api/red/recon/api-security-misconfiguration/SKILL.md"
     },
     {
@@ -1342,6 +1412,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/blue/detect/ci-audit-logging-detection/SKILL.md"
     },
     {
@@ -1378,6 +1449,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/detect/ci-runner-abuse-detection/SKILL.md"
     },
     {
@@ -1414,6 +1486,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/detect/ci-secret-exposure-monitoring/SKILL.md"
     },
     {
@@ -1450,6 +1523,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/harden/ci-artifact-provenance-hardening/SKILL.md"
     },
     {
@@ -1485,6 +1559,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/harden/ci-dependency-integrity-hardening/SKILL.md"
     },
     {
@@ -1521,6 +1596,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/blue/harden/ci-flow-control-hardening/SKILL.md"
     },
     {
@@ -1557,6 +1633,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/harden/ci-identity-access-hardening/SKILL.md"
     },
     {
@@ -1593,6 +1670,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/blue/harden/ci-pbac-hardening/SKILL.md"
     },
     {
@@ -1629,6 +1707,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/harden/ci-pipeline-execution-hardening/SKILL.md"
     },
     {
@@ -1665,6 +1744,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/blue/harden/ci-third-party-governance-hardening/SKILL.md"
     },
     {
@@ -1698,6 +1778,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/credential-access/ci-secret-exfiltration/SKILL.md"
     },
     {
@@ -1731,6 +1812,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/red/defense-evasion/ci-logging-evasion/SKILL.md"
     },
     {
@@ -1764,6 +1846,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/red/execution/ci-flow-control-abuse/SKILL.md"
     },
     {
@@ -1797,6 +1880,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/execution/ci-poisoned-pipeline-execution/SKILL.md"
     },
     {
@@ -1830,6 +1914,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/impact/ci-artifact-tampering/SKILL.md"
     },
     {
@@ -1862,6 +1947,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/initial-access/ci-dependency-confusion/SKILL.md"
     },
     {
@@ -1895,6 +1981,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/initial-access/ci-third-party-integration-abuse/SKILL.md"
     },
     {
@@ -1928,6 +2015,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "ci-local",
       "path": "skills/ci-cd/red/lateral-movement/ci-pbac-abuse/SKILL.md"
     },
     {
@@ -1961,6 +2049,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/privilege-escalation/ci-identity-privilege-abuse/SKILL.md"
     },
     {
@@ -1994,6 +2083,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/ci-cd/red/privilege-escalation/ci-self-hosted-runner-abuse/SKILL.md"
     },
     {
@@ -2028,6 +2118,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/blue/detect/cloud-audit-logging-detection/SKILL.md"
     },
     {
@@ -2064,6 +2155,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "minio-s3",
       "path": "skills/cloud-native/blue/detect/cloud-storage-exposure-monitoring/SKILL.md"
     },
     {
@@ -2101,6 +2193,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "docker-colima",
       "path": "skills/cloud-native/blue/harden/cloud-container-hardening/SKILL.md"
     },
     {
@@ -2138,6 +2231,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "ec2-metadata-mock",
       "path": "skills/cloud-native/blue/harden/cloud-imds-hardening/SKILL.md"
     },
     {
@@ -2177,6 +2271,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/blue/harden/cloud-k8s-rbac-hardening/SKILL.md"
     },
     {
@@ -2211,6 +2306,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/blue/harden/cloud-serverless-hardening/SKILL.md"
     },
     {
@@ -2250,6 +2346,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/blue/hunt/cloud-iam-persistence-hunt/SKILL.md"
     },
     {
@@ -2283,6 +2380,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "minio-s3",
       "path": "skills/cloud-native/red/collection/cloud-public-storage-exposure/SKILL.md"
     },
     {
@@ -2316,6 +2414,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "ec2-metadata-mock",
       "path": "skills/cloud-native/red/credential-access/cloud-imds-credential-theft/SKILL.md"
     },
     {
@@ -2347,6 +2446,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/red/defense-evasion/cloud-logging-tamper/SKILL.md"
     },
     {
@@ -2382,6 +2482,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/red/persistence/cloud-iam-persistence/SKILL.md"
     },
     {
@@ -2417,6 +2518,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/red/privilege-escalation/cloud-k8s-rbac-abuse/SKILL.md"
     },
     {
@@ -2450,6 +2552,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-06",
+      "validation_target": "docker-colima",
       "path": "skills/cloud-native/red/privilege-escalation/cloud-privileged-container-escape/SKILL.md"
     },
     {
@@ -2481,6 +2584,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/cloud-native/red/privilege-escalation/cloud-serverless-privilege-abuse/SKILL.md"
     },
     {
@@ -2512,6 +2616,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/detect/llm-prompt-injection-detection/SKILL.md"
     },
     {
@@ -2543,6 +2648,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-agency-confinement/SKILL.md"
     },
     {
@@ -2564,6 +2670,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/llm-ai/blue/harden/llm-artifact-supply-chain-hardening/SKILL.md"
     },
     {
@@ -2595,6 +2702,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-consumption-limits/SKILL.md"
     },
     {
@@ -2626,6 +2734,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-grounding-verification/SKILL.md"
     },
     {
@@ -2657,6 +2766,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-output-dlp/SKILL.md"
     },
     {
@@ -2690,6 +2800,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-output-encoding/SKILL.md"
     },
     {
@@ -2721,6 +2832,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-system-prompt-hardening/SKILL.md"
     },
     {
@@ -2753,6 +2865,7 @@
       "maturity": "validated",
       "version": "1.0.1",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-training-data-provenance/SKILL.md"
     },
     {
@@ -2785,6 +2898,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/blue/harden/llm-vector-store-isolation/SKILL.md"
     },
     {
@@ -2814,6 +2928,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/collection/llm-sensitive-info-disclosure/SKILL.md"
     },
     {
@@ -2843,6 +2958,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/collection/llm-vector-store-leakage/SKILL.md"
     },
     {
@@ -2872,6 +2988,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/credential-access/llm-system-prompt-leakage/SKILL.md"
     },
     {
@@ -2903,6 +3020,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/execution/llm-improper-output-handling/SKILL.md"
     },
     {
@@ -2932,6 +3050,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/impact/llm-misinformation/SKILL.md"
     },
     {
@@ -2961,6 +3080,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/impact/llm-unbounded-consumption/SKILL.md"
     },
     {
@@ -2982,6 +3102,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/llm-ai/red/initial-access/llm-artifact-supply-chain-assessment/SKILL.md"
     },
     {
@@ -3011,6 +3132,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-10",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/initial-access/llm-data-poisoning/SKILL.md"
     },
     {
@@ -3040,6 +3162,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/initial-access/llm-prompt-injection/SKILL.md"
     },
     {
@@ -3069,6 +3192,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-08-09",
+      "validation_target": "llm-local",
       "path": "skills/llm-ai/red/privilege-escalation/llm-excessive-agency/SKILL.md"
     },
     {
@@ -3102,6 +3226,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/detect/mobile-backend-abuse-detection/SKILL.md"
     },
     {
@@ -3136,6 +3261,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-binary-protection-hardening/SKILL.md"
     },
     {
@@ -3170,6 +3296,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-cryptography-hardening/SKILL.md"
     },
     {
@@ -3205,6 +3332,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-data-storage-hardening/SKILL.md"
     },
     {
@@ -3239,6 +3367,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-deep-link-hardening/SKILL.md"
     },
     {
@@ -3273,6 +3402,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-misconfiguration-hardening/SKILL.md"
     },
     {
@@ -3307,6 +3437,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-privacy-hardening/SKILL.md"
     },
     {
@@ -3341,6 +3472,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-secrets-hardening/SKILL.md"
     },
     {
@@ -3375,6 +3507,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-supply-chain-hardening/SKILL.md"
     },
     {
@@ -3409,6 +3542,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/blue/harden/mobile-transport-hardening/SKILL.md"
     },
     {
@@ -3441,6 +3575,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/collection/mobile-insecure-data-storage/SKILL.md"
     },
     {
@@ -3472,6 +3607,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/collection/mobile-privacy-exposure/SKILL.md"
     },
     {
@@ -3504,6 +3640,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/credential-access/mobile-insecure-transport/SKILL.md"
     },
     {
@@ -3536,6 +3673,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/credential-access/mobile-weak-cryptography/SKILL.md"
     },
     {
@@ -3568,6 +3706,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/defense-evasion/mobile-binary-tampering/SKILL.md"
     },
     {
@@ -3599,6 +3738,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/initial-access/mobile-deep-link-abuse/SKILL.md"
     },
     {
@@ -3631,6 +3771,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/initial-access/mobile-supply-chain-tampering/SKILL.md"
     },
     {
@@ -3661,6 +3802,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/privilege-escalation/mobile-backend-api-abuse/SKILL.md"
     },
     {
@@ -3693,6 +3835,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/recon/mobile-hardcoded-secrets/SKILL.md"
     },
     {
@@ -3725,6 +3868,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/mobile/red/recon/mobile-security-misconfiguration/SKILL.md"
     },
     {
@@ -3761,6 +3905,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/detect/network-intrusion-detection/SKILL.md"
     },
     {
@@ -3799,6 +3944,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/detect/network-lateral-movement-detection/SKILL.md"
     },
     {
@@ -3838,6 +3984,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/detect/network-mitm-detection/SKILL.md"
     },
     {
@@ -3873,6 +4020,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/harden/network-attack-surface-hardening/SKILL.md"
     },
     {
@@ -3907,6 +4055,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/harden/network-egress-filtering-hardening/SKILL.md"
     },
     {
@@ -3942,6 +4091,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/harden/network-remote-access-hardening/SKILL.md"
     },
     {
@@ -3978,6 +4128,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/blue/harden/network-tls-hardening/SKILL.md"
     },
     {
@@ -4013,6 +4164,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/credential-access/network-credential-sniffing/SKILL.md"
     },
     {
@@ -4044,6 +4196,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/exfiltration/network-egress-exfiltration/SKILL.md"
     },
     {
@@ -4077,6 +4230,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/initial-access/network-remote-access-abuse/SKILL.md"
     },
     {
@@ -4110,6 +4264,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/initial-access/network-service-exploitation/SKILL.md"
     },
     {
@@ -4146,6 +4301,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/lateral-movement/network-lateral-movement/SKILL.md"
     },
     {
@@ -4178,6 +4334,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/recon/network-service-discovery/SKILL.md"
     },
     {
@@ -4211,6 +4368,7 @@
       "maturity": "reviewed",
       "version": "1.0.0",
       "last_validated": null,
+      "validation_target": null,
       "path": "skills/network/red/recon/network-tls-assessment/SKILL.md"
     },
     {
@@ -4246,6 +4404,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/detect/web-access-control-monitoring/SKILL.md"
     },
     {
@@ -4281,6 +4440,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/detect/web-command-injection-detection/SKILL.md"
     },
     {
@@ -4317,6 +4477,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/detect/web-path-traversal-detection/SKILL.md"
     },
     {
@@ -4351,6 +4512,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/detect/web-sqli-detection/SKILL.md"
     },
     {
@@ -4385,6 +4547,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/detect/web-xss-detection/SKILL.md"
     },
     {
@@ -4423,6 +4586,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/harden/web-authentication-hardening/SKILL.md"
     },
     {
@@ -4456,6 +4620,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/harden/web-csrf-hardening/SKILL.md"
     },
     {
@@ -4477,6 +4642,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/web-app/blue/harden/web-file-upload-hardening/SKILL.md"
     },
     {
@@ -4512,6 +4678,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/harden/web-security-headers/SKILL.md"
     },
     {
@@ -4546,6 +4713,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/harden/web-ssrf-hardening/SKILL.md"
     },
     {
@@ -4579,6 +4747,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/blue/harden/web-xxe-hardening/SKILL.md"
     },
     {
@@ -4615,6 +4784,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/credential-access/web-broken-authentication/SKILL.md"
     },
     {
@@ -4646,6 +4816,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/execution/web-csrf/SKILL.md"
     },
     {
@@ -4678,6 +4849,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-command-injection/SKILL.md"
     },
     {
@@ -4699,6 +4871,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-09-18",
+      "validation_target": "security-controls",
       "path": "skills/web-app/red/initial-access/web-file-upload-abuse/SKILL.md"
     },
     {
@@ -4732,6 +4905,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-path-traversal/SKILL.md"
     },
     {
@@ -4764,6 +4938,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-reflected-xss/SKILL.md"
     },
     {
@@ -4795,6 +4970,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-sql-injection/SKILL.md"
     },
     {
@@ -4826,6 +5002,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-ssrf/SKILL.md"
     },
     {
@@ -4857,6 +5034,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/initial-access/web-xxe/SKILL.md"
     },
     {
@@ -4890,6 +5068,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-28",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/privilege-escalation/web-idor/SKILL.md"
     },
     {
@@ -4922,6 +5101,7 @@
       "maturity": "validated",
       "version": "1.0.0",
       "last_validated": "2026-07-20",
+      "validation_target": "owasp-juice-shop",
       "path": "skills/web-app/red/recon/web-http-fingerprinting/SKILL.md"
     }
   ]

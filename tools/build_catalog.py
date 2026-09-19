@@ -108,8 +108,8 @@ def render_coverage_md(coverage: dict) -> str:
     grand = sum(coverage["totals"][s]["total"] for s in coverage["surfaces_order"])
     val = sum(coverage["totals"][s]["validated"] for s in coverage["surfaces_order"])
     legend = (f"\n_{grand} skills across {len([s for s in coverage['surfaces_order'] if coverage['totals'][s]['total']])} "
-              f"live surfaces; {val} validated end-to-end. `·` = empty slot, "
-              f"`✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._")
+              f"catalog surfaces; {val} validation stamps. `·` = empty slot, "
+              f"`✓` = every skill in the cell has a validation stamp, `_(planned)_` = surface not yet started._")
     return "\n".join(lines) + "\n" + legend
 
 
@@ -144,6 +144,7 @@ def collect() -> list[dict]:
             "maturity": fm.get("maturity"),
             "version": fm.get("version"),
             "last_validated": lv.isoformat() if hasattr(lv, "isoformat") else lv,
+            "validation_target": (fm.get("validation") or {}).get("target"),
             "path": str(path.relative_to(REPO)),
         })
     return rows
@@ -303,7 +304,7 @@ def render_coverage_svg(coverage: dict, stats: dict) -> str:
     # legend
     ly = pad_t + len(surfaces) * ch + 18
     legend = [("empty", "var(--empty)"), ("some", "var(--some)"),
-              ("partial", "var(--part)"), ("all validated", "var(--full)")]
+              ("partial", "var(--part)"), ("all stamped", "var(--full)")]
     lx = pad_l
     for label, fill in legend:
         parts.append(f'<rect x="{lx}" y="{ly-10}" width="12" height="12" rx="2" '
@@ -323,7 +324,7 @@ def render_readme(stats: dict) -> str | None:
         return None
     block = (
         f"{STATS_BEGIN}\n"
-        f"| skills | red↔blue pairs | validated end-to-end | live surfaces |\n"
+        f"| skills | red↔blue pairs | validation stamps | catalog surfaces |\n"
         f"|:--:|:--:|:--:|:--:|\n"
         f"| **{stats['total']}** | **{stats['pairs']}** | "
         f"**{stats['validated']}** ({stats['validated_pct']}%) | "

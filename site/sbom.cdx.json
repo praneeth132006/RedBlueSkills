@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:c013cca1-cda6-5c6e-8535-91635f61b450",
+  "serialNumber": "urn:uuid:486a19eb-d0a7-53ca-acc7-0a56eead4819",
   "version": 1,
   "metadata": {
     "component": {
@@ -279,6 +279,48 @@
         {
           "name": "redblueskills:risk",
           "value": "low"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "reviewed"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:api-cors-trust-hardening",
+      "name": "api-cors-trust-hardening",
+      "version": "1.0.0",
+      "description": "blue skill for api (harden)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "03b6e22c7631b63bd3e294f848197ed509000bdf60bca4ee3a62a472c5b900a0"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "blue"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "api"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "harden"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
         },
         {
           "name": "redblueskills:maturity",
@@ -577,6 +619,48 @@
         {
           "name": "redblueskills:maturity",
           "value": "validated"
+        }
+      ]
+    },
+    {
+      "type": "data",
+      "bom-ref": "skill:api-cors-trust-assessment",
+      "name": "api-cors-trust-assessment",
+      "version": "1.0.0",
+      "description": "red skill for api (collection)",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b6982b64b3a5f75f9c0ea2c8826af5dd415f1f7bb2525218cbb7992db2d26eed"
+        }
+      ],
+      "properties": [
+        {
+          "name": "redblueskills:team",
+          "value": "red"
+        },
+        {
+          "name": "redblueskills:app_type",
+          "value": "api"
+        },
+        {
+          "name": "redblueskills:stage",
+          "value": "collection"
+        },
+        {
+          "name": "redblueskills:risk",
+          "value": "medium"
+        },
+        {
+          "name": "redblueskills:maturity",
+          "value": "reviewed"
         }
       ]
     },

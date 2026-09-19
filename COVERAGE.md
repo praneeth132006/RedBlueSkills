@@ -157,13 +157,13 @@ data as a radial coverage map and matrix.
 | surface | recon | initial-access | execution | persistence | privilege-escalation | defense-evasion | credential-access | lateral-movement | collection | exfiltration | impact | harden | detect | hunt | **total** |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `web-app` | 1✓ | 7✓ | 1✓ | · | 1✓ | · | 1✓ | · | · | · | · | 6✓ | 5✓ | · | **22** |
-| `api` | 2✓ | 3✓ | · | · | 3✓ | · | 2✓ | · | 1✓ | · | 2✓ | 8 | 5 | · | **26** |
+| `api` | 2✓ | 3✓ | · | · | 3✓ | · | 2✓ | · | 2 | · | 2✓ | 9 | 5 | · | **28** |
 | `cloud-native` | · | · | · | 1 | 3 | 1 | 1✓ | · | 1✓ | · | · | 4 | 2 | 1 | **14** |
 | `ci-cd` | · | 2 | 2 | · | 2 | 1✓ | 1 | 1✓ | · | · | 1 | 7 | 3 | · | **20** |
 | `mobile` | 2 | 2 | · | · | 1 | 1 | 2 | · | 2 | · | · | 9 | 1 | · | **20** |
 | `network` | 2 | 2 | · | · | · | · | 1 | 1 | · | 1 | · | 4 | 3 | · | **14** |
 | `llm-ai` | · | 3✓ | 1✓ | · | 1✓ | · | 1✓ | · | 2✓ | · | 2✓ | 9✓ | 1✓ | · | **20** |
 
-_136 skills across 7 live surfaces; 73 validated end-to-end. `·` = empty slot, `✓` = every skill in the cell is validated, `_(planned)_` = surface not yet started._
+_138 skills across 7 catalog surfaces; 73 validation stamps. `·` = empty slot, `✓` = every skill in the cell has a validation stamp, `_(planned)_` = surface not yet started._
 
 <!-- COVERAGE:END -->

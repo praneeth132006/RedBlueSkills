@@ -6,9 +6,9 @@
     "repository": "https://github.com/praneeth132006/RedBlueSkills.git"
   },
   "summary": {
-    "total": 136,
+    "total": 138,
     "validated": 73,
-    "reviewed": 63,
+    "reviewed": 65,
     "labs": [
       "ci-local",
       "docker-colima",
@@ -128,6 +128,20 @@
       "validation": null
     },
     {
+      "name": "api-cors-trust-hardening",
+      "path": "skills/api/blue/harden/api-cors-trust-hardening/SKILL.md",
+      "sha256": "03b6e22c7631b63bd3e294f848197ed509000bdf60bca4ee3a62a472c5b900a0",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "reviewed",
+      "pairs_with": [
+        "api-cors-trust-assessment"
+      ],
+      "validation": null
+    },
+    {
       "name": "api-jwt-validation-hardening",
       "path": "skills/api/blue/harden/api-jwt-validation-hardening/SKILL.md",
       "sha256": "4f0de8f6f120fa602520f30f434484ed949a25716151d21e274f93991a789a89",
@@ -234,6 +248,20 @@
         "last_validated": "2026-09-19",
         "validated_by": "codex-local-validation"
       }
+    },
+    {
+      "name": "api-cors-trust-assessment",
+      "path": "skills/api/red/collection/api-cors-trust-assessment/SKILL.md",
+      "sha256": "b6982b64b3a5f75f9c0ea2c8826af5dd415f1f7bb2525218cbb7992db2d26eed",
+      "team": "red",
+      "app_type": "api",
+      "stage": "collection",
+      "risk": "medium",
+      "maturity": "reviewed",
+      "pairs_with": [
+        "api-cors-trust-hardening"
+      ],
+      "validation": null
     },
     {
       "name": "api-excessive-data-exposure",
