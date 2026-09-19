@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from controls import Rejected, load_artifact, store_upload, token, verify_token
+from controls import accept_webhook, webhook_signature, Rejected, load_artifact, store_upload, token, verify_token
 
 
 class JWTControls(unittest.TestCase):
@@ -132,6 +132,59 @@ class ArtifactControls(unittest.TestCase):
                 load_artifact(self.blob, supplied, self.approved)
         with self.assertRaises(Rejected):
             load_artifact(b' ' * 4097, self.supplied, self.approved)
+
+
+class WebhookControls(unittest.TestCase):
+    def setUp(self):
+        self.body = b'{"id":"evt_fixture","value":1}'
+        self.key = b'public-fixture-key'
+        self.seen = set()
+
+    def accept(self, body=None, timestamp=1000, signature=None, now=1000, strict=True):
+        body = self.body if body is None else body
+        signature = webhook_signature(body, timestamp, self.key) if signature is None else signature
+        return accept_webhook(body, timestamp, signature, self.key, now, self.seen, strict)
+
+    def test_valid_and_duplicate_have_one_effect(self):
+        self.assertEqual(self.accept(), 'processed')
+        self.assertEqual(self.accept(), 'duplicate')
+        self.assertEqual(self.accept(timestamp=1001), 'duplicate')
+        self.assertEqual(self.seen, {'evt_fixture'})
+
+    def test_vulnerable_control_accepts_forgery_and_replay(self):
+        self.assertEqual(self.accept(signature='forged', strict=False), 'processed')
+        self.assertEqual(self.accept(signature='forged', strict=False), 'processed')
+        self.seen.clear()
+        with self.assertRaises(Rejected):
+            self.accept(signature='forged')
+        self.assertFalse(self.seen)
+
+    def test_raw_body_and_timestamp_are_authenticated(self):
+        signature = webhook_signature(self.body, 1000, self.key)
+        for body, timestamp in [(self.body + b' ', 1000), (self.body, 1001),
+                                (self.body.replace(b':1', b':2'), 1000)]:
+            with self.subTest(body=body, timestamp=timestamp), self.assertRaises(Rejected):
+                self.accept(body=body, timestamp=timestamp, signature=signature)
+        self.assertFalse(self.seen)
+
+    def test_time_boundaries(self):
+        for now in [700, 1300]:
+            self.seen.clear()
+            self.assertEqual(self.accept(now=now), 'processed')
+        for now in [699, 1301]:
+            with self.subTest(now=now), self.assertRaises(Rejected):
+                self.accept(now=now)
+
+    def test_malformed_and_wrong_key_leave_no_effect(self):
+        for body in [b'[]', b'{}', b'{"id":1}', b'{', b' ' * 4097]:
+            with self.subTest(body=body[:20]), self.assertRaises(Rejected):
+                self.accept(body=body)
+        for signature in ['', 'a' * 64, 'é' * 64, webhook_signature(self.body, 1000, b'other')]:
+            with self.subTest(signature=signature), self.assertRaises(Rejected):
+                self.accept(signature=signature)
+        with self.assertRaises(Rejected):
+            accept_webhook(self.body, 1000, 'a' * 64, b'', 1000, self.seen)
+        self.assertFalse(self.seen)
 
 
 if __name__ == '__main__':

@@ -9,9 +9,10 @@ follow [Semantic Versioning](https://semver.org/).
 ## [1.1.0] — 2026-09-18
 
 ### Added
-- Six researched skills: JWT validation, file upload controls, and LLM artifact
-  supply-chain assessment/hardening, each paired and validated against the new
-  `security-controls` fixture (16 tests with negative and positive controls).
+- Eight researched skills: JWT validation, file upload controls, and LLM artifact
+  supply-chain assessment/hardening, plus webhook authenticity/replay controls,
+  each paired and validated against the new
+  `security-controls` fixture (21 tests with negative and positive controls).
 - `redblueskills verify`, `--version`, and bundled `lab` commands. Actual packed
   npm installs are tested, including all offline labs and integrity-failure cases.
 

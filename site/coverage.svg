@@ -6,7 +6,7 @@
 </style>
 <rect width="1238" height="336" fill="var(--bg)"/>
 <text x="16" y="30" class="n" font-size="15">RedBlueSkills coverage</text>
-<text x="16" y="50" class="m" font-size="11">134 skills · 71 validated · 67 red↔blue pairs · 7 surfaces</text>
+<text x="16" y="50" class="m" font-size="11">136 skills · 73 validated · 68 red↔blue pairs · 7 surfaces</text>
 <text x="169" y="88" class="m" font-size="10" text-anchor="start" transform="rotate(-45 169 88)">recon</text>
 <text x="243" y="88" class="m" font-size="10" text-anchor="start" transform="rotate(-45 243 88)">initial-access</text>
 <text x="317" y="88" class="m" font-size="10" text-anchor="start" transform="rotate(-45 317 88)">execution</text>
@@ -48,7 +48,7 @@
 <rect x="132" y="126" width="71" height="27" rx="3" fill="var(--full)" stroke="var(--grid)" stroke-width="0.5"/>
 <text x="168" y="145" class="t" font-size="11" text-anchor="middle">2</text>
 <rect x="206" y="126" width="71" height="27" rx="3" fill="var(--full)" stroke="var(--grid)" stroke-width="0.5"/>
-<text x="242" y="145" class="t" font-size="11" text-anchor="middle">2</text>
+<text x="242" y="145" class="t" font-size="11" text-anchor="middle">3</text>
 <rect x="280" y="126" width="71" height="27" rx="3" fill="var(--empty)" stroke="var(--grid)" stroke-width="0.5"/>
 <rect x="354" y="126" width="71" height="27" rx="3" fill="var(--empty)" stroke="var(--grid)" stroke-width="0.5"/>
 <rect x="428" y="126" width="71" height="27" rx="3" fill="var(--full)" stroke="var(--grid)" stroke-width="0.5"/>
@@ -63,11 +63,11 @@
 <rect x="872" y="126" width="71" height="27" rx="3" fill="var(--full)" stroke="var(--grid)" stroke-width="0.5"/>
 <text x="908" y="145" class="t" font-size="11" text-anchor="middle">2</text>
 <rect x="946" y="126" width="71" height="27" rx="3" fill="var(--part)" stroke="var(--grid)" stroke-width="0.5"/>
-<text x="982" y="145" class="t" font-size="11" text-anchor="middle">7</text>
+<text x="982" y="145" class="t" font-size="11" text-anchor="middle">8</text>
 <rect x="1020" y="126" width="71" height="27" rx="3" fill="var(--part)" stroke="var(--grid)" stroke-width="0.5"/>
 <text x="1056" y="145" class="t" font-size="11" text-anchor="middle">5</text>
 <rect x="1094" y="126" width="71" height="27" rx="3" fill="var(--empty)" stroke="var(--grid)" stroke-width="0.5"/>
-<text x="1174" y="145" class="n" font-size="11">24</text>
+<text x="1174" y="145" class="n" font-size="11">26</text>
 <text x="122" y="175" class="t" font-size="11" text-anchor="end">cloud-native</text>
 <rect x="132" y="156" width="71" height="27" rx="3" fill="var(--empty)" stroke="var(--grid)" stroke-width="0.5"/>
 <rect x="206" y="156" width="71" height="27" rx="3" fill="var(--empty)" stroke="var(--grid)" stroke-width="0.5"/>

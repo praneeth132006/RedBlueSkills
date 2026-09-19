@@ -6,8 +6,8 @@
     "repository": "https://github.com/praneeth132006/RedBlueSkills.git"
   },
   "summary": {
-    "total": 134,
-    "validated": 71,
+    "total": 136,
+    "validated": 73,
     "reviewed": 63,
     "labs": [
       "ci-local",
@@ -217,6 +217,25 @@
       "validation": null
     },
     {
+      "name": "api-webhook-authentication-hardening",
+      "path": "skills/api/blue/harden/api-webhook-authentication-hardening/SKILL.md",
+      "sha256": "8b22fd574ba9e6ad3dcfca608624419735c04b1f0b4c683cd8e197f813990eb4",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-webhook-authentication-assessment"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-19",
+        "validated_by": "codex-local-validation"
+      }
+    },
+    {
       "name": "api-excessive-data-exposure",
       "path": "skills/api/red/collection/api-excessive-data-exposure/SKILL.md",
       "sha256": "fac4accd169094c0a858d8a4bf7e81ffcc0e475bf527d4edd74f0be9ec835a73",
@@ -347,6 +366,25 @@
         "target": "owasp-crapi",
         "last_validated": "2026-08-06",
         "validated_by": "praneeth132006"
+      }
+    },
+    {
+      "name": "api-webhook-authentication-assessment",
+      "path": "skills/api/red/initial-access/api-webhook-authentication-assessment/SKILL.md",
+      "sha256": "95f8de2eeeb340afd711721110972cb9ea6defa3fcce98673114d0b79e09f649",
+      "team": "red",
+      "app_type": "api",
+      "stage": "initial-access",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-webhook-authentication-hardening"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-19",
+        "validated_by": "codex-local-validation"
       }
     },
     {

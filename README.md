@@ -12,7 +12,7 @@
 <!-- STATS:BEGIN -->
 | skills | red↔blue pairs | validated end-to-end | live surfaces |
 |:--:|:--:|:--:|:--:|
-| **134** | **67** | **71** (53%) | **7** |
+| **136** | **68** | **73** (54%) | **7** |
 
 <sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — never hand-edited. CI fails if this table drifts.</sub>
 <!-- STATS:END -->

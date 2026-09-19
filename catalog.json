@@ -1,6 +1,6 @@
 {
   "schema": "redblueskills/catalog/v1",
-  "count": 134,
+  "count": 136,
   "coverage": {
     "surfaces_order": [
       "web-app",
@@ -92,10 +92,10 @@
         },
         "harden": {
           "red": 0,
-          "blue": 7,
+          "blue": 8,
           "purple": 0,
-          "validated": 1,
-          "total": 7
+          "validated": 2,
+          "total": 8
         },
         "collection": {
           "red": 1,
@@ -119,11 +119,11 @@
           "total": 2
         },
         "initial-access": {
-          "red": 2,
+          "red": 3,
           "blue": 0,
           "purple": 0,
-          "validated": 2,
-          "total": 2
+          "validated": 3,
+          "total": 3
         },
         "privilege-escalation": {
           "red": 3,
@@ -440,10 +440,10 @@
         "purple": 0
       },
       "api": {
-        "total": 24,
-        "validated": 17,
-        "red": 12,
-        "blue": 12,
+        "total": 26,
+        "validated": 19,
+        "red": 13,
+        "blue": 13,
         "purple": 0
       },
       "cloud-native": {
@@ -887,6 +887,27 @@
       "path": "skills/api/blue/harden/api-third-party-consumption-hardening/SKILL.md"
     },
     {
+      "name": "api-webhook-authentication-hardening",
+      "description": "Harden incoming webhooks with provider signature verification, signed freshness checks where supported, and durable idempotent processing.",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "techniques": {
+        "cwe": [
+          "CWE-345"
+        ]
+      },
+      "pairs_with": [
+        "api-webhook-authentication-assessment"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-19",
+      "path": "skills/api/blue/harden/api-webhook-authentication-hardening/SKILL.md"
+    },
+    {
       "name": "api-excessive-data-exposure",
       "description": "Find and prove excessive data exposure (part of API3:2023) in an API during an authorized test — endpoints that return more object properties than the caller needs, leaking sensitive or internal fields the client merely hides. Use when an API response may carry fields beyond what the consuming UI displays.",
       "team": "red",
@@ -1101,6 +1122,27 @@
       "version": "1.0.0",
       "last_validated": "2026-08-06",
       "path": "skills/api/red/initial-access/api-unsafe-consumption/SKILL.md"
+    },
+    {
+      "name": "api-webhook-authentication-assessment",
+      "description": "Assess incoming webhook signature validation and duplicate-event handling using synthetic deliveries. Use for webhook receivers, not outbound callback SSRF.",
+      "team": "red",
+      "app_type": "api",
+      "stage": "initial-access",
+      "techniques": {
+        "cwe": [
+          "CWE-345"
+        ]
+      },
+      "pairs_with": [
+        "api-webhook-authentication-hardening"
+      ],
+      "risk": "medium",
+      "authorization": "required",
+      "maturity": "validated",
+      "version": "1.0.0",
+      "last_validated": "2026-09-19",
+      "path": "skills/api/red/initial-access/api-webhook-authentication-assessment/SKILL.md"
     },
     {
       "name": "api-bfla",

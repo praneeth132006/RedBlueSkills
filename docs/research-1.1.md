@@ -1,6 +1,6 @@
 # v1.1 research and validation scope
 
-Reviewed 2026-09-18. Six new skills fill three focused gaps; they do not imply
+Reviewed 2026-09-19. Eight new skills fill four focused gaps; they do not imply
 complete coverage of every deployment or every risk within a framework category.
 
 | Pair | Primary basis | Local evidence | Still needs integration testing |
@@ -35,9 +35,20 @@ use the signed GitHub release artifacts for independent provenance verification.
 
 ## What was rechecked for this release
 
-All 134 skills pass metadata, pairing, package integrity, install, and MCP-load
-checks. Of the 71 skills carrying a validation stamp, 30 point to the three
+All 136 skills pass metadata, pairing, package integrity, install, and MCP-load
+checks. Of the 73 skills carrying a validation stamp, 32 point to the three
 offline labs replayed here (18 mock-LLM, 6 CI, 6 new security-controls skills).
 The other 41 retain earlier external-lab evidence and were not re-executed in
 this release. The remaining 63 skills are `reviewed`, not end-to-end validated.
 These distinctions remain visible in the catalog and per-skill metadata.
+
+## Webhook pair (2026-09-19)
+
+Added `api-webhook-authentication-assessment` and its hardening counterpart.
+Primary sources: [GitHub signature validation](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries)
+and [Stripe webhooks](https://docs.stripe.com/webhooks). The instructions distinguish
+provider authentication, provider-specific freshness, and durable duplicate handling.
+Five new offline tests use synthetic timestamped HMAC messages, never real events.
+The complete security-controls lab now has 21 tests. These tests do not establish
+provider integration or distributed processing correctness. The catalog now has
+136 skills (68 pairs); this new pair adds two fixture-validated skills.
