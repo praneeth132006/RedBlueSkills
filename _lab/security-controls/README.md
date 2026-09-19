@@ -22,3 +22,11 @@ testing. `validated` refers to this named fixture, not all possible deployments.
 
 A failing unittest produces a nonzero exit. Tests use a fixed clock and public
 fixture key; never substitute production credentials.
+
+## Webhook controls
+
+`WebhookControls` tests a synthetic timestamped HMAC receiver: raw-body tampering,
+forgery, time boundaries, malformed input, and duplicate authenticated events.
+The in-memory deduplication set only models sequential completed work. Production
+receivers need provider SDK verification and durable atomic processing; crash
+recovery, concurrent deliveries, and real provider wire formats are not covered.

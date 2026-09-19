@@ -133,3 +133,38 @@ an operator-controlled policy; supplied metadata cannot replace that policy.
     if not isinstance(value, dict):
         raise Rejected('artifact must be an object')
     return value
+
+
+def webhook_signature(body, timestamp, key):
+    """Synthetic timestamped HMAC format, not a provider SDK implementation."""
+    return hmac.new(key, str(timestamp).encode('ascii') + b'.' + body,
+                    hashlib.sha256).hexdigest()
+
+
+def accept_webhook(body, timestamp, signature, key, now, seen, strict=True):
+    """Single-process teaching fixture. Returns processed or duplicate.
+
+    Production needs a durable, atomic inbox transaction and provider SDK.
+    The in-memory set models completed work only; no external action runs here.
+    """
+    if not isinstance(body, bytes) or len(body) > 4096:
+        raise Rejected('invalid body')
+    if strict:
+        if not isinstance(key, bytes) or not key:
+            raise Rejected('missing key')
+        if type(timestamp) is not int or type(now) is not int or abs(now - timestamp) > 300:
+            raise Rejected('outside time window')
+        if not isinstance(signature, str) or not re.fullmatch(r'[0-9a-f]{64}', signature):
+            raise Rejected('invalid signature format')
+        if not hmac.compare_digest(webhook_signature(body, timestamp, key), signature):
+            raise Rejected('signature mismatch')
+    try:
+        event = json.loads(body)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise Rejected('invalid json') from exc
+    if not isinstance(event, dict) or not isinstance(event.get('id'), str) or not event['id']:
+        raise Rejected('missing event id')
+    if strict and event['id'] in seen:
+        return 'duplicate'
+    seen.add(event['id'])
+    return 'processed'

@@ -1,20 +1,5 @@
-/* =====================================================================
-   redblueskills — "TTY"
-   A terminal interface in ANSI red and blue.
-
-   Rules of the system
-   - One typeface: JetBrains Mono. Everything sits on a character grid.
-   - Black, white, six greys, and exactly two hues.
-   - Colour is meaning, never decoration:
-       RED   offense, risk, danger, the attack surface
-       BLUE  defense, links, focus, anything you can act on
-     If a thing is neither offensive nor interactive, it stays grey.
-   - Form still carries the distinction too, so the page survives
-     greyscale printing and colour-blind readers: █ vs ░, solid vs hollow.
-   - Panels are ASCII boxes: 1px rules with + corner marks.
-   - Phosphor bleed (a tight text-shadow) is the only glow. Never a gradient
-     wash, never a drop shadow.
-   ===================================================================== */
+/* Base component styles. design.css supplies the current presentation tokens,
+   typography, responsive refinements, and reduced-motion overrides. */
 
 /* ─────────────────────────────────────────────────────────────────────
    TOKENS
