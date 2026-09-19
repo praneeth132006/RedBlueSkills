@@ -767,16 +767,16 @@
   if ('IntersectionObserver' in window && Element.prototype.animate) {
     var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     var revealObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
+      entries.forEach(function (entry, index) {
         if (!entry.isIntersecting) return;
         if (!motionPreference.matches) {
           entry.target.animate([{opacity: 0.35, transform: 'translateY(20px)'}, {opacity: 1, transform: 'translateY(0)'}],
-            {duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)'});
+            {duration: 850, delay: Math.min(index, 3) * 65, easing: 'cubic-bezier(.22,1,.36,1)'});
         }
         revealObs.unobserve(entry.target);
       });
     }, {threshold: 0.08});
-    $$('.sect__head, .workflow__card, .steps, .tenets').forEach(function (el) { revealObs.observe(el); });
+    $$('.sect__head, .workflow__card, .ex__c, .tenet, .steps > li, .proof__item').forEach(function (el) { revealObs.observe(el); });
     motionPreference.addEventListener('change', function () {
       if (motionPreference.matches) document.getAnimations().forEach(function (animation) { animation.finish(); });
     });
