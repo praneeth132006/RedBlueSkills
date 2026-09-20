@@ -1,13 +1,10 @@
-# Quickstart — from zero to a security report in 5 minutes
+# Quickstart — install and run a scoped assessment
 
-**New here? Start on this page.** RedBlueSkills turns your AI coding agent (Claude
-Code and friends) into an authorized security tester *and* a defender. You install
-the library once, point it at an app **you own or are allowed to test**, and say
-**"attack my application."** The agent probes the app, proves what it finds with a
-minimal example, checks whether your own logging would have caught it, and writes
-you a prioritized report.
+RedBlueSkills provides playbooks for compatible coding agents. The CLI installs
+instructions and prints assessment prompts; the agent needs the tools, permissions,
+and target access to execute them. A report is not guaranteed within a fixed time.
 
-No security background required. If you can run one `npx` command, you can do this.
+As checked on 2026-09-19, npm publication is pending. Use the source checkout below.
 
 > ⚠️ **One rule before anything else.** Only run these skills against systems you
 > own or have **written permission** to test, and only to defend systems you
@@ -26,36 +23,37 @@ No security background required. If you can run one `npx` command, you can do th
 
 ---
 
-## Step 1 — Install the library into your agent (30 seconds)
+## Step 1 — Install from source
 
-From the root of the project you want to test:
+The current website reflects PR #24. From a working directory:
 
 ```bash
-npx redblueskills init
+git clone --branch codex/clean-site-unscoped-package https://github.com/praneeth132006/RedBlueSkills.git
+cd RedBlueSkills
+node bin/cli.js init --dest /path/to/your/project/.claude/skills/redblueskills
 ```
 
-Use whatever runner you already have — `pnpm dlx redblueskills init`,
-`yarn dlx redblueskills init` (yarn 2+), `bunx redblueskills init`, or
-`deno run -A npm:redblueskills init`. Prefer it on your PATH?
-`npm i -g redblueskills`, then drop the runner prefix from every command below.
+Replace `/path/to/your/project` with the project you want to assess. Run the
+remaining CLI examples from the cloned repository, using an explicit target path
+for source assessments in another project.
 
 That copies every skill **and** the `attack-my-application` orchestrator into
 `./.claude/skills/redblueskills/`, plus a generated `README.md` that tells your
-agent when to load each one. No repo to clone, no submodules.
+agent when to load each one. No runtime npm dependencies are installed.
 
 Only want one technique? Grab it — its paired defense comes along automatically:
 
 ```bash
-npx redblueskills add web-sql-injection
+node bin/cli.js add web-sql-injection
 ```
 
 Browse what's available anytime:
 
 ```bash
-npx redblueskills list          # everything
-npx redblueskills list red      # just offense
-npx redblueskills list blue     # just defense
-npx redblueskills list ssrf     # free-text search
+node bin/cli.js list          # everything
+node bin/cli.js list red      # just offense
+node bin/cli.js list blue     # just defense
+node bin/cli.js list ssrf     # free-text search
 ```
 
 ## Step 2 — Point your agent at a target and give the instruction
@@ -82,10 +80,10 @@ specific folder instead of the whole project? Say *"…review the code at `./src
 Or, to see the exact instruction and playbook without guessing:
 
 ```bash
-npx redblueskills attack                          # review the code in this project
-npx redblueskills attack ./src                     # review a specific code path
-npx redblueskills attack http://localhost:3000     # probe a running app
-npx redblueskills attack --print                   # the full orchestrator playbook
+node bin/cli.js attack                          # review the code in this project
+node bin/cli.js attack ./src                     # review a specific code path
+node bin/cli.js attack http://localhost:3000     # probe a running app
+node bin/cli.js attack --print                   # the full orchestrator playbook
 ```
 
 ## Step 3 — Answer the authorization questions

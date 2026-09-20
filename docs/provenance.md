@@ -1,8 +1,9 @@
 # Provenance & supply-chain integrity
 
-RedBlueSkills is a security library, so it holds itself to the standard it asks of
-its users: every artifact is **reproducible, hashed, and signed**, and nothing that
-describes the library is written by hand.
+The source tree contains generated hashes and metadata. These check consistency;
+they do not prove that a target is secure or that a replaced manifest is authentic.
+As checked on 2026-09-19, v1.0.0 is the latest GitHub release and includes manifest
+signature files. Current development content is not a signed v1.1.0 release.
 
 ## What ships
 
@@ -14,14 +15,13 @@ describes the library is written by hand.
 | `site/badges/*.json` | shields.io endpoints for the README badges (counts) | `make catalog` |
 | `site/coverage.svg` | surface × kill-chain heatmap | `make catalog` |
 
-Every one is derived from the `SKILL.md` files on disk. There are **no hardcoded
-counts** anywhere — `tools/build_catalog.py --check` and
+Every one is derived from the `SKILL.md` files on disk. The generated catalog counts are checked for freshness — `tools/build_catalog.py --check` and
 `tools/build_provenance.py --check` run in CI and fail the build if any committed
 artifact drifts from what the tree would produce.
 
 ## Determinism
 
-The SBOM and provenance manifest contain **no timestamps and no clock-based UUIDs**.
+The SBOM and provenance manifest contain no generation-time clock value; validation dates remain in the metadata.
 The CycloneDX `serialNumber` is a UUIDv5 derived from the component hashes, so the
 same tree always produces byte-identical files. That is what makes the `--check`
 gate meaningful and what makes a signature verifiable: the bytes you verify are the
@@ -29,12 +29,11 @@ bytes anyone can reproduce from the source.
 
 ## Signing (cosign keyless)
 
-Releases are signed in CI with [Sigstore cosign](https://docs.sigstore.dev/) in
-**keyless mode** — there is no private key stored anywhere. The signing identity is
+The release workflow is configured to sign manifests with [Sigstore cosign](https://docs.sigstore.dev/) in
+**keyless mode**. The signing identity is
 the GitHub Actions OIDC token for this repository, recorded in the certificate and
-in the public Rekor transparency log. The release also carries a
-[SLSA build provenance attestation](https://slsa.dev/) via
-`actions/attest-build-provenance`.
+in the public Rekor transparency log. The workflow also requests a build attestation. Inspect the actual release artifacts
+and verification results before treating that configuration as evidence.
 
 ### Verify a signed artifact
 

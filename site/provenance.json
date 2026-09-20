@@ -6,9 +6,9 @@
     "repository": "https://github.com/praneeth132006/RedBlueSkills.git"
   },
   "summary": {
-    "total": 134,
-    "validated": 71,
-    "reviewed": 63,
+    "total": 138,
+    "validated": 73,
+    "reviewed": 65,
     "labs": [
       "ci-local",
       "docker-colima",
@@ -128,6 +128,20 @@
       "validation": null
     },
     {
+      "name": "api-cors-trust-hardening",
+      "path": "skills/api/blue/harden/api-cors-trust-hardening/SKILL.md",
+      "sha256": "03b6e22c7631b63bd3e294f848197ed509000bdf60bca4ee3a62a472c5b900a0",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "reviewed",
+      "pairs_with": [
+        "api-cors-trust-assessment"
+      ],
+      "validation": null
+    },
+    {
       "name": "api-jwt-validation-hardening",
       "path": "skills/api/blue/harden/api-jwt-validation-hardening/SKILL.md",
       "sha256": "4f0de8f6f120fa602520f30f434484ed949a25716151d21e274f93991a789a89",
@@ -213,6 +227,39 @@
       "maturity": "reviewed",
       "pairs_with": [
         "api-unsafe-consumption"
+      ],
+      "validation": null
+    },
+    {
+      "name": "api-webhook-authentication-hardening",
+      "path": "skills/api/blue/harden/api-webhook-authentication-hardening/SKILL.md",
+      "sha256": "8b22fd574ba9e6ad3dcfca608624419735c04b1f0b4c683cd8e197f813990eb4",
+      "team": "blue",
+      "app_type": "api",
+      "stage": "harden",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-webhook-authentication-assessment"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-19",
+        "validated_by": "codex-local-validation"
+      }
+    },
+    {
+      "name": "api-cors-trust-assessment",
+      "path": "skills/api/red/collection/api-cors-trust-assessment/SKILL.md",
+      "sha256": "b6982b64b3a5f75f9c0ea2c8826af5dd415f1f7bb2525218cbb7992db2d26eed",
+      "team": "red",
+      "app_type": "api",
+      "stage": "collection",
+      "risk": "medium",
+      "maturity": "reviewed",
+      "pairs_with": [
+        "api-cors-trust-hardening"
       ],
       "validation": null
     },
@@ -347,6 +394,25 @@
         "target": "owasp-crapi",
         "last_validated": "2026-08-06",
         "validated_by": "praneeth132006"
+      }
+    },
+    {
+      "name": "api-webhook-authentication-assessment",
+      "path": "skills/api/red/initial-access/api-webhook-authentication-assessment/SKILL.md",
+      "sha256": "95f8de2eeeb340afd711721110972cb9ea6defa3fcce98673114d0b79e09f649",
+      "team": "red",
+      "app_type": "api",
+      "stage": "initial-access",
+      "risk": "medium",
+      "maturity": "validated",
+      "pairs_with": [
+        "api-webhook-authentication-hardening"
+      ],
+      "validation": {
+        "method": "lab",
+        "target": "security-controls",
+        "last_validated": "2026-09-19",
+        "validated_by": "codex-local-validation"
       }
     },
     {

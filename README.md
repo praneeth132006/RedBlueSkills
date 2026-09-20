@@ -1,6 +1,6 @@
 # RedBlueSkills
 
-**Agent-native, validated security skills for red teams and blue teams — paired offense and defense, risk-labeled, and proven before merge.**
+**Paired security playbooks for coding agents — explicit risk labels, validation metadata, and documented test limits.**
 
 [![Validate](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml/badge.svg)](https://github.com/praneeth132006/RedBlueSkills/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
@@ -10,9 +10,9 @@
 [![npm](https://img.shields.io/badge/npm-redblueskills-c4362a)](https://www.npmjs.com/package/redblueskills)
 
 <!-- STATS:BEGIN -->
-| skills | red↔blue pairs | validated end-to-end | live surfaces |
+| skills | red↔blue pairs | validation stamps | catalog surfaces |
 |:--:|:--:|:--:|:--:|
-| **134** | **67** | **71** (53%) | **7** |
+| **138** | **69** | **73** (53%) | **7** |
 
 <sub>Counts generated from `catalog.json` by `tools/build_catalog.py` — never hand-edited. CI fails if this table drifts.</sub>
 <!-- STATS:END -->
@@ -29,7 +29,7 @@ That means four things most "awesome-security" lists don't give you:
 |---|---|
 | 🤖 **Agent-native** | Every skill is an executable `SKILL.md` with a machine-readable header — loadable by Claude Code and other agents, not just human-readable notes. |
 | 🔗 **Paired red ↔ blue** | Every offensive technique links to its detection/defense counterpart, and CI enforces the pairing is bidirectional. Offense you can't detect doesn't ship. |
-| ✅ **Validated & provenanced** | Skills are proven against a real lab or CTF target, stamped with who validated them and when, and auto-flagged as `stale` after 6 months. |
+| ✅ **Validated & provenanced** | Validated skills record a target, validator, and date. Other skills remain reviewed; metadata does not certify a live application. |
 | 🛠️ **Tooled** | A schema validator, catalog generator, and test suite gate every PR. Quality scales with contributors instead of rotting. |
 
 > ⚠️ **Authorized use only.** These skills are for security testing on systems you
@@ -48,7 +48,7 @@ point it at a URL) — and read the report.
 
 | Guide | What it covers |
 |---|---|
-| **[QUICKSTART.md](QUICKSTART.md)** | The 5-minute, no-jargon path from install to report. |
+| **[QUICKSTART.md](QUICKSTART.md)** | Source installation and a scoped assessment workflow. |
 | **[docs/orchestrator.md](docs/orchestrator.md)** | How `attack-my-application` works, stage by stage, with a sample transcript. |
 | **[docs/examples/](docs/examples/)** | Full runs against real stacks — [Flask](docs/examples/flask.md) · [Node/Express](docs/examples/node-express.md) · [Rails](docs/examples/rails.md). |
 | **[docs/adding-a-skill.md](docs/adding-a-skill.md)** | Write your own red↔blue pair; every CI gate explained. |
@@ -111,12 +111,10 @@ unbounded consumption (LLM10). The bundled mock-LLM and security-controls labs
 exercise the named fixtures; production providers and integrations require
 separate validation. Dedicated JWT and file-upload pairs extend the API and web
 surfaces. See [the research and validation notes](docs/research-1.1.md).
-A large share are **`validated` end-to-end** (see the *validated* badge) against
-live labs — OWASP crAPI, Docker/Colima, a mock EC2 IMDS, MinIO, a git+bash CI lab,
-and the mock-LLM lab — with the exact evidence recorded in each skill's
-`## Validation` section; the rest stay `reviewed` with the blocker documented
-in-skill. The validated labs are **re-provable on demand** with `make validate-labs`,
-so a stamp is a claim you can re-run, not just trust.
+Maturity is recorded per skill. `make validate-labs` replays three bundled offline
+labs; it does not rerun earlier external-lab validations. Reviewed skills have no
+runtime-validation claim. Read [the scope breakdown](docs/research-1.1.md) before
+interpreting validation counts.
 
 ![Coverage heatmap — surface × kill-chain stage](site/coverage.svg)
 
@@ -127,12 +125,12 @@ and pairing discipline.
 
 ### Supply-chain provenance
 
-Every release ships a **CycloneDX SBOM** ([`sbom.cdx.json`](sbom.cdx.json)) and a
+The source tree contains a **CycloneDX SBOM** ([`sbom.cdx.json`](sbom.cdx.json)) and a
 **provenance manifest** ([`provenance.json`](provenance.json)) that records, for
 each skill, the SHA-256 of its `SKILL.md` and who validated it against which lab.
 Both are regenerated from the tree by `make provenance` (CI fails if they drift)
-and **signed at release with cosign keyless signing** — no long-lived keys, the
-signing identity is the GitHub Actions OIDC token. Verify a release:
+The v1.0.0 release includes signature files for its manifests. Current development
+artifacts are unsigned. Verify signatures against matching downloaded release bytes:
 
 ```bash
 cosign verify-blob \
@@ -146,39 +144,22 @@ See [`docs/provenance.md`](docs/provenance.md) for the full verification walkthr
 
 ---
 
-## Install into your agent — one command
+## Install into your agent from source
 
-You don't need to clone this repo to use it. The library is published to npm, so
-any coding LLM (Claude Code and friends) can pull the whole thing — skills,
-`catalog.json`, and the `attack-my-application` orchestrator — into its skills
-path in one step:
+As checked on 2026-09-19, `redblueskills` is **not published on npm**. The current
+website reflects the development branch in PR #24. Install those playbooks from source:
 
 ```bash
-npx redblueskills init          # all skills + orchestrator → ./.claude/skills/redblueskills
-npx redblueskills add web-ssrf  # just one (its paired defense comes along)
-npx redblueskills list red      # browse offense (or: blue, a stage, or free text)
+git clone --branch codex/clean-site-unscoped-package https://github.com/praneeth132006/RedBlueSkills.git
+cd RedBlueSkills
+node bin/cli.js init
+node bin/cli.js verify
 ```
 
-Not an npm user? Every runner works — the package has no install step of its own:
-
-```bash
-pnpm dlx redblueskills init             # pnpm
-yarn dlx redblueskills init             # yarn 2+ (yarn 1: use npx)
-bunx redblueskills init                 # bun
-deno run -A npm:redblueskills init      # deno — -A because it writes ./.claude
-npm i -g redblueskills && redblueskills init   # global, if you'd rather have it on PATH
-```
-
-> **Alternative distribution:** install the GitHub Release tarball — no account,
-> no auth, same package:
->
-> ```bash
-> npm i -g https://github.com/praneeth132006/RedBlueSkills/releases/download/v1.1.0/redblueskills-1.1.0.tgz
-> ```
->
-> It is also on GitHub Packages as `@praneeth132006/redblueskills` (that registry
-> requires a GitHub token even for public packages). See
-> [`docs/RELEASING.md`](docs/RELEASING.md).
+Use `--dest /path/to/project/.claude/skills/redblueskills` to choose another
+project. The planned command `npm install redblueskills` is unavailable until
+publication completes. The older [v1.0.0 GitHub release](https://github.com/praneeth132006/RedBlueSkills/releases/tag/v1.0.0)
+contains a downloadable package; it does not include the current new skills.
 
 Then simply tell your agent **"attack my application"** (see below) — with no URL
 it reviews the code in your project; add `at <url>` to probe a running app — or
@@ -201,9 +182,9 @@ static directory, deployable to any static host if you ever want it published.
 ## Verify the installed package
 
 ```bash
-npx --package redblueskills@1.1.0 redblueskills verify
-npx --package redblueskills@1.1.0 redblueskills lab --list
-npx --package redblueskills@1.1.0 redblueskills lab security-controls
+node bin/cli.js verify
+node bin/cli.js lab --list
+node bin/cli.js lab security-controls
 ```
 
 `verify` checks all bundled skill hashes, pairings, and package metadata offline.
@@ -214,12 +195,12 @@ and MCP without runtime npm dependencies; use a maintained Node release.
 To register the MCP server (the binary is shipped by the `redblueskills` package):
 
 ```bash
-claude mcp add redblueskills -- npx --yes --package redblueskills@1.1.0 redblueskills-mcp
+claude mcp add redblueskills -- node /absolute/path/to/RedBlueSkills/bin/mcp.js
 ```
 
 ## The `attack-my-application` orchestrator
 
-The headline capability. One instruction runs a full, authorized assessment: the
+The headline capability. A compatible agent can follow the documented assessment workflow: the
 orchestrator ([`orchestrators/attack-my-application/SKILL.md`](orchestrators/attack-my-application/SKILL.md))
 **maps** the target, **selects** the skills whose preconditions the app satisfies,
 **runs** them in kill-chain order (minimal-proof first), **verifies** each finding
@@ -236,10 +217,10 @@ Point it at **the code you built** or at a **running app** — it handles both:
   with the minimal proof each skill defines.
 
 ```bash
-npx redblueskills attack                          # review the code in this project (default)
-npx redblueskills attack ./src                     # review a specific code path
-npx redblueskills attack http://localhost:3000     # probe a running app
-npx redblueskills attack --print                   # the full playbook
+node bin/cli.js attack                          # review the code in this project (default)
+node bin/cli.js attack ./src                     # review a specific code path
+node bin/cli.js attack http://localhost:3000     # probe a running app
+node bin/cli.js attack --print                   # the full playbook
 ```
 
 > ⚠️ It only assesses systems you own or are explicitly authorized to test. The

@@ -1,6 +1,6 @@
 # v1.1 research and validation scope
 
-Reviewed 2026-09-18. Six new skills fill three focused gaps; they do not imply
+Reviewed 2026-09-19. Ten new skills fill five focused gaps; they do not imply
 complete coverage of every deployment or every risk within a framework category.
 
 | Pair | Primary basis | Local evidence | Still needs integration testing |
@@ -35,9 +35,30 @@ use the signed GitHub release artifacts for independent provenance verification.
 
 ## What was rechecked for this release
 
-All 134 skills pass metadata, pairing, package integrity, install, and MCP-load
-checks. Of the 71 skills carrying a validation stamp, 30 point to the three
-offline labs replayed here (18 mock-LLM, 6 CI, 6 new security-controls skills).
+All 138 skills pass metadata, pairing, package integrity, install, and MCP-load
+checks. Of the 73 skills carrying a validation stamp, 32 point to the three
+offline labs replayed here (18 mock-LLM, 6 CI, 8 security-controls skills).
 The other 41 retain earlier external-lab evidence and were not re-executed in
-this release. The remaining 63 skills are `reviewed`, not end-to-end validated.
+this release. The remaining 65 skills are `reviewed`, not end-to-end validated.
 These distinctions remain visible in the catalog and per-skill metadata.
+
+## Webhook pair (2026-09-19)
+
+Added `api-webhook-authentication-assessment` and its hardening counterpart.
+Primary sources: [GitHub signature validation](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries)
+and [Stripe webhooks](https://docs.stripe.com/webhooks). The instructions distinguish
+provider authentication, provider-specific freshness, and durable duplicate handling.
+Five new offline tests use synthetic timestamped HMAC messages, never real events.
+The complete security-controls lab now has 21 tests. These tests do not establish
+provider integration or distributed processing correctness. The catalog now has
+136 skills (68 pairs); this new pair adds two fixture-validated skills.
+
+## CORS pair (2026-09-19)
+
+Added `api-cors-trust-assessment` and `api-cors-trust-hardening` as **reviewed**.
+Sources: [MDN CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)
+and [OWASP HTML5 security](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html).
+No CORS browser integration lab was executed. Schema, pairing, package, and content
+checks do not constitute runtime validation. The current total is 138 skills,
+69 pairs, 73 validation stamps, and 65 reviewed skills. npm publication remains
+pending; v1.0.0 is the latest GitHub release as checked on this date.

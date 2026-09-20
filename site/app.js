@@ -52,8 +52,8 @@
   }, { passive: true });
 
   /* which section the reader is in — highlights the matching tab */
-  /* contribute has no tab — including it clears the highlight once past doctrine */
-  var sectionIds = ['library', 'attack', 'start', 'doctrine', 'contribute'];
+  /* Follow the visible navigation in document order. */
+  var sectionIds = ['impact', 'map', 'library', 'start'];
   function markCurrentSection() {
     var here = '';
     sectionIds.forEach(function (id) {
@@ -71,6 +71,13 @@
     burger.addEventListener('click', function () {
       var open = nav.classList.toggle('is-open');
       burger.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
+      }
     });
     $$('.tabbar__tabs a').forEach(function (a) {
       a.addEventListener('click', function () {
@@ -100,8 +107,10 @@
     ta.style.cssText = 'position:fixed;top:-999px;opacity:0';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); } catch (e) { /* nothing else to try */ }
+    var copied = false;
+    try { copied = document.execCommand('copy'); } catch (e) { /* manual copy remains available */ }
     document.body.removeChild(ta);
+    return copied;
   }
 
   document.addEventListener('click', function (ev) {
@@ -115,11 +124,15 @@
       setTimeout(function () { btn.classList.remove('is-done'); }, 1600);
     }
 
+    function fallback() {
+      if (legacyCopy(text)) done();
+      else showToast('Copy unavailable. Select and copy the command manually.');
+    }
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text); done(); });
+      navigator.clipboard.writeText(text).then(done, fallback);
     } else {
-      legacyCopy(text);
-      done();
+      fallback();
     }
   });
 
@@ -182,6 +195,7 @@
       var on = tab.getAttribute('data-runner') === key;
       tab.classList.toggle('is-on', on);
       tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
     });
 
     var note = $('[data-pm-note]');
@@ -198,7 +212,16 @@
 
     var saved;
     try { saved = localStorage.getItem(RUNNER_KEY); } catch (e) { saved = null; }
-    if (saved && RUNNERS[saved] && saved !== 'npx') applyRunner(saved);
+    applyRunner(saved && RUNNERS[saved] ? saved : 'npx');
+    $('.pm').addEventListener('keydown', function (ev) {
+      var tabs = $$('.pm__t');
+      var index = tabs.indexOf(document.activeElement);
+      if (index < 0 || ['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(ev.key) < 0) return;
+      ev.preventDefault();
+      index = ev.key === 'Home' ? 0 : ev.key === 'End' ? tabs.length - 1 : (index + (ev.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[index].focus();
+      applyRunner(tabs[index].getAttribute('data-runner'));
+    });
 
     $('.pm').addEventListener('click', function (ev) {
       var tab = ev.target.closest('[data-runner]');
@@ -278,6 +301,15 @@
     setText('[data-boot-skills]', total);
     setText('[data-boot-pairs]', state.pairs.length);
     setText('[data-boot-val]', validated + '/' + total);
+
+    var localTargets = ['llm-local', 'ci-local', 'security-controls'];
+    var fixtureCount = skills.filter(function (skill) {
+      return skill.maturity === 'validated' && localTargets.indexOf(skill.validation_target) >= 0;
+    }).length;
+    var reviewed = skills.filter(function (skill) { return skill.maturity === 'reviewed'; }).length;
+    setText('[data-validation-summary]', total + ' skills: ' + reviewed + ' reviewed; ' + validated +
+      ' carry validation stamps. Of those stamps, ' + fixtureCount + ' reference bundled offline labs and ' +
+      (validated - fixtureCount) + ' reference other targets. These are metadata counts, not live test results.');
 
     setText('[data-c-vert-all]', total);
     Object.keys(verticals).forEach(function (v) {
@@ -445,8 +477,9 @@
     $$('[data-filter]').forEach(function (group) {
       var key = group.getAttribute('data-filter');
       $$('.chk', group).forEach(function (chk) {
+        chk.setAttribute('aria-pressed', String(chk.classList.contains('is-on')));
         chk.addEventListener('click', function () {
-          $$('.chk', group).forEach(function (c) { c.classList.toggle('is-on', c === chk); });
+          $$('.chk', group).forEach(function (c) { c.classList.toggle('is-on', c === chk); c.setAttribute('aria-pressed', String(c === chk)); });
           state[key] = chk.getAttribute('data-val');
           if (key === 'view') {
             pairsPanel.hidden = state.view !== 'pairs';
@@ -460,6 +493,8 @@
 
     var search = $('[data-search]');
     if (search) {
+      // Preserve input entered while the catalog request was still loading.
+      state.q = search.value.trim().toLowerCase();
       search.addEventListener('input', function () {
         state.q = search.value.trim().toLowerCase();
         state.cursor = -1;
@@ -737,69 +772,23 @@
      SCROLL REVEAL — sections and panels fade-in as they enter the viewport.
      Uses IntersectionObserver for performance. Respects prefers-reduced-motion.
      ───────────────────────────────────────────────────────────────── */
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-    /* inject the CSS for the reveal animation once, via a <style> tag */
-    var revealStyle = document.createElement('style');
-    revealStyle.textContent =
-      /* initial hidden state — elements start invisible and slightly below */
-      '.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease-out,transform .55s ease-out}' +
-      /* revealed state — elements become fully visible and move to their natural position */
-      '.reveal.is-visible{opacity:1;transform:none}' +
-      /* stagger delays for child elements within a revealed container */
-      '.reveal-d1{transition-delay:.08s}' +
-      '.reveal-d2{transition-delay:.16s}' +
-      '.reveal-d3{transition-delay:.24s}';
-    document.head.appendChild(revealStyle);
-
-    /* mark all sections, panels, and major content blocks for reveal */
-    $$('.sect__head, .panel, .pipe, .tenets, .ex, .steps, .foot__warn, .foot__cta, .foot__grid, .foot__sigil').forEach(function (el) {
-      el.classList.add('reveal');
-    });
-
-    /* create an observer that triggers the reveal when elements are 15% visible */
+  // Content is visible by default; animations never gate access to it.
+  if ('IntersectionObserver' in window && Element.prototype.animate) {
+    var motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     var revealObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          /* add the visible class to trigger the CSS transition */
-          entry.target.classList.add('is-visible');
-          /* stop observing once revealed — no need to re-animate */
-          revealObs.unobserve(entry.target);
+      entries.forEach(function (entry, index) {
+        if (!entry.isIntersecting) return;
+        if (!motionPreference.matches) {
+          entry.target.animate([{opacity: 0.35, transform: 'translateY(20px)'}, {opacity: 1, transform: 'translateY(0)'}],
+            {duration: 850, delay: Math.min(index, 3) * 65, easing: 'cubic-bezier(.22,1,.36,1)'});
         }
+        revealObs.unobserve(entry.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    /* observe all marked elements */
-    $$('.reveal').forEach(function (el) { revealObs.observe(el); });
-
-    /* ── Fail-safe: content must NEVER stay permanently invisible. ──
-       The observer only reveals on intersection, so in environments where it
-       never fires as expected — a zero/odd-height viewport, a deep-link that
-       skips past sections, some headless/print renderers — un-revealed
-       `.reveal` blocks would be stuck at opacity:0 and the page would look
-       blank/broken. These nets guarantee everything ends up visible. */
-    function revealAllRemaining() {
-      $$('.reveal').forEach(function (el) {
-        if (!el.classList.contains('is-visible')) {
-          el.classList.add('is-visible');
-          /* Set the end state inline too, so content is visible even in a
-             renderer that never advances the CSS transition (frozen/0-height
-             viewports, print). The class alone would leave opacity stuck at 0
-             there; these inline styles win immediately, no animation needed. */
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-          revealObs.unobserve(el);
-        }
-      });
-    }
-    /* if the viewport has no usable height, the observer can't fire at all —
-       reveal immediately rather than animate into a void. */
-    if (!window.innerHeight) revealAllRemaining();
-    /* second net: once everything has loaded, reveal anything still hidden. */
-    window.addEventListener('load', function () {
-      setTimeout(revealAllRemaining, 1200);
+    }, {threshold: 0.08});
+    $$('.sect__head, .workflow__card, .ex__c, .tenet, .steps > li, .proof__item').forEach(function (el) { revealObs.observe(el); });
+    motionPreference.addEventListener('change', function () {
+      if (motionPreference.matches) document.getAnimations().forEach(function (animation) { animation.finish(); });
     });
-    /* third net: hard timeout so nothing can outlive a slow/absent load event. */
-    setTimeout(revealAllRemaining, 2500);
   }
 
 })();

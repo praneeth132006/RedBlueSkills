@@ -176,7 +176,7 @@
       (STAGE_LABEL[stage] || stage) + '<br>';
     bits += '<span class="cmap__tip-r">' + (c.red || 0) + ' red</span> · ' +
       '<span class="cmap__tip-b">' + (c.blue || 0) + ' blue</span>';
-    bits += '<br>' + c.validated + '/' + c.total + ' validated';
+    bits += '<br>' + c.validated + '/' + c.total + ' validation stamps';
     return bits;
   }
   function showTip(html, ev) {
@@ -198,7 +198,7 @@
     var t = cov.totals[surface];
     var html = '<b>' + (SURFACE_LABEL[surface] || surface) + '</b><br>' +
       t.total + ' skills · ' + t.red + ' red / ' + t.blue + ' blue<br>' +
-      t.validated + ' validated';
+      t.validated + ' validation stamps';
     node.style.cursor = 'pointer';
     node.addEventListener('mousemove', function (e) { showTip(html, e); });
     node.addEventListener('mouseleave', hideTip);
@@ -223,7 +223,7 @@
         if (!c) { html += '<td class="c-dark"></td>'; return; }
         var full = c.validated === c.total;
         html += '<td class="c-' + cellClass(c) + (full ? ' is-val' : '') +
-          '" title="' + c.red + ' red / ' + c.blue + ' blue · ' + c.validated + '/' + c.total + ' validated">' +
+          '" title="' + c.red + ' red / ' + c.blue + ' blue · ' + c.validated + '/' + c.total + ' stamped">' +
           c.total + (full ? '<i>✓</i>' : '') + '</td>';
       });
       var tot = (cov.totals[s] || {}).total || 0;
